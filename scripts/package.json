@@ -1,0 +1,11 @@
+{
+  "name": "eye-for-design-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "screenshots": "node fetch-screenshots.js"
+  },
+  "dependencies": {
+    "playwright": "^1.44.0"
+  }
+}
