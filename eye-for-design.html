@@ -553,58 +553,58 @@ const linearData = {
       imageUrl: 'assets/screenshots/linear/inbox.png',
       imageWidth: 1440,
       imageHeight: 900,
-      context: 'The first screen users land on — surfaces unread notifications and action items without requiring navigation.',
+      context: 'The default landing screen — surfaces what needs your attention without requiring navigation.',
       annotations: [
         {
           id: 'linear-inbox-1',
-          x: 6.5,
-          y: 38,
+          x: 3.2,
+          y: 42,
           label: '1',
-          title: 'Icon-only sidebar at rest',
-          analysis: 'Linear collapses the global sidebar to icon-only by default. This is a deliberate application of progressive disclosure: the full labels are available via hover or expanding the rail, but hidden until needed. The result is more horizontal room for the content that actually matters — the issue list — without losing navigational orientation. Users who know where they are don\'t need the label; those who are learning can hover to reveal it.',
+          title: 'Icon-only sidebar — the anti-Jira manifesto',
+          analysis: 'Karri Saarinen (Linear\'s CEO and designer) built this product out of pure frustration. His exact words from Figma Config 2025: "I\'ve always been frustrated with how bad the commonly used tools are in this market. Why are they so slow? Why is everything so complex?" The collapsed icon-only sidebar is the direct answer. Linear bets that developers using the product daily build spatial memory — they know Issues is at position 3 without needing the label. Labels appear on hover for anyone who needs them. This is the same pattern as VS Code\'s activity bar, which Linear\'s ICP already lived in for hours every day. The design borrows a mental model users already have, then removes every pixel that isn\'t earning its place.',
           sources: [
-            { label: 'NNG: Progressive Disclosure', url: 'https://www.nngroup.com/articles/progressive-disclosure/' },
-            { label: 'NNG: Icon Usability', url: 'https://www.nngroup.com/articles/icon-usability/' }
+            { label: 'Figma Blog: Karri Saarinen\'s 10 Rules', url: 'https://www.figma.com/blog/karri-saarinens-10-rules-for-crafting-products-that-stand-out/' },
+            { label: 'Lenny\'s Newsletter: Inside Linear', url: 'https://www.lennysnewsletter.com/p/inside-linear-building-with-taste' }
           ],
-          principles: ['Progressive Disclosure', 'Spatial Memory', 'Visual Hierarchy']
+          principles: ['Progressive Disclosure', 'Spatial Memory', 'Mental Model Transfer']
         },
         {
           id: 'linear-inbox-2',
           x: 50,
-          y: 12,
+          y: 16,
           label: '2',
-          title: 'Grouped, scannable notification rows',
-          analysis: 'Inbox items are grouped by issue, not by notification type. This matches how a developer\'s mental model works: "what happened to issue ENG-412?" rather than "what did Alice comment on?". Each row shows just enough — title, actor, timestamp — and relies on a single click to expand. This is Miller\'s Law in practice: chunking related signals into one scannable row rather than exploding them into separate items.',
+          title: 'Grouped by issue, not by person',
+          analysis: 'Most notification feeds group by actor: "Alice commented, Bob changed status." Linear groups by issue instead. This reflects a deep understanding of how engineers actually think: "What happened to ENG-412 today?" — not "What did everyone do today?" It sounds like a small data structure choice, but it\'s actually a statement of values: Linear was built by engineers for engineers, with the founders as their own first customers. Karri Saarinen told First Round Capital: "We were the first ideal customer. So we just had to build something nice for ourselves that actually worked." When you design for yourself with real discipline, you catch things outsiders never would.',
           sources: [
-            { label: 'Laws of UX: Miller\'s Law', url: 'https://lawsofux.com/millers-law/' },
-            { label: 'NNG: Chunking', url: 'https://www.nngroup.com/articles/chunking/' }
+            { label: 'First Round Review: Linear\'s Path to PMF', url: 'https://review.firstround.com/linears-path-to-product-market-fit/' }
           ],
-          principles: ['Miller\'s Law', 'Information Scent', 'Cognitive Load']
+          principles: ['User Mental Model', 'Information Architecture', 'Jobs-to-be-Done']
         },
         {
           id: 'linear-inbox-3',
-          x: 88,
-          y: 19,
+          x: 90,
+          y: 30,
           label: '3',
-          title: 'Done / Archive actions at the row level',
-          analysis: 'Hovering a notification reveals "Done" and "Snooze" actions inline, without a modal or separate page. This is direct manipulation: the action lives where the object lives. Linear avoids the common antipattern of sending users to a separate "notification settings" page to triage their inbox. The Doherty Threshold (< 400ms response time) is met because the action is instant and the item disappears immediately, giving satisfying closure.',
+          title: 'Mark done in one keystroke — inbox-zero culture built in',
+          analysis: 'Hovering a notification reveals "Done" and "Snooze" actions. Pressing D marks it done instantly. This is direct manipulation at the notification level — the action lives where the object lives, with no modal, no confirmation, no page redirect. But the deeper story is cultural: Linear\'s inbox is built around inbox-zero, the ritual that many engineers already practice with email. Linear didn\'t invent the habit — they borrowed it. This is Jakob\'s Law applied strategically: people spend most of their time in other products, so products that import familiar interaction patterns win faster than those that invent new ones.',
           sources: [
-            { label: 'Laws of UX: Doherty Threshold', url: 'https://lawsofux.com/doherty-threshold/' },
+            { label: 'Laws of UX: Jakob\'s Law', url: 'https://lawsofux.com/jakobs-law/' },
             { label: 'NNG: Direct Manipulation', url: 'https://www.nngroup.com/articles/direct-manipulation/' }
           ],
-          principles: ['Direct Manipulation', 'Doherty Threshold', 'Efficiency']
+          principles: ['Jakob\'s Law', 'Direct Manipulation', 'Habit Import']
         },
         {
           id: 'linear-inbox-4',
           x: 50,
           y: 96,
           label: '4',
-          title: '⌘K command palette hint',
-          analysis: 'The keyboard shortcut hint is persistently visible at the bottom of the UI — a quiet but powerful teacher. Rather than burying power-user features in a help doc or onboarding modal, Linear surfaces them at the moment the user has run out of content to look at (the bottom). This is sometimes called "progressive onboarding": the system teaches as the user gains confidence, not before.',
+          title: '⌘K hint: teaching power users passively',
+          analysis: 'The command palette shortcut sits quietly at the bottom of the screen — visible when there\'s nothing else to look at. This is one of the most underrated UX patterns in Linear\'s design: passive progressive onboarding. Instead of a modal that explains keyboard shortcuts on Day 1 (which users dismiss and forget), the hint surfaces when users have run out of active content to process. Linear runs on $35K in total paid marketing spend in its entire history, with 80% of growth product-led (per Aakash Gupta\'s growth analysis). The keyboard-first design isn\'t just a UX choice — it\'s a growth mechanic. Engineers tweet about it. Word-of-mouth spreads among technical teams who value speed.',
           sources: [
-            { label: 'NNG: Progressive Disclosure in Interfaces', url: 'https://www.nngroup.com/articles/progressive-disclosure/' }
+            { label: 'Aakash Gupta: How Linear Grows', url: 'https://www.news.aakashg.com/p/how-linear-grows' },
+            { label: 'NNG: Progressive Disclosure', url: 'https://www.nngroup.com/articles/progressive-disclosure/' }
           ],
-          principles: ['Progressive Disclosure', 'Learnability', 'Expert Efficiency']
+          principles: ['Progressive Disclosure', 'Product-Led Growth', 'Expert Efficiency']
         }
       ]
     },
@@ -614,56 +614,56 @@ const linearData = {
       imageUrl: 'assets/screenshots/linear/issues.png',
       imageWidth: 1440,
       imageHeight: 900,
-      context: 'The core workspace — where teams spend the majority of their time writing, triaging, and updating issues.',
+      context: 'The core workspace — where teams spend most of their time triaging, writing, and updating issues.',
       annotations: [
         {
           id: 'linear-issues-1',
-          x: 72,
-          y: 18,
+          x: 68,
+          y: 22,
           label: '1',
-          title: 'Metadata in a right-rail, not inline',
-          analysis: 'Status, priority, assignee, cycle, and label all live in a structured right column, never interrupting the prose of the issue description. This respects the "F-pattern" reading behavior: users scan the left side for the narrative, and look right only when they need to act on metadata. Mixing metadata inline with prose (as many tools do) forces eye movement that breaks reading flow.',
+          title: 'Right-rail metadata — F-pattern reading respected',
+          analysis: 'Status, priority, assignee, and label all live in a right column. The prose of the issue description runs freely on the left. This respects NNG\'s research on F-pattern scanning: users read left-to-right, top-heavy, with the right side reserved for supporting detail. Mixing metadata inline with prose — which many tools do — forces constant eye movement that breaks reading flow. Linear\'s layout decision seems obvious once you see it, which is the hallmark of good design. But it required a conscious choice to not "maximize information density" — a temptation most PM tools fall into. Linear published this philosophy publicly as "The Linear Method": focused work requires an uncluttered surface.',
           sources: [
-            { label: 'NNG: F-Pattern Scanning', url: 'https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/' },
-            { label: 'NNG: Layered Information Architecture', url: 'https://www.nngroup.com/articles/ia-vs-navigation/' }
+            { label: 'The Linear Method', url: 'https://linear.app/method' },
+            { label: 'NNG: F-Pattern Scanning', url: 'https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/' }
           ],
-          principles: ['F-Pattern', 'Visual Hierarchy', 'Cognitive Load']
+          principles: ['F-Pattern', 'Visual Hierarchy', 'Focused Work Design']
         },
         {
           id: 'linear-issues-2',
           x: 35,
-          y: 35,
+          y: 38,
           label: '2',
-          title: 'Markdown-rendered description',
-          analysis: 'The issue body renders markdown immediately — no "preview" tab required. This is a common but important UX decision: forcing users into a separate preview mode adds friction and breaks the creative flow of writing. Rendering inline signals that the product trusts users and respects their time. The editing affordance (pencil icon) appears on hover, keeping the surface clean at rest.',
+          title: 'No "preview" tab — WYSIWYG Markdown is a trust statement',
+          analysis: 'Linear renders Markdown immediately as you type — no separate "preview" tab required. This is rare in issue trackers (Jira, GitHub Issues still use a write/preview split). The design decision signals trust in the user: they don\'t need to switch modes to verify their work. It also dramatically reduces friction for the primary workflow (writing an issue description). The editing affordance (pencil icon) appears on hover, keeping the surface clean at rest — a "progressive disclosure at the element level" pattern. Jori Lallo\'s founding insight was that flexible software that forces users to switch modes constantly creates cognitive overhead at scale. Every mode-switch is a micro-interruption.',
           sources: [
-            { label: 'NNG: Efficiency of Use', url: 'https://www.nngroup.com/articles/efficiency-vs-effectiveness/' }
+            { label: 'Eleken: Linear App Case Study', url: 'https://www.eleken.co/blog-posts/linear-app-case-study' }
           ],
-          principles: ['Efficiency', 'Direct Manipulation', 'WYSIWYG']
+          principles: ['WYSIWYG', 'Direct Manipulation', 'Mode Reduction']
         },
         {
           id: 'linear-issues-3',
-          x: 72,
-          y: 55,
+          x: 70,
+          y: 52,
           label: '3',
-          title: 'Compact status selector',
-          analysis: 'Clicking "Status" opens a small dropdown with all states, not a modal. Each state has a distinct icon shape and color, not just a label — this is redundant coding, where both color and shape carry the same meaning. This matters for accessibility and for glanceability: users can distinguish "In Progress" from "Done" even while focused elsewhere on the page.',
+          title: 'Status selector with shape + color — redundant coding for glanceability',
+          analysis: 'Each status (Todo, In Progress, Done, Cancelled) has a distinct icon shape and a distinct color. This is redundant coding: the same meaning is carried by two visual channels simultaneously. Redundant coding matters because color alone fails for colorblind users and shape alone is slow to parse at a distance. Using both means the status of 20 issues is legible in a single glance — no reading required. This is pre-attentive attribute design, borrowed from the information visualization tradition (Edward Tufte, Stephen Few). Linear\'s team had design pedigree — Saarinen led Airbnb\'s Design Language System and built the Lottie animation library — and it shows in these small, principled decisions.',
           sources: [
             { label: 'NNG: Redundant Coding', url: 'https://www.nngroup.com/articles/color-enhance-design/' }
           ],
-          principles: ['Redundant Coding', 'Accessibility', 'Fitts\'s Law']
+          principles: ['Redundant Coding', 'Pre-attentive Attributes', 'Accessibility']
         },
         {
           id: 'linear-issues-4',
           x: 35,
-          y: 80,
+          y: 82,
           label: '4',
-          title: 'Activity log with comment thread',
-          analysis: 'All changes — status updates, assignments, comments — appear in a single chronological log. This gives the issue a full audit trail without separate tabs for "history" and "comments". Users can follow the narrative of an issue\'s life without switching contexts. The mild visual distinction between automated events (status changed) and human comments (avatar-led) maintains parsability.',
+          title: 'Unified activity log — history and comments as one narrative',
+          analysis: 'Status changes, assignments, and comments all appear in a single chronological stream. Most tools separate these into "History" and "Comments" tabs, which forces users to context-switch to reconstruct the full story of an issue. Linear\'s unified log means you can follow the life of any issue — from creation to close — without clicking. This reflects Nielsen\'s Visibility of System Status heuristic at a high level: the product makes its own state transparent so users always know what happened and when. For engineering teams doing incident reviews or retrospectives, this log becomes the source of truth.',
           sources: [
-            { label: 'NNG: Visibility of System Status', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
+            { label: 'NNG: 10 Usability Heuristics', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
           ],
-          principles: ['Visibility of System Status', 'Audit Trail', 'Narrative Cohesion']
+          principles: ['Visibility of System Status', 'Unified Narrative', 'Audit Transparency']
         }
       ]
     },
@@ -673,44 +673,44 @@ const linearData = {
       imageUrl: 'assets/screenshots/linear/cycles.png',
       imageWidth: 1440,
       imageHeight: 900,
-      context: 'Linear\'s version of sprints — designed to feel lighter-weight and less ceremonial than traditional sprint tooling.',
+      context: 'Linear\'s version of sprints — lighter-weight and less ceremonial than traditional sprint tooling.',
       annotations: [
         {
           id: 'linear-cycles-1',
           x: 50,
-          y: 22,
+          y: 25,
           label: '1',
-          title: 'Progress bar as primary status signal',
-          analysis: 'Each cycle has a prominent horizontal progress bar showing completion percentage. This is a direct application of the Gestalt principle of continuity — the bar is pre-attentive: users grasp the state of the cycle before they\'ve consciously processed any text. Status numbers (12/28 issues) appear alongside but are secondary to the visual.',
+          title: 'Progress bar as primary status — pre-attentive before conscious',
+          analysis: 'Each cycle shows a horizontal progress bar displaying completion percentage before any text. This is a deliberate application of pre-attentive processing: the brain registers a half-filled bar as "in progress" before conscious reading begins. Status in numbers (12/28 issues) is present but secondary. This distinction matters in practice: when a head of engineering looks at 6 active cycles, she needs the status of each in under a second. A progress bar delivers that; a table of numbers does not. Linear\'s entire visual language is built around the principle that information used for monitoring should be faster to read than information used for editing.',
           sources: [
-            { label: 'Laws of UX: Pre-attentive Processing', url: 'https://lawsofux.com/aesthetic-usability-effect/' },
-            { label: 'NNG: Data Visualization', url: 'https://www.nngroup.com/articles/data-visualization-for-teams/' }
+            { label: 'Pragmatic Engineer: Story of Linear with Tuomas Artman', url: 'https://newsletter.pragmaticengineer.com/p/linear' }
           ],
-          principles: ['Pre-attentive Attributes', 'Gestalt: Continuity', 'Status Visibility']
+          principles: ['Pre-attentive Attributes', 'Monitoring vs Editing', 'Data Visualization']
         },
         {
           id: 'linear-cycles-2',
           x: 50,
-          y: 50,
+          y: 52,
           label: '2',
-          title: 'Active / Upcoming / Completed tabs',
-          analysis: 'Cycles are partitioned into three clearly labeled time states. This solves a real problem in sprint tools: "where is the last sprint\'s data?" The consistent tab pattern (same as issues, projects) means users transfer their mental model from one area of Linear to another — this is Jakob\'s Law: familiarity from one part of the product reduces the learning cost in another.',
+          title: 'Active / Upcoming / Completed — answering "where is the last sprint?"',
+          analysis: 'Cycles are partitioned into three time-state tabs, solving a real and frustrating problem: in most sprint tools, previous sprints are hard to find. The consistent tab pattern (same as Issues, Projects, Views) means users transfer their mental model across every part of Linear — this is Jakob\'s Law working at a product architecture level. Linear keeps its surface area deliberately small: Jori Lallo\'s founding rule was "one really good way of doing things." Fewer patterns, more mastery. Aakash Gupta noted in his analysis of Linear\'s growth that the company operates with only 2 PMs for 18,000+ paying customers — a product so well-designed that support and education cost is near zero.',
           sources: [
+            { label: 'Aakash Gupta: How Linear Grows', url: 'https://www.news.aakashg.com/p/how-linear-grows' },
             { label: 'Laws of UX: Jakob\'s Law', url: 'https://lawsofux.com/jakobs-law/' }
           ],
-          principles: ['Jakob\'s Law', 'Consistency', 'Mental Model Transfer']
+          principles: ['Jakob\'s Law', 'Consistent Patterns', 'Wayfinding']
         },
         {
           id: 'linear-cycles-3',
           x: 82,
-          y: 38,
+          y: 40,
           label: '3',
-          title: 'Scope creep indicator',
-          analysis: 'Issues added after the cycle started appear with a subtle "added after start" badge. This is a small but sophisticated design decision: it surfaces information that was previously invisible in most PM tools, enabling teams to reason about whether their cycle was well-scoped or if scope crept. Making invisible data visible is one of the highest-leverage things a product interface can do.',
+          title: 'Scope creep badge — making invisible data visible',
+          analysis: 'Issues added after the cycle started are flagged with a subtle "added after start" marker. This surfaces a data point that was invisible in every major project tool before Linear: did this cycle\'s scope hold? This is one of the highest-leverage things a product interface can do — make invisible organizational behavior visible so teams can reflect on it. Karri Saarinen\'s Figma Config 2025 talk centered on this principle: "If you want to build a culture of quality, you have to make quality measurable." Linear\'s scope creep badge does for sprint health what a step counter does for fitness — it doesn\'t force behavior change, but it makes the data undeniable.',
           sources: [
-            { label: 'NNG: Visibility Heuristic', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
+            { label: 'Figma Blog: Karri Saarinen\'s 10 Rules', url: 'https://www.figma.com/blog/karri-saarinens-10-rules-for-crafting-products-that-stand-out/' }
           ],
-          principles: ['Visibility of System Status', 'Sensemaking', 'Data Transparency']
+          principles: ['Data Transparency', 'Behavioral Nudge', 'Visibility of System Status']
         }
       ]
     }
@@ -729,57 +729,58 @@ const duolingoData = {
       imageUrl: 'assets/screenshots/duolingo/home.png',
       imageWidth: 1440,
       imageHeight: 900,
-      context: 'The first screen after login — the daily hub that users return to dozens of times across weeks and months.',
+      context: 'The daily hub — the screen users return to dozens of times across weeks and months.',
       annotations: [
         {
           id: 'duolingo-home-1',
-          x: 50,
-          y: 18,
+          x: 38,
+          y: 8,
           label: '1',
-          title: 'Streak counter front and center',
-          analysis: 'The streak — number of consecutive days practiced — is displayed prominently in the header with a fire emoji and a bold number. This is a masterclass in variable reward schedules, a behavioral psychology concept popularized by B.F. Skinner. The streak creates loss aversion: the longer the streak, the more psychologically painful it is to break. Duolingo has found that streak is the single most powerful retention mechanic in the product.',
+          title: 'The streak: 600 experiments, one copy change worth 10,000 DAUs',
+          analysis: 'The fire emoji and streak counter at the top of the screen is not decoration — it\'s the most A/B tested single feature in Duolingo\'s history. Jackson Shuttleworth\'s retention team ran 600+ experiments on streaks over four years. One of the most striking findings: changing the button text from "Continue" to "Commit to my goal" drove 10,000 incremental daily active users — a single copy change. The streak was discovered when an associate PM noticed that users who hit a 10-day streak had dramatically lower churn. The simplification mattered too: Duolingo originally tied streaks to XP points, which confused users. Simplifying to "complete one lesson a day" dramatically improved the feature\'s effectiveness. Lenny Rachitsky called it "one of the best designed, most clever, and most impactful growth features ever created."',
           sources: [
-            { label: 'NNG: Gamification in UX', url: 'https://www.nngroup.com/articles/gamification/' },
-            { label: 'BJ Fogg: Behavior Design', url: 'https://behaviordesign.stanford.edu/' }
+            { label: 'Lenny\'s Newsletter: Behind the Product — Duolingo Streaks', url: 'https://www.lennysnewsletter.com/p/behind-the-product-duolingo-streaks' },
+            { label: 'Duolingo Blog: How the Streak Builds Habit', url: 'https://blog.duolingo.com/how-duolingo-streak-builds-habit/' }
           ],
-          principles: ['Loss Aversion', 'Variable Reward', 'Habit Formation']
+          principles: ['Loss Aversion', 'Habit Formation', 'Variable Reward']
         },
         {
           id: 'duolingo-home-2',
           x: 50,
-          y: 45,
+          y: 48,
           label: '2',
-          title: 'Single prominent CTA: Continue',
-          analysis: 'The page has one dominant action: "Continue" or "Start Lesson". This is Hick\'s Law in practice — the time to make a decision grows logarithmically with the number of choices. By removing every possible alternative (grammar notes, vocabulary lists, settings), Duolingo eliminates the decision fatigue that causes users to leave without completing a lesson. The path of least resistance is always the right path.',
+          title: 'One button: Hick\'s Law as a growth strategy',
+          analysis: 'The page has one dominant action. Luis von Ahn frames Duolingo\'s real competitors as Instagram and TikTok — not Rosetta Stone. "The insight is the hardest thing about learning something by yourself is staying motivated — by a margin." Every design decision flows from that: if motivation is the problem, friction is the enemy. Hick\'s Law states that decision time grows logarithmically with the number of choices. Duolingo eliminates the decision by removing every alternative. No grammar notes, no vocabulary lists — just "Continue." The path of least resistance is always the right path. The company has run 16,000 A/B tests in its history to optimize exactly this kind of conversion moment.',
           sources: [
-            { label: 'Laws of UX: Hick\'s Law', url: 'https://lawsofux.com/hicks-law/' },
-            { label: 'NNG: Decision Making & UX', url: 'https://www.nngroup.com/articles/decision-making/' }
+            { label: 'ACQ2: Why Duolingo Worked — Luis von Ahn', url: 'https://www.acquired.fm/acq2-episodes/why-duolingo-worked-with-luis-von-ahn-ceo' },
+            { label: 'Laws of UX: Hick\'s Law', url: 'https://lawsofux.com/hicks-law/' }
           ],
-          principles: ['Hick\'s Law', 'Choice Reduction', 'Goal Gradient']
+          principles: ['Hick\'s Law', 'Friction Reduction', 'Motivation-First Design']
         },
         {
           id: 'duolingo-home-3',
-          x: 15,
-          y: 65,
+          x: 11,
+          y: 62,
           label: '3',
-          title: 'League and XP leaderboard tease',
-          analysis: 'A persistent left-rail widget shows the user\'s current league position and XP progress relative to peers. Social comparison is a powerful motivator, but Duolingo is careful: it shows your percentile in a friendly, encouraging frame, not a shame-inducing one. "You\'re in the top 20%!" works better than "12 people are ahead of you." The design avoids the dark pattern of social pressure while still leveraging social motivation.',
+          title: 'The leaderboard: a Zynga idea that tripled engaged learners',
+          analysis: 'The league widget in the sidebar came from Jorge Mazal, Duolingo\'s CPO, who joined in 2017 from Zynga where he had worked on FarmVille 2. His hypothesis: in a product where users\' friends are no longer active, competitive matching by engagement level works better than social graphs. Duolingo auto-opts users into a league with 30 strangers who had similar engagement the prior week. The results were immediate and dramatic: overall learning time rose 17%, and the number of highly engaged learners (1+ hour/day, 5+ days/week) tripled. Mazal\'s Lenny\'s Newsletter post explaining this is Lenny\'s #1 most-read post of all time.',
           sources: [
-            { label: 'NNG: Social Proof in UX', url: 'https://www.nngroup.com/articles/social-proof/' }
+            { label: 'Lenny\'s Newsletter: How Duolingo Reignited User Growth', url: 'https://www.lennysnewsletter.com/p/how-duolingo-reignited-user-growth' }
           ],
-          principles: ['Social Proof', 'Extrinsic Motivation', 'Ethical Gamification']
+          principles: ['Social Competition', 'Extrinsic Motivation', 'Engagement Loop']
         },
         {
           id: 'duolingo-home-4',
-          x: 85,
-          y: 65,
+          x: 88,
+          y: 62,
           label: '4',
-          title: 'Daily goal progress ring',
-          analysis: 'A circular progress indicator shows how much of the daily XP goal has been completed. The ring is never shown as empty — even one XP lights up a segment. This is the Goal Gradient Effect: people put in more effort as they approach a goal. By making progress immediately visible from the first action, Duolingo creates a sense of momentum that persists across the session.',
+          title: 'XP progress ring: the Goal Gradient Effect in action',
+          analysis: 'The daily XP goal ring starts lighting up from the very first XP earned — it is never shown as empty. This is the Goal Gradient Effect: people put in more effort as they approach a goal, and Duolingo creates the perception of progress from the first action. The company\'s North Star metric is CURR (Current User Retention Rate). Data showed that a 1% CURR improvement compounded over time — an experiment that added 1,000 DAUs in week 1 added 1,072 the following week through word-of-mouth. Over four years of CURR focus, DAUs grew 4.5x. The progress ring is not a UI element — it is the physical embodiment of Duolingo\'s retention strategy.',
           sources: [
+            { label: 'Lenny\'s Newsletter: The Secret to Duolingo\'s Exponential Growth', url: 'https://www.lennysnewsletter.com/p/the-secret-to-duolingos-growth' },
             { label: 'Laws of UX: Goal Gradient Effect', url: 'https://lawsofux.com/goal-gradient-effect/' }
           ],
-          principles: ['Goal Gradient Effect', 'Progress Indicators', 'Intrinsic Motivation']
+          principles: ['Goal Gradient Effect', 'Progress Visualization', 'Retention Strategy']
         }
       ]
     },
@@ -794,40 +795,41 @@ const duolingoData = {
         {
           id: 'duolingo-lesson-1',
           x: 50,
-          y: 8,
+          y: 5,
           label: '1',
-          title: 'Progress bar at the top',
-          analysis: 'A thin green progress bar at the top of the lesson screen shows how many exercises remain. It grows with each correct answer. This is a classic application of the Zeigarnik Effect: people are more likely to stay motivated to finish something they\'ve already started. By making progress visible from the very first question, Duolingo increases lesson completion rates.',
+          title: 'Progress bar at the top: the Zeigarnik Effect as an engine',
+          analysis: 'The thin progress bar at the top of every lesson screen grows with each correct answer. This is a direct application of the Zeigarnik Effect: humans are more motivated to complete tasks they have already started than tasks they haven\'t begun. Duolingo never shows you an empty progress bar — by the time you see it, you\'ve already made one move. The data behind this: Duolingo found the first 7 days to be the highest-risk churn window. Get a user past their first week and long-term retention probability rises dramatically. The progress bar is one of the mechanisms that closes that gap.',
           sources: [
+            { label: 'Lenny\'s Newsletter: Behind the Product — Duolingo Streaks', url: 'https://www.lennysnewsletter.com/p/behind-the-product-duolingo-streaks' },
             { label: 'Laws of UX: Zeigarnik Effect', url: 'https://lawsofux.com/zeigarnik-effect/' }
           ],
-          principles: ['Zeigarnik Effect', 'Progress Visibility', 'Completion Motivation']
+          principles: ['Zeigarnik Effect', 'Completion Motivation', 'Churn Prevention']
         },
         {
           id: 'duolingo-lesson-2',
           x: 50,
-          y: 45,
+          y: 58,
           label: '2',
-          title: 'Large tap targets, generous spacing',
-          analysis: 'Answer choices are large, rounded tiles with significant padding. This is Fitts\'s Law: the time to tap a target is a function of its distance and size. On mobile, Duolingo makes targets generously large (minimum 44px touch target, often much larger), reducing the motor effort required to interact. The spacing between choices prevents accidental taps — an often-overlooked detail in mobile UX.',
+          title: 'Answer tiles: Fitts\'s Law at the core of the product loop',
+          analysis: 'Answer choices are large, rounded tiles with generous padding. This is Fitts\'s Law: the time to tap a target is a function of both its size and the distance to it. Duolingo\'s mobile-first design makes targets generously large — minimum 44px, often much larger — which reduces motor effort and accidental taps. But there\'s a business reason beyond usability: each lesson is a micro-loop. Reduce friction per interaction → increase completions per session → increase XP per day → extend streak → improve retention. The tile size is part of the conversion funnel. Luis von Ahn\'s game design confession: "You can trace a lot of the things we do based on what game our product managers are currently playing." The tile interaction pattern comes directly from mobile gaming.',
           sources: [
-            { label: 'Laws of UX: Fitts\'s Law', url: 'https://lawsofux.com/fittss-law/' },
-            { label: 'Apple HIG: Touch Targets', url: 'https://developer.apple.com/design/human-interface-guidelines/accessibility' }
+            { label: 'Stanford GSB: Duolingo\'s Luis von Ahn on AI', url: 'https://www.gsb.stanford.edu/insights/duolingos-luis-von-ahn-his-vision-ai-educating-world' },
+            { label: 'Laws of UX: Fitts\'s Law', url: 'https://lawsofux.com/fittss-law/' }
           ],
-          principles: ['Fitts\'s Law', 'Touch Target Size', 'Error Prevention']
+          principles: ['Fitts\'s Law', 'Micro-Loop Design', 'Mobile-First']
         },
         {
           id: 'duolingo-lesson-3',
           x: 50,
-          y: 88,
+          y: 90,
           label: '3',
-          title: 'Correct / incorrect feedback panel',
-          analysis: 'When an answer is submitted, a large banner slides up from the bottom: green for correct ("Great job!"), red for incorrect (showing the right answer). This is immediate, unambiguous feedback — a foundational UX principle from Nielsen\'s heuristics. The red state doesn\'t feel punishing because the tone is encouraging ("The correct answer is...") and the user can immediately try the next question. The delay before the next question (≈ 800ms) is calibrated to the Doherty Threshold — long enough to feel the feedback, short enough to maintain flow.',
+          title: 'Feedback banner: error framing as a retention tool',
+          analysis: 'When an answer is wrong, a red banner slides up showing the correct answer — but the copy is always encouraging, never shaming. This is deliberate. Duolingo\'s product team studied the emotional arc of language learning and found that shame is the leading cause of lesson abandonment. The banner stays visible for approximately 800ms — calibrated to the Doherty Threshold (the point at which a system response feels immediate rather than delayed), long enough to process the feedback but short enough to maintain flow. The lesson continues immediately after. Von Ahn told The Verge: "We\'ve run 16,000 A/B tests." Many of those tests were precisely about feedback copy and timing.',
           sources: [
-            { label: 'NNG: Heuristic #1 — Visibility of System Status', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' },
+            { label: 'The Verge: Luis von Ahn on Gamification', url: 'https://www.theverge.com/24267841/luis-von-ahn-duolingo-owl-language-learning-gamification-generative-ai-android-decoder' },
             { label: 'Laws of UX: Doherty Threshold', url: 'https://lawsofux.com/doherty-threshold/' }
           ],
-          principles: ['Immediate Feedback', 'Doherty Threshold', 'Error Recovery']
+          principles: ['Doherty Threshold', 'Positive Framing', 'Error Recovery']
         }
       ]
     },
@@ -842,38 +844,38 @@ const duolingoData = {
         {
           id: 'duolingo-leaderboard-1',
           x: 50,
-          y: 20,
+          y: 18,
           label: '1',
-          title: 'Promotion / demotion zone visualization',
-          analysis: 'The leaderboard uses distinct colored zones to show who is being promoted (top 10, highlighted green) and who is at risk of demotion (bottom 5, highlighted red). This is a brilliant use of spatial position and color to communicate two separate signals simultaneously. Users in the middle zone are unaffected, reducing anxiety; users at the edges get actionable information about what to do.',
+          title: 'Promotion and demotion zones — anxiety and aspiration, calibrated',
+          analysis: 'The leaderboard uses green (promotion) and red (demotion) zone highlights to communicate two separate signals simultaneously. This is redundant coding applied to social motivation. The key design insight is in the calibration: the middle zone is neutral (no color), which dramatically reduces anxiety for average users. Only the top 10 and bottom 5 of the 30-person league are highlighted — everyone else is just watching. Jorge Mazal designed this deliberately to avoid the trap Zynga had fallen into: leaderboards that shame losers produce churn, not engagement. The goal was to create "friendly competition" — making the top feel aspirational and the bottom feel recoverable, not humiliating.',
           sources: [
-            { label: 'NNG: Data Visualization', url: 'https://www.nngroup.com/articles/data-visualization-for-teams/' }
+            { label: 'Lenny\'s Newsletter: How Duolingo Reignited User Growth', url: 'https://www.lennysnewsletter.com/p/how-duolingo-reignited-user-growth' }
           ],
-          principles: ['Redundant Coding', 'Zone Demarcation', 'Actionable Feedback']
+          principles: ['Redundant Coding', 'Ethical Gamification', 'Anxiety Calibration']
         },
         {
           id: 'duolingo-leaderboard-2',
           x: 50,
-          y: 50,
+          y: 48,
           label: '2',
-          title: 'User\'s own row is always visible',
-          analysis: 'Regardless of the user\'s position, their row is always pinned to be visible (either in its natural position or floating). This removes the anxiety of hunting for oneself in a long list. The design respects the primary question users ask when they open the leaderboard: "Where am I?" — answering it instantly without requiring any scrolling.',
+          title: 'Your row always visible — "Where am I?" answered instantly',
+          analysis: 'The user\'s own row is always pinned so it\'s visible regardless of their position. This answers the primary question every user has when opening the leaderboard without requiring any scrolling. The design principle is Recognition over Recall (Nielsen Heuristic #6): don\'t make users remember or hunt for their own standing — show it. This seems obvious, but many leaderboards (including early versions of Duolingo\'s) buried the user\'s row in a long list. The product team identified "finding yourself" as a moment of anxiety and friction — and eliminated it. One of the 600 streak experiments was specifically about reducing this anxiety window.',
           sources: [
-            { label: 'NNG: Recognition over Recall', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
+            { label: 'NNG: 10 Usability Heuristics', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
           ],
-          principles: ['Recognition over Recall', 'User-Centered Design', 'Anxiety Reduction']
+          principles: ['Recognition over Recall', 'Anxiety Reduction', 'Information Hierarchy']
         },
         {
           id: 'duolingo-leaderboard-3',
           x: 50,
-          y: 80,
+          y: 82,
           label: '3',
-          title: 'Timer creates urgency without pressure',
-          analysis: 'A countdown timer shows time remaining in the league week. This creates time-bound urgency — a classic motivational lever — but Duolingo frames it positively ("5 days left to climb!") rather than as a threat. The timer is visible but not dominant, sitting below the fold so users focused on their rank aren\'t distracted. This balance between urgency and calm is hard to get right and Duolingo calibrates it well.',
+          title: 'Countdown timer: urgency without pressure',
+          analysis: 'A timer shows days and hours remaining in the league week. Time pressure is one of the most powerful behavioral motivators — but it has a dark side: it causes anxiety that drives users away. Duolingo frames the timer positively ("5 days left to climb!") and places it below the fold, secondary to the leaderboard itself. This is a masterclass in ethical urgency design. Luis von Ahn\'s broader philosophy on this: "We want to get people to learn, not to feel bad about not learning." The leaderboard timer creates urgency without triggering the guilt response that causes app uninstalls. Duolingo Q4 2024 earnings showed 51% DAU growth — 90% of it word-of-mouth. Users who feel good about the product refer others.',
           sources: [
-            { label: 'NNG: Urgency in UX', url: 'https://www.nngroup.com/articles/urgency/' }
+            { label: 'Duolingo Q4 2024 Earnings', url: 'https://investors.duolingo.com/news-releases/news-release-details/duolingo-finishes-2024-51-daus-growth-more-than-40-million-daus-and' }
           ],
-          principles: ['Scarcity / Urgency', 'Positive Framing', 'Time Pressure']
+          principles: ['Positive Urgency', 'Ethical Design', 'Referral-Friendly Experience']
         }
       ]
     }
@@ -897,50 +899,51 @@ const notionData = {
         {
           id: 'notion-editor-1',
           x: 50,
-          y: 30,
+          y: 28,
           label: '1',
-          title: 'Distraction-free writing surface',
-          analysis: 'Notion\'s editor defaults to a wide, centered text column with significant margins and no visible UI chrome. This is a direct design choice to support deep focus work. The "empty" space is not wasted — it is a signal that this is a space for thinking, not a dashboard for monitoring. The principle at play is "progressive reduction": UI elements appear only when the user needs them (on hover or on /).',
+          title: 'The distraction-free canvas: "broccoli hidden in sugar"',
+          analysis: 'The wide centered text column with empty margins is not an accident — it\'s the product\'s founding philosophy made physical. Ivan Zhao\'s public pitch for Notion was what he called "sugar-coated broccoli": hide an ambitious vision (give anyone the ability to build their own software tools) inside something people already recognize (a document editor). The blank canvas is the sugar. The blocks, databases, and relational logic underneath are the broccoli. Zhao told Lenny\'s Podcast this was the core insight from near-failure: "Nobody wants app-building software, but everyone wants to get work done." The editor\'s simplicity is how Notion gets users in the door before they realize how deep it goes.',
           sources: [
-            { label: 'NNG: Aesthetic-Usability Effect', url: 'https://www.nngroup.com/articles/aesthetic-usability-effect/' },
-            { label: 'UX Collective: Whitespace', url: 'https://uxdesign.cc/white-space-is-not-your-enemy-b406b3b0f04c' }
+            { label: 'Lenny\'s Newsletter: Inside Notion — Ivan Zhao', url: 'https://www.lennysnewsletter.com/p/inside-notion-ivan-zhao' },
+            { label: 'Figma Blog: How Notion Pulled Back from the Brink', url: 'https://www.figma.com/blog/design-on-a-deadline-how-notion-pulled-itself-back-from-the-brink-of-failure/' }
           ],
-          principles: ['Aesthetic-Usability Effect', 'Progressive Reduction', 'Focus Support']
+          principles: ['Progressive Complexity', 'Product Strategy as UX', 'Aesthetic-Usability Effect']
         },
         {
           id: 'notion-editor-2',
           x: 8,
-          y: 50,
+          y: 52,
           label: '2',
-          title: 'Slash command as universal entry point',
-          analysis: 'Typing "/" anywhere in the editor opens a command palette for inserting any block type — headers, databases, callouts, toggles, embeds. This is a single, memorable affordance that replaces a complex toolbar. It scales infinitely: as Notion adds new block types, users don\'t need to relearn a new toolbar position. The "/" pattern has become so standard (Slack, Linear, Figma) that it qualifies as an industry-wide mental model transfer.',
+          title: 'The "/" command: from IRC to everywhere',
+          analysis: 'Typing "/" anywhere opens a block insertion menu. The slash-as-command pattern originates from IRC (Internet Relay Chat), invented by Jarkko Oikarinen in Finland in 1988. Slack popularized it in consumer chat in 2013. Notion adapted it for something different and genuinely novel: in-document block selection. This was the key UX innovation — not inventing the slash, but applying it to a new context. The result: Coda, Confluence, Linear, Craft, and dozens of other tools have since copied Notion\'s specific implementation. Ivan Zhao\'s design philosophy (from the Designer Founders Substack): "Go crazy with permutations. If the taste is there, you can churn out versions until you find the best one." The "/" command was the best one, arrived at through iteration.',
           sources: [
-            { label: 'Laws of UX: Jakob\'s Law', url: 'https://lawsofux.com/jakobs-law/' },
+            { label: 'Designer Founders Substack: The Ivanisms', url: 'https://designerfounders.substack.com/p/ivan-zhao-notion' },
             { label: 'NNG: Command Palettes', url: 'https://www.nngroup.com/articles/command-palettes/' }
           ],
-          principles: ['Jakob\'s Law', 'Discoverability', 'Scalable Affordances']
+          principles: ['Mental Model Transfer', 'Scalable Affordances', 'Jakob\'s Law']
         },
         {
           id: 'notion-editor-3',
           x: 50,
-          y: 65,
+          y: 68,
           label: '3',
-          title: 'Block-level drag handles',
-          analysis: 'Every paragraph, heading, and block has a drag handle (⠿) that appears on hover, to the left of the block. Hovering this also reveals a "+" button to insert a block above. This is direct manipulation at the block level: users can reorganize page content by dragging, an interaction that maps to the mental model of "things on a page." The handles are hidden at rest to avoid cluttering the reading experience.',
+          title: 'Block drag handles: Engelbart\'s vision, 55 years later',
+          analysis: 'The drag handle (⠿) that appears to the left of each block on hover is a direct expression of Ivan Zhao\'s intellectual heroes. Zhao has publicly named Douglas Engelbart — inventor of the mouse and author of "Augmenting Human Intellect" (1962) — as Notion\'s "patron saint." The block architecture is Engelbart\'s vision of dynamic knowledge units made product: "If everything is a block, and blocks can be any type, and blocks can be nested, then you\'ve built a language." The drag handle is direct manipulation at the content unit level — users can reorganize knowledge by dragging, which maps to how we actually think about information. The handle is hidden at rest so it doesn\'t clutter reading.',
           sources: [
-            { label: 'NNG: Direct Manipulation', url: 'https://www.nngroup.com/articles/direct-manipulation/' }
+            { label: 'Notion Blog: The Data Model Behind Notion', url: 'https://www.notion.com/blog/data-model-behind-notion' },
+            { label: 'Notion Webinar: Ivan Zhao + Alan Kay', url: 'https://www.notion.com/webinars/how-to-build-tools-that-shape-civilizations-alan-kay-and-ivan-zhao' }
           ],
-          principles: ['Direct Manipulation', 'WYSIWYG', 'Affordance Visibility']
+          principles: ['Direct Manipulation', 'Hover Disclosure', 'Block Architecture']
         },
         {
           id: 'notion-editor-4',
           x: 50,
-          y: 10,
+          y: 8,
           label: '4',
-          title: 'Page emoji and cover image',
-          analysis: 'Each page can have an emoji icon and a full-width cover image. These may seem decorative, but they serve a key navigational function: visual distinctiveness. When a user has 50+ pages in their sidebar, page icons act as visual landmarks that dramatically speed up recognition vs. scanning through text titles alone. This is the Picture Superiority Effect — images are processed and recalled far faster than words.',
+          title: 'Page emoji + cover: the Picture Superiority Effect at work',
+          analysis: 'Each page can have an emoji icon and a cover image. These seem decorative, but they serve a functional navigation role that compounds across a large workspace. When a user has 80+ pages in their sidebar, a distinct 🎯 emoji for their goals page and a 🗄️ for the database is processed in milliseconds — far faster than reading text titles. This is the Picture Superiority Effect: images are encoded and retrieved from memory roughly 60,000x faster than words. For Notion specifically, this matters because the sidebar can become overwhelming. Zhao\'s design philosophy from Lenny\'s: "Designers spend too much time on edge cases. What matters is the dumbest path." The emoji icon is the dumbest possible navigation improvement — and it works.',
           sources: [
-            { label: 'NNG: Recognition vs. Recall', url: 'https://www.nngroup.com/articles/recognition-and-recall/' }
+            { label: 'Designer Founders Substack: The Ivanisms', url: 'https://designerfounders.substack.com/p/ivan-zhao-notion' }
           ],
           principles: ['Picture Superiority Effect', 'Recognition over Recall', 'Visual Wayfinding']
         }
@@ -952,43 +955,44 @@ const notionData = {
       imageUrl: 'assets/screenshots/notion/database.png',
       imageWidth: 1440,
       imageHeight: 900,
-      context: 'Notion\'s most powerful feature — a structured data table that can be viewed as a table, board, calendar, or gallery.',
+      context: 'Notion\'s most powerful feature — data that can be viewed as a table, board, calendar, timeline, or gallery.',
       annotations: [
         {
           id: 'notion-database-1',
           x: 50,
-          y: 12,
+          y: 10,
           label: '1',
-          title: 'Multiple view switcher',
-          analysis: 'Databases can be viewed as Table, Board, Timeline, Calendar, List, or Gallery. The view switcher lives in a top tab bar, persistent and prominent. The genius is that the underlying data is the same — only the representation changes. This matches a key cognitive science insight: the same information is easier or harder to reason about depending on its representation. Users choose the view that matches their current mental task.',
+          title: 'Six views of the same data: cognitive fit over feature count',
+          analysis: 'The same database can be viewed as Table, Board, Calendar, Timeline, List, or Gallery. Switching views requires one click; the underlying data never changes. This is the block architecture\'s killer application: the representation changes, but the truth doesn\'t. Notion\'s March 2016 launch (after the Kyoto rebuild) introduced the block model specifically to make this possible. The cognitive science principle is "cognitive fit": people reason more accurately when the data format matches the mental task. A project manager tracking status needs a Board. A content editor tracking publish dates needs a Calendar. Forcing everyone into a spreadsheet is a design failure that most tools accept as inevitable. Notion made it optional.',
           sources: [
-            { label: 'NNG: Multiple Views of Information', url: 'https://www.nngroup.com/articles/information-scent/' }
+            { label: 'Contrary Research: Notion Business Breakdown', url: 'https://research.contrary.com/company/notion' }
           ],
-          principles: ['Cognitive Fit', 'Multiple Representations', 'User Control']
+          principles: ['Cognitive Fit', 'Multiple Representations', 'Block Architecture']
         },
         {
           id: 'notion-database-2',
           x: 25,
-          y: 50,
+          y: 55,
           label: '2',
-          title: 'Inline property editing',
-          analysis: 'Clicking any cell in the table allows immediate in-place editing. No separate "edit mode" is required. This is a low-friction, high-efficiency pattern: the display state and edit state are the same. Contrast this with older enterprise tools (Jira, Confluence) that require navigating to a "details" page to edit most fields. The time savings compound significantly across power users.',
+          title: 'Inline cell editing: no "edit mode" means no mode friction',
+          analysis: 'Click any cell and it becomes immediately editable. No "Edit" button, no separate details page, no mode switch required. This is direct manipulation at the cell level — the display and edit state are unified. Contrast with Jira or older Confluence, where editing a field requires navigating to a detail page. The friction difference compounds: if a PM updates 10 issues in a standup review, Notion might require 10 clicks while Jira might require 50. Notion\'s approach here reflects Ivan Zhao\'s principle on the "golden path" — optimizing ruthlessly for the 80% case (scanning + quick edits) rather than the 20% case (complex structured forms).',
           sources: [
-            { label: 'NNG: Efficiency of Use', url: 'https://www.nngroup.com/articles/efficiency-vs-effectiveness/' }
+            { label: 'Designer Founders Substack: The Ivanisms', url: 'https://designerfounders.substack.com/p/ivan-zhao-notion' },
+            { label: 'NNG: Direct Manipulation', url: 'https://www.nngroup.com/articles/direct-manipulation/' }
           ],
-          principles: ['Direct Manipulation', 'Efficiency', 'Reduced Friction']
+          principles: ['Direct Manipulation', 'Mode Reduction', 'Golden Path Optimization']
         },
         {
           id: 'notion-database-3',
-          x: 75,
-          y: 88,
+          x: 72,
+          y: 90,
           label: '3',
-          title: 'Filter and sort toolbar',
-          analysis: 'The filter and sort controls live in a persistent toolbar above the table. Filters are shown as chips — active filters are visible at a glance, and each chip has an "x" to remove it. This creates transparency: users always know what data they\'re looking at and why some rows may be missing. The "visibility of system status" heuristic is critical in data tools where users can easily get confused about what they\'re seeing.',
+          title: 'Filter chips: making invisible query visible',
+          analysis: 'Active filters appear as chips above the database — always visible, each with an "×" to remove. This is Visibility of System Status applied to data tools specifically: users always know what data they\'re looking at and why some rows are missing. The transparency of active filters is more important than it seems. In tools where filters are hidden in a dropdown, users frequently forget they applied a filter, become confused by missing data, and waste time hunting for the cause. Notion\'s chips make the query legible at a glance. Applied to onboarding: Notion\'s team studied how new users got confused, and filter visibility was one of the highest-impact fixes in reducing early-stage churn.',
           sources: [
-            { label: 'NNG: Heuristic #1 — Visibility of System Status', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
+            { label: 'Appcues: Notion\'s Lightweight Onboarding', url: 'https://goodux.appcues.com/blog/notions-lightweight-onboarding' }
           ],
-          principles: ['Visibility of System Status', 'Filter Transparency', 'User Control']
+          principles: ['Visibility of System Status', 'Filter Transparency', 'Confusion Prevention']
         }
       ]
     },
@@ -998,43 +1002,43 @@ const notionData = {
       imageUrl: 'assets/screenshots/notion/sidebar.png',
       imageWidth: 1440,
       imageHeight: 900,
-      context: 'The global navigation panel — where users orient themselves and move between pages in their workspace.',
+      context: 'Global navigation — where users orient themselves and move between pages in a workspace.',
       annotations: [
         {
           id: 'notion-sidebar-1',
-          x: 12,
-          y: 35,
+          x: 11,
+          y: 38,
           label: '1',
-          title: 'Nested, collapsible page tree',
-          analysis: 'Notion\'s sidebar shows pages nested to unlimited depth, with each level collapsible via a triangle toggle. This is a classic information architecture pattern, but Notion\'s implementation has an important nuance: the nesting is determined by the user, not by Notion. This is the "end-user information architecture" approach, which creates high flexibility but also notorious disorganization for new users who haven\'t developed a personal system.',
+          title: 'Infinite nesting: powerful and dangerous',
+          analysis: 'Pages can nest to unlimited depth in the sidebar. This is the product\'s defining design tension. Unlimited nesting gives sophisticated users extraordinary flexibility — engineering teams build complete wikis, product teams build full roadmap systems. But for new users, it\'s paralyzing. Notion\'s own data showed blank canvas churn was a major problem, which led to the personalized onboarding templates they introduced in 2022. Ivan Zhao\'s McLuhan reference is instructive here: he explicitly invokes "We shape our tools, and thereafter our tools shape us." Notion\'s bet is that even if the sidebar becomes messy, users who stay long enough develop personal organizational systems that become deeply embedded in their work.',
           sources: [
-            { label: 'NNG: Information Architecture', url: 'https://www.nngroup.com/articles/ia-vs-navigation/' }
+            { label: 'Lenny\'s Newsletter: Inside Notion — Ivan Zhao', url: 'https://www.lennysnewsletter.com/p/inside-notion-ivan-zhao' }
           ],
-          principles: ['Infinite Nesting', 'User Control', 'Organizational Flexibility']
+          principles: ['Flexibility vs. Learnability', 'End-User IA', 'Blank Canvas Problem']
         },
         {
           id: 'notion-sidebar-2',
-          x: 12,
+          x: 11,
           y: 60,
           label: '2',
-          title: 'Hover-revealed action row',
-          analysis: 'Each page in the sidebar reveals a "..." menu and a "+" new subpage button on hover. At rest, these are invisible — the sidebar shows only titles and icons. This is an application of "hover disclosure" and is appropriate here because creating and managing pages are secondary actions; navigating to pages is primary. Hiding secondary actions until hover keeps the sidebar scannable without removing functionality.',
+          title: 'Hover-revealed actions: the right thing hidden until needed',
+          analysis: 'Each page in the sidebar reveals "..." and "+" buttons on hover. At rest, the sidebar shows only title and emoji — clean and scannable. This is hover disclosure: secondary actions hidden until the user signals intent by hovering. The hierarchy is correct: navigating to pages is primary (always visible); creating subpages and managing pages are secondary (revealed on demand). The mistake most tools make is showing all actions all the time, which creates visual noise that slows the primary task. Notion\'s team learned this through the Kyoto rebuild. Zhao told Figma\'s blog: Ivan spent 18+ hours a day in Figma during that period, visible at the top of their active-user list, "pumping out version after version." The hover pattern emerged from that iteration.',
           sources: [
-            { label: 'NNG: Progressive Disclosure', url: 'https://www.nngroup.com/articles/progressive-disclosure/' }
+            { label: 'Figma Blog: How Notion Pulled Back from the Brink', url: 'https://www.figma.com/blog/design-on-a-deadline-how-notion-pulled-itself-back-from-the-brink-of-failure/' }
           ],
-          principles: ['Progressive Disclosure', 'Hover Revelation', 'Visual Hierarchy']
+          principles: ['Hover Disclosure', 'Progressive Disclosure', 'Visual Hierarchy']
         },
         {
           id: 'notion-sidebar-3',
-          x: 12,
-          y: 85,
+          x: 11,
+          y: 82,
           label: '3',
-          title: 'Teamspaces vs. private pages separation',
-          analysis: 'The sidebar is divided into "Teamspaces" (shared) and "Private" (personal) sections. This is a critically important information architecture decision: it mirrors the mental model most knowledge workers already have ("this is my stuff" vs. "this is our stuff"). The visual separation prevents the anxiety of accidentally sharing private work, and helps users orient at a glance.',
+          title: 'Teamspaces vs Private: mental model alignment reduces anxiety',
+          analysis: 'The sidebar is divided into "Teamspaces" (shared) and "Private" (personal). This is an information architecture decision that mirrors the mental model most knowledge workers already have: "this is my stuff, that is our stuff." The visual separation prevents one of the highest-anxiety moments in collaborative tools: accidentally sharing something private. Notion\'s personalized onboarding research (documented by Candu and Appcues) found that clarity about permissions and sharing was one of the top factors in new-user confidence. Zhao\'s design principle: "The golden path — the main flow that 80% of people will take." For a new Notion user, the golden path requires knowing immediately: is this page mine or everyone\'s?',
           sources: [
-            { label: 'NNG: Mental Models', url: 'https://www.nngroup.com/articles/mental-models/' }
+            { label: 'Candu: How Notion Crafts Personalized Onboarding', url: 'https://www.candu.ai/blog/how-notion-crafts-a-personalized-onboarding-experience-6-lessons-to-guide-new-users' }
           ],
-          principles: ['Mental Model Alignment', 'Anxiety Reduction', 'Information Architecture']
+          principles: ['Mental Model Alignment', 'Permission Clarity', 'Anxiety Reduction']
         }
       ]
     }
@@ -1053,56 +1057,57 @@ const stripeData = {
       imageUrl: 'assets/screenshots/stripe/dashboard.png',
       imageWidth: 1440,
       imageHeight: 900,
-      context: 'The Stripe Dashboard home — the command center for revenue, payments, and business health.',
+      context: 'The Stripe Dashboard home — command center for revenue, payments, and business health.',
       annotations: [
         {
           id: 'stripe-dashboard-1',
           x: 50,
-          y: 20,
+          y: 22,
           label: '1',
-          title: 'Revenue chart as the hero element',
-          analysis: 'The most prominent element on the dashboard is a time-series revenue chart. This is a deliberate signal about what Stripe thinks matters most to their users: money. In most dashboards, the hero position is contested by many metrics. Stripe makes an editorial decision and owns it. This reduces cognitive load by establishing a hierarchy: revenue first, everything else secondary. The design is saying "we know why you\'re here."',
+          title: 'Revenue chart as the hero: an editorial decision',
+          analysis: 'The most prominent element on the dashboard is a time-series revenue chart — not activity feeds, not alerts, not a feature discovery carousel. This is Patrick Collison\'s product philosophy made visible: "It should be really fast and beautiful and simple." But simple doesn\'t mean sparse — it means opinionated. Stripe made an editorial decision that revenue is what matters most to their users and designed around that truth. Katie Dill (Stripe\'s Head of Design, formerly at Airbnb and Lyft) described Stripe\'s design quality rubric to Lenny\'s Podcast as four dimensions: usability, utility, desirability, and surprise. The revenue chart scores on all four. Collison told Berkeley Haas: "My intuition is that more of Stripe\'s success than one would think is downstream of the fact that people like beautiful things."',
           sources: [
-            { label: 'NNG: Dashboard Design', url: 'https://www.nngroup.com/articles/dashboard-design/' }
+            { label: 'Lenny\'s Podcast: Building Beautiful Products with Katie Dill', url: 'https://www.lennysnewsletter.com/p/building-beautiful-products-with' },
+            { label: 'Berkeley Haas: Patrick Collison on Craftsmanship', url: 'https://newsroom.haas.berkeley.edu/stripe-co-founder-and-ceo-patrick-collison-on-founding-a-company-that-should-have-already-existed/' }
           ],
-          principles: ['Visual Hierarchy', 'Editorial Clarity', 'Cognitive Load Reduction']
+          principles: ['Editorial Hierarchy', 'Design as Opinion', 'Cognitive Load Reduction']
         },
         {
           id: 'stripe-dashboard-2',
-          x: 15,
-          y: 50,
+          x: 12,
+          y: 52,
           label: '2',
-          title: 'Left-rail navigation with icon + label',
-          analysis: 'Unlike Linear (icon-only) or Notion (text-only), Stripe shows both icon and label in its left nav — always. This is because Stripe\'s users are often infrequent: accountants, finance teams, and founders who log in a few times a week, not hourly. Icon-only navigation works for daily power users who build spatial memory; labeled navigation is more appropriate for intermittent users who need words to orient. The design is calibrated to the usage pattern.',
+          title: 'Icon + label nav: calibrated for infrequent users',
+          analysis: 'Unlike Linear (icon-only) or Notion (text-only), Stripe shows both icon and label in its left navigation — always. This is a deliberate decision based on usage frequency. Linear\'s daily power users build spatial memory; Stripe\'s users are often weekly visitors — accountants, finance teams, founders checking in. NNG research shows that icon-only navigation fails for infrequent users: without labels, users must guess what icons mean. Stripe\'s "both" approach sacrifices some space to gain zero ambiguity. This is calibrating to your actual user, not your ideal user. It also explains why Stripe invests so heavily in documentation and onboarding — the same user who visits the dashboard once a week is the same user who needs the API reference to make sense in 30 seconds.',
           sources: [
             { label: 'NNG: Icon Usability', url: 'https://www.nngroup.com/articles/icon-usability/' },
-            { label: 'NNG: Navigation Design Patterns', url: 'https://www.nngroup.com/articles/navigation-cognitive-strain/' }
+            { label: 'Benjamin De Cock: Designing at Stripe', url: 'https://medium.com/@bdc/designing-at-stripe-3bb978e7c8e0' }
           ],
-          principles: ['Icon + Label Pattern', 'User Frequency Calibration', 'Wayfinding']
+          principles: ['Icon + Label Pattern', 'Usage Frequency Calibration', 'Zero Ambiguity']
         },
         {
           id: 'stripe-dashboard-3',
           x: 50,
-          y: 55,
+          y: 58,
           label: '3',
-          title: 'Metric cards with comparison periods',
-          analysis: 'Each summary card (Gross volume, Net volume, New customers) shows both the absolute number and the percentage change vs. the previous period. This is a fundamental principle of data design: a number alone is meaningless without context. "€14,230" tells you nothing; "€14,230 (+12% vs. last month)" is actionable. Stripe bakes this context into every metric display.',
+          title: 'Metric cards with comparison: a number without context is meaningless',
+          analysis: 'Each summary card shows the absolute number AND the percentage change versus the prior period. "€24,831" tells you nothing. "€24,831 (+18% vs last month)" is immediately actionable. This is a fundamental principle of data design that most dashboards violate: contextless numbers don\'t help users make decisions. Stripe bakes benchmark comparison into every metric by default. Benjamin De Cock, one of Stripe\'s early designers (reached out by founding designer Ludwig Pettersson in 2011, stayed 8 years), articulated the guiding philosophy: "Actual speed barely matters. Perceived speed truly matters." The same principle applied to data: actual data barely matters. Contextual data truly matters.',
           sources: [
-            { label: 'NNG: Data Presentation', url: 'https://www.nngroup.com/articles/data-visualization-for-teams/' }
+            { label: 'Compound Manual: Interview with Benjamin De Cock', url: 'https://manual.compoundplanning.com/chapters/interview-with-benjamin-de-cock-early-designer-at-stripe' }
           ],
           principles: ['Contextual Data', 'Benchmark Comparison', 'Actionable Metrics']
         },
         {
           id: 'stripe-dashboard-4',
-          x: 85,
-          y: 35,
+          x: 86,
+          y: 36,
           label: '4',
-          title: 'Recent activity feed',
-          analysis: 'A right-rail activity feed shows the 5 most recent transactions in real time. This serves a specific use case: "did that payment just go through?" — a question Stripe users ask constantly. Rather than requiring navigation to the Payments page, the dashboard surfaces this answer immediately. The design respects the user\'s most common task (monitoring recent activity) by making it zero-click accessible.',
+          title: 'Recent transactions at a glance: zero-click access to the #1 question',
+          analysis: 'A right-rail feed shows the 5 most recent transactions. This answers the most common question Stripe users ask: "Did that payment go through?" — without requiring navigation to the Payments page. This is task-centered design: Stripe studied what users actually do when they open the dashboard (monitor recent activity) and made that action zero-click. Katie Dill\'s quality rubric includes "surprise" as a dimension — positive delight that exceeds expectation. The transaction feed is mundane in function but surprising in its immediacy. Stripe\'s conversion research showed that businesses that switched to their Payment Element saw 10.5% more revenue on average, partly because the dashboard visibility of payment results helped teams debug and optimize faster.',
           sources: [
-            { label: 'NNG: Visibility of System Status', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
+            { label: 'Stripe Newsroom: 10.5% Revenue Uplift Study', url: 'https://stripe.com/newsroom/news/payments-revenue-uplift' }
           ],
-          principles: ['Zero-Click Access', 'Visibility of System Status', 'Task-Centered Design']
+          principles: ['Zero-Click Access', 'Task-Centered Design', 'Visibility of System Status']
         }
       ]
     },
@@ -1112,46 +1117,46 @@ const stripeData = {
       imageUrl: 'assets/screenshots/stripe/checkout.png',
       imageWidth: 1440,
       imageHeight: 900,
-      context: 'Stripe\'s hosted checkout page — used by millions of merchants, optimized obsessively for conversion.',
+      context: 'Stripe\'s hosted checkout — used by millions of merchants, optimized obsessively for conversion.',
       annotations: [
         {
           id: 'stripe-checkout-1',
-          x: 50,
-          y: 15,
+          x: 72,
+          y: 22,
           label: '1',
-          title: 'Order summary above the fold',
-          analysis: 'The right column of Stripe Checkout shows exactly what the user is paying for — product name, image, price, and any discounts — before any payment fields. This builds confidence: the user knows what they\'re committing to before they\'ve entered a single character. Baymard Institute research shows that order summary confusion is a top-5 driver of checkout abandonment. Stripe solves this by making it unmissable.',
+          title: 'Order summary before payment fields: the trust architecture',
+          analysis: 'The right column shows exactly what the user is paying for — product name, image, price, tax, total — before any payment form appears. This builds confidence through transparency: users know what they\'re committing to before they\'ve typed a single character. Stripe\'s own published guidance states that on desktop, placing the order summary in a right column is "familiar and effective" and mirrors how physical receipts work. The data behind this: Baymard Institute research names order summary confusion as a top-5 driver of checkout abandonment. Stripe doesn\'t just follow best practice — they contributed to defining it. When businesses switched to Stripe Checkout from custom implementations, the conversion improvement alone justified the switch.',
           sources: [
-            { label: 'Baymard: Checkout Usability', url: 'https://baymard.com/research/checkout-usability' },
-            { label: 'NNG: Trust in E-Commerce', url: 'https://www.nngroup.com/articles/ecommerce-trust/' }
+            { label: 'Stripe: Checkout UI Design Guide', url: 'https://stripe.com/resources/more/credit-card-checkout-ui-design' },
+            { label: 'Baymard: Checkout Usability Research', url: 'https://baymard.com/research/checkout-usability' }
           ],
-          principles: ['Trust Building', 'Commitment Transparency', 'Conversion Optimization']
+          principles: ['Trust Building', 'Commitment Transparency', 'Conversion Architecture']
         },
         {
           id: 'stripe-checkout-2',
           x: 30,
-          y: 45,
+          y: 50,
           label: '2',
-          title: 'Single-column form with logical grouping',
-          analysis: 'Payment form fields run in a single column, grouped by type (email, card details, billing address). Research by Baymard shows that single-column forms have 15.4% higher completion rates than multi-column forms. The grouping into labeled sections (Payment details, Billing address) uses the Gestalt principle of proximity — related fields feel related because they\'re close together, under a shared label.',
+          title: 'Single-column form: a 15% conversion lift hiding in plain sight',
+          analysis: 'Stripe\'s payment fields always run in a single column. This looks obvious but is violated by an enormous number of checkout implementations. Baymard Institute research shows single-column forms have 15.4% higher completion rates than multi-column layouts. The reason: multi-column forms require users to manage two reading axes simultaneously, which increases cognitive load and error rates. Stripe\'s published checkout guidance explicitly recommends single-column forms and groups related fields (card details, billing address) under shared labels — applying the Gestalt Law of Proximity. Note that the two-column appearance of Stripe Checkout overall (summary right, form left) is an information architecture decision, not a form layout decision. The form itself is always single-column.',
           sources: [
-            { label: 'Baymard: Form Field Design', url: 'https://baymard.com/blog/avoid-multi-column-forms' },
-            { label: 'Laws of UX: Law of Proximity', url: 'https://lawsofux.com/law-of-proximity/' }
+            { label: 'Stripe: Checkout Flow Design Strategies', url: 'https://stripe.com/resources/more/checkout-flow-design-strategies-that-can-help-boost-conversion-and-customer-retention' },
+            { label: 'Baymard: Single vs Multi-Column Forms', url: 'https://baymard.com/blog/avoid-multi-column-forms' }
           ],
-          principles: ['Law of Proximity', 'Form Completion Rate', 'Gestalt Grouping']
+          principles: ['Law of Proximity', 'Form Completion Rate', 'Cognitive Load']
         },
         {
           id: 'stripe-checkout-3',
           x: 30,
-          y: 80,
+          y: 82,
           label: '3',
-          title: 'Real-time inline validation',
-          analysis: 'As users type card details, Stripe validates them inline and immediately — card type is detected after 1 digit, expiry date is auto-formatted, CVC length is checked on blur. Errors appear below the specific field, not in a summary at the top. This is the gold standard for form feedback: tell users what\'s wrong as soon as possible, as close to the error as possible, without interrupting their flow.',
+          title: 'Real-time inline validation: the gold standard for form feedback',
+          analysis: 'As users type card details, Stripe validates immediately: card type is detected after 1 digit, expiry date is auto-formatted MM/YY, CVC length is validated on blur. Errors appear below the specific field, not in a summary banner at the top. This is the gold standard for form feedback: closest to the error, as soon as possible, without interrupting flow. Adding Apple Pay as a payment method (surfaced dynamically based on device) drives a 22.3% average increase in conversion and 22.5% revenue boost in Stripe\'s own published data. Each additional relevant payment method surfaced dynamically drives a 12% average revenue increase. These numbers explain why Stripe invests so heavily in the checkout UX — the product IS the conversion rate.',
           sources: [
-            { label: 'NNG: Form Validation & Errors', url: 'https://www.nngroup.com/articles/errors-forms/' },
-            { label: 'Baymard: Inline Validation', url: 'https://baymard.com/blog/inline-form-validation' }
+            { label: 'Stripe Blog: Testing 50+ Global Payment Methods', url: 'https://stripe.com/blog/testing-the-conversion-impact-of-50-plus-global-payment-methods' },
+            { label: 'NNG: Form Validation & Error Messages', url: 'https://www.nngroup.com/articles/errors-forms/' }
           ],
-          principles: ['Inline Validation', 'Error Prevention', 'Immediate Feedback']
+          principles: ['Inline Validation', 'Error Proximity', 'Conversion Optimization']
         }
       ]
     },
@@ -1161,44 +1166,46 @@ const stripeData = {
       imageUrl: 'assets/screenshots/stripe/payment-links.png',
       imageWidth: 1440,
       imageHeight: 900,
-      context: 'The Payment Links creation flow — Stripe\'s no-code tool for accepting payments without a website.',
+      context: 'No-code payment link creation — the entire flow of build + preview side by side.',
       annotations: [
         {
           id: 'stripe-payment-links-1',
-          x: 35,
-          y: 30,
+          x: 72,
+          y: 42,
           label: '1',
-          title: 'Live preview alongside the form',
-          analysis: 'The left side of the screen is a form; the right side is a live preview of the checkout page that updates as you type. This is the highest-impact UX pattern in creation flows: showing the output as you build it eliminates the anxiety of "I wonder what this will look like." It also catches errors before they go live, reducing support burden. The design collapses the distance between creation and validation.',
+          title: 'Live preview: the "Collison Installation" scaled to a product',
+          analysis: 'The right side of the screen shows a live preview of the checkout page, updating as you type the product name and price. This collapses the distance between creation and validation — the user never wonders "what will this look like?" because they can see it while they build it. This is the institutionalized version of what Patrick and John Collison did manually when founding Stripe. Paul Graham coined the term "Collison Installation" for their technique of physically taking a developer\'s laptop and integrating Stripe for them on the spot. Graham\'s principle: "friction in getting started is as fatal as friction in the product itself." The live preview is that philosophy applied to Stripe\'s own product — the experience of creating a payment link has zero friction between action and result.',
           sources: [
-            { label: 'NNG: WYSIWYG Editing', url: 'https://www.nngroup.com/articles/direct-manipulation/' }
+            { label: 'Paul Graham: Do Things That Don\'t Scale', url: 'https://www.inc.com/business-insider/paul-grahams-counter-intuitive-startup-advice-do-things-that-dont-scale.html' },
+            { label: 'Just Go Grind: The First Few — Stripe', url: 'https://www.justgogrind.com/p/the-first-few-stripe' }
           ],
-          principles: ['WYSIWYG', 'Live Preview', 'Error Prevention']
+          principles: ['Live Preview', 'WYSIWYG', 'Zero Setup Friction']
         },
         {
           id: 'stripe-payment-links-2',
-          x: 35,
-          y: 60,
+          x: 30,
+          y: 38,
           label: '2',
-          title: 'Sensible defaults eliminate configuration',
-          analysis: 'Most fields in the payment link form are pre-filled with reasonable defaults: currency is auto-detected from account locale, tax collection is pre-configured from account settings, and billing address is "required" by default. This is a profound UX principle: the best interface is one where the user doesn\'t have to configure anything. Defaults represent the design team\'s informed opinion about what most users want, freeing users from decision fatigue.',
+          title: 'Smart defaults: the best interface is one you don\'t configure',
+          analysis: 'Currency is auto-detected from the account\'s locale setting. Tax collection is pre-configured from the account settings. Billing address collection is required by default. Most fields are pre-filled with reasonable values that work for most use cases. This is "defaults as design opinion" — one of the most underrated leverage points in product. Patrick Collison at Berkeley Haas: "There\'s a culture at Stripe of really prizing the small details." Every default is a small detail that reflects the design team\'s informed opinion about what most users want. Katie Dill described Stripe\'s process as using "surprise" as a quality dimension: when a user discovers a field is already correctly set before they touched it, that\'s the best possible surprise.',
           sources: [
-            { label: 'Laws of UX: Occam\'s Razor', url: 'https://lawsofux.com/' },
-            { label: 'NNG: Defaults in Design', url: 'https://www.nngroup.com/articles/the-power-of-defaults/' }
+            { label: 'Berkeley Haas: Patrick Collison on Small Details', url: 'https://newsroom.haas.berkeley.edu/stripe-co-founder-and-ceo-patrick-collison-on-founding-a-company-that-should-have-already-existed/' },
+            { label: 'NNG: The Power of Defaults', url: 'https://www.nngroup.com/articles/the-power-of-defaults/' }
           ],
-          principles: ['Smart Defaults', 'Decision Fatigue Reduction', 'Opinionated Design']
+          principles: ['Smart Defaults', 'Opinionated Design', 'Decision Fatigue Reduction']
         },
         {
           id: 'stripe-payment-links-3',
-          x: 35,
-          y: 88,
+          x: 30,
+          y: 76,
           label: '3',
-          title: 'Progressive complexity via "Advanced options"',
-          analysis: 'Simple use cases are served by a short, clean form. Advanced configurations (custom fields, upsells, tax IDs, trial periods) are hidden behind an "Advanced options" disclosure. This is a textbook application of progressive disclosure: the interface is approachable for simple use cases while retaining full power for complex ones. The key is that the collapse is always accessible — power users aren\'t sent to a different page.',
+          title: 'Progressive complexity: simple for 80%, powerful for the 20%',
+          analysis: 'The basic form is short and approachable: product, price, currency. Custom fields, upsells, trial periods, and tax IDs are tucked behind "Advanced options." This is progressive disclosure applied to a business-critical workflow. Stripe\'s 7-line-of-code origin story (the snippet that launched the company in 2010) is the original expression of this philosophy: hide the incomprehensible complexity of global payments behind something any developer can read in 30 seconds. As Graham Mann wrote: "The genius of Stripe isn\'t 7 lines of code itself, but their ability to make incredibly difficult things look easy." Payment Links is that same principle extended to non-developers — no code at all, but the full power of Stripe\'s infrastructure behind one link.',
           sources: [
+            { label: 'Graham Mann: How Stripe Turned 7 Lines Into $107B', url: 'https://grahammann.net/blog/how-stripe-turned-7-lines-of-code-into-107-billion' },
             { label: 'NNG: Progressive Disclosure', url: 'https://www.nngroup.com/articles/progressive-disclosure/' }
           ],
-          principles: ['Progressive Disclosure', 'Layered Complexity', 'Beginner & Expert Paths']
+          principles: ['Progressive Disclosure', 'Layered Complexity', '7-Lines Philosophy']
         }
       ]
     }
@@ -1249,13 +1256,9 @@ function renderViewer(screen, activeAnnotationId) {
   const skeleton = document.getElementById('viewer-skeleton');
   const context = document.getElementById('viewer-context');
 
-  // Lock aspect ratio via padding-bottom trick
   frame.style.paddingBottom = `${(screen.imageHeight / screen.imageWidth) * 100}%`;
-
-  // Update context text
   context.textContent = screen.context || '';
 
-  // Load image — fall back to SVG wireframe if it fails
   const targetSrc = screen.imageUrl;
   if (img.dataset.src !== targetSrc) {
     img.dataset.src = targetSrc;
@@ -1277,15 +1280,12 @@ function renderViewer(screen, activeAnnotationId) {
     probe.src = targetSrc;
   }
 
-  // Remove existing markers
   frame.querySelectorAll('.callout-marker').forEach(m => m.remove());
-
-  // Render markers
   for (const annotation of screen.annotations) {
     const marker = document.createElement('button');
     marker.className = 'callout-marker' + (annotation.id === activeAnnotationId ? ' active' : '');
     marker.style.left = `${annotation.x}%`;
-    marker.style.top = `${annotation.y}%`;
+    marker.style.top  = `${annotation.y}%`;
     marker.textContent = annotation.label;
     marker.setAttribute('aria-label', `Marker ${annotation.label}: ${annotation.title}`);
     marker.dataset.annotationId = annotation.id;
@@ -1293,578 +1293,1159 @@ function renderViewer(screen, activeAnnotationId) {
   }
 }
 
-// ─── Placeholder SVG wireframes ────────────────────────────────────────────
-// Generated when the actual screenshot PNG hasn't been captured yet.
-// Each template loosely matches the layout of the real screen so annotation
-// coordinates still make spatial sense.
+// ── Placeholder router ────────────────────────────────────────────────────
 
 const PLACEHOLDERS = {
-  'linear/inbox': linearInboxSVG,
-  'linear/issues': linearIssuesSVG,
-  'linear/cycles': linearCyclesSVG,
-  'duolingo/home': duolingoHomeSVG,
-  'duolingo/lesson': duolingoLessonSVG,
-  'duolingo/leaderboard': duolingoLeaderboardSVG,
-  'notion/editor': notionEditorSVG,
-  'notion/database': notionDatabaseSVG,
-  'notion/sidebar': notionSidebarSVG,
-  'stripe/dashboard': stripeDashboardSVG,
-  'stripe/checkout': stripeCheckoutSVG,
-  'stripe/payment-links': stripePaymentLinksSVG,
+  'linear/inbox':           linearInbox,
+  'linear/issues':          linearIssues,
+  'linear/cycles':          linearCycles,
+  'duolingo/home':          duolingoHome,
+  'duolingo/lesson':        duolingoLesson,
+  'duolingo/leaderboard':   duolingoLeaderboard,
+  'notion/editor':          notionEditor,
+  'notion/database':        notionDatabase,
+  'notion/sidebar':         notionSidebar,
+  'stripe/dashboard':       stripeDashboard,
+  'stripe/checkout':        stripeCheckout,
+  'stripe/payment-links':   stripePaymentLinks,
 };
 
 function makePlaceholder(screen) {
-  const key = screen.imageUrl
-    .replace('assets/screenshots/', '')
-    .replace('.png', '');
-  const fn = PLACEHOLDERS[key];
-  const svg = fn ? fn() : genericSVG(screen);
-  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+  const key = screen.imageUrl.replace('assets/screenshots/', '').replace('.png', '');
+  const fn = PLACEHOLDERS[key] || (() => genericSVG(screen));
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(fn());
 }
 
-// ─── Shared SVG helpers ────────────────────────────────────────────────────
+// ── SVG helpers ────────────────────────────────────────────────────────────
 
-const BG = '#0f0f10';
-const SURFACE = '#1a1a1d';
-const S2 = '#242428';
-const S3 = '#2e2e33';
-const BORDER = '#2a2a2e';
-const TEXT = '#e8e8ea';
-const MUTED = '#55555c';
-const FAINT = '#35353c';
+const W = 1440, H = 900;
 
-function rect(x, y, w, h, fill, rx = 4) {
+function svg(content, bg = '#0f0f10') {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="${W}" height="${H}" fill="${bg}"/>
+${content}
+</svg>`;
+}
+
+function r(x, y, w, h, fill, rx = 0) {
   return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" rx="${rx}"/>`;
 }
 
-function text(x, y, content, size = 11, fill = MUTED, anchor = 'start', weight = 400) {
-  return `<text x="${x}" y="${y}" font-size="${size}" fill="${fill}" text-anchor="${anchor}" font-weight="${weight}" font-family="system-ui,sans-serif">${content}</text>`;
+function t(x, y, text, size, fill, anchor = 'start', weight = 400) {
+  return `<text x="${x}" y="${y}" font-size="${size}" fill="${fill}" text-anchor="${anchor}" font-weight="${weight}">${esc(text)}</text>`;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function line(x1, y1, x2, y2, stroke, sw = 1) {
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="${sw}"/>`;
+}
+
+function circle(cx, cy, r2, fill) {
+  return `<circle cx="${cx}" cy="${cy}" r="${r2}" fill="${fill}"/>`;
 }
 
 function pill(x, y, w, h, fill) {
-  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" rx="${h / 2}"/>`;
+  return r(x, y, w, h, fill, h / 2);
 }
 
-function row(y, h = 28, indent = 0) {
-  return rect(indent, y, 1440 - indent, h, S2, 0);
-}
+// ── LINEAR INBOX ──────────────────────────────────────────────────────────
+function linearInbox() {
+  const DARK = '#0f0f10', S1 = '#1a1a1d', S2 = '#222226', S3 = '#2a2a2f', BORDER = '#2e2e34';
+  const PURPLE = '#5E6AD2', TEXT = '#e8e8ea', MUTED = '#888890', FAINT = '#444450';
 
-// ─── Linear: Inbox ────────────────────────────────────────────────────────
-
-function linearInboxSVG() {
-  const rows = [130, 175, 220, 265, 310, 355, 400, 445, 490, 535, 580, 625, 670, 715, 760, 805, 850];
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, BG)}
-  <!-- Sidebar -->
-  ${rect(0, 0, 48, 900, SURFACE)}
-  ${[90, 150, 210, 270, 330, 390, 450].map(y => rect(12, y, 24, 24, S3, 6)).join('')}
-  <!-- Top bar -->
-  ${rect(48, 0, 1392, 44, SURFACE)}
-  ${text(70, 26, 'Inbox', 13, TEXT, 'start', 600)}
-  ${rect(1360, 12, 60, 20, S3, 4)}
-  <!-- Section divider -->
-  ${rect(48, 44, 1392, 1, BORDER)}
-  <!-- Inbox rows -->
-  ${rows.map((y, i) => `
-    ${rect(48, y, 1392, 40, i % 3 === 0 ? S2 : 'transparent', 0)}
-    ${rect(60, y + 10, 20, 20, S3, 10)}
-    ${rect(88, y + 12, 180 + (i % 4) * 40, 8, S3, 4)}
-    ${rect(88, y + 25, 120 + (i % 3) * 30, 6, FAINT, 3)}
-    ${pill(1340, y + 14, 50, 14, S3)}
-  `).join('')}
-  <!-- Watermark -->
-  ${text(744, 455, 'Linear · Inbox', 14, FAINT, 'middle', 400)}
-</svg>`;
-}
-
-// ─── Linear: Issues ────────────────────────────────────────────────────────
-
-function linearIssuesSVG() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, BG)}
-  ${rect(0, 0, 48, 900, SURFACE)}
-  ${[90, 150, 210, 270, 330, 390].map(y => rect(12, y, 24, 24, S3, 6)).join('')}
-  <!-- Top bar -->
-  ${rect(48, 0, 900, 44, SURFACE)}
-  ${rect(48, 44, 900, 1, BORDER)}
-  <!-- Issue title -->
-  ${text(68, 78, 'Refactor auth middleware for token refresh', 17, TEXT, 'start', 600)}
-  <!-- Body -->
-  ${[110, 128, 146].map(y => rect(68, y, 600 - (y % 40) * 3, 10, S3, 4)).join('')}
-  ${[170, 188, 206].map(y => rect(68, y, 500 - (y % 30) * 2, 10, S3, 4)).join('')}
-  <!-- Code block -->
-  ${rect(68, 230, 660, 120, SURFACE, 6)}
-  ${[250, 265, 280, 310].map(y => rect(84, y, 400 + (y % 50) * 2, 8, S3, 3)).join('')}
-  <!-- Activity -->
-  ${[400, 450, 500, 550, 600, 650, 700, 750, 800].map(y => `
-    ${rect(60, y, 28, 28, S3, 14)}
-    ${rect(96, y + 6, 350 + (y % 50) * 2, 8, S3, 4)}
-    ${rect(96, y + 19, 200, 6, FAINT, 3)}
-  `).join('')}
-  <!-- Right rail -->
-  ${rect(948, 0, 492, 900, SURFACE)}
-  ${rect(948, 0, 1, 900, BORDER)}
-  ${['Status', 'Priority', 'Assignee', 'Cycle', 'Label', 'Due date'].map((label, i) => `
-    ${text(968, 60 + i * 50, label, 11, MUTED)}
-    ${rect(1060, 44 + i * 50, 360, 24, S3, 4)}
-  `).join('')}
-  ${text(720, 455, 'Linear · Issue Detail', 14, FAINT, 'middle')}
-</svg>`;
-}
-
-// ─── Linear: Cycles ────────────────────────────────────────────────────────
-
-function linearCyclesSVG() {
-  const cycles = [
-    { label: 'Sprint 24 · Active', pct: 62, y: 80 },
-    { label: 'Sprint 25 · Upcoming', pct: 0, y: 240 },
-    { label: 'Sprint 23 · Completed', pct: 100, y: 400 },
-  ];
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, BG)}
-  ${rect(0, 0, 48, 900, SURFACE)}
-  ${rect(48, 0, 1392, 44, SURFACE)}
-  ${text(68, 26, 'Cycles', 13, TEXT, 'start', 600)}
-  <!-- Tabs -->
-  ${['Active', 'Upcoming', 'Completed'].map((t, i) => `
-    ${rect(68 + i * 100, 50, 88, 28, i === 0 ? S2 : 'transparent', 4)}
-    ${text(112 + i * 100, 69, t, 12, i === 0 ? TEXT : MUTED, 'middle')}
-  `).join('')}
-  ${cycles.map(({ label, pct, y }) => `
-    ${rect(68, y, 1300, 130, SURFACE, 8)}
-    ${text(88, y + 26, label, 13, TEXT, 'start', 600)}
-    ${text(88, y + 44, `${Math.round(pct * 0.28)}/28 issues`, 11, MUTED)}
-    <!-- Progress bar -->
-    ${rect(88, y + 64, 1220, 12, S3, 6)}
-    ${pct > 0 ? rect(88, y + 64, Math.round(1220 * pct / 100), 12, '#5E6AD2', 6) : ''}
-    ${text(1320, y + 74, `${pct}%`, 11, MUTED, 'end')}
-  `).join('')}
-  ${text(720, 600, 'Linear · Cycles', 14, FAINT, 'middle')}
-</svg>`;
-}
-
-// ─── Duolingo: Home ────────────────────────────────────────────────────────
-
-function duolingoHomeSVG() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, '#ffffff')}
-  <!-- Nav -->
-  ${rect(0, 0, 1440, 56, '#ffffff')}
-  ${rect(0, 56, 1440, 1, '#e5e5e5')}
-  <!-- Logo area -->
-  ${rect(32, 14, 120, 28, '#58CC02', 6)}
-  ${text(92, 32, 'duolingo', 14, '#ffffff', 'middle', 700)}
-  <!-- Streak display -->
-  ${rect(540, 14, 80, 28, '#FFF3E0', 14)}
-  ${text(580, 32, '🔥 47', 13, '#FF9800', 'middle', 700)}
-  <!-- Gems -->
-  ${rect(640, 14, 70, 28, '#E8F5E9', 14)}
-  ${text(675, 32, '💎 350', 12, '#58CC02', 'middle', 600)}
-  <!-- Main layout: left rail + center + right rail -->
-  ${rect(0, 56, 220, 844, '#fafafa')}
-  ${rect(220, 56, 1, 844, '#e5e5e5')}
-  ${rect(1100, 56, 1, 844, '#e5e5e5')}
-  ${rect(1100, 56, 340, 844, '#fafafa')}
-  <!-- Left rail: course tree -->
-  ${text(30, 100, 'SPANISH', 10, '#58CC02', 'start', 800)}
-  ${[130, 200, 270, 340, 410, 480, 550, 620].map((y, i) => `
-    ${rect(60, y, 100, 44, i % 4 === 0 ? '#58CC02' : i % 4 === 1 ? '#e5e5e5' : '#f0f0f0', 22)}
-    ${text(110, y + 26, i === 0 ? '✓' : '🔒', 14, i === 0 ? '#fff' : '#bbb', 'middle')}
-  `).join('')}
-  <!-- Center: lesson path -->
-  ${[140, 260, 380, 500, 620, 740].map((y, i) => `
-    ${rect(520 - (i % 2) * 60, y, 400 + (i % 2) * 120, 80, i === 0 ? '#58CC02' : '#f0f0f0', 12)}
-    ${rect(660 - (i % 2) * 30, y + 25, 120, 30, i === 0 ? '#46a302' : '#e0e0e0', 8)}
-    ${text(720, y + 47, i === 0 ? 'Continue' : `Unit ${i + 1}`, 13, i === 0 ? '#fff' : '#999', 'middle', i === 0 ? 700 : 400)}
-  `).join('')}
-  <!-- Right rail: XP progress ring -->
-  ${text(1250, 100, 'Daily Goal', 12, '#aaa', 'middle', 600)}
-  <circle cx="1250" cy="170" r="44" fill="none" stroke="#e5e5e5" stroke-width="8"/>
-  <circle cx="1250" cy="170" r="44" fill="none" stroke="#58CC02" stroke-width="8" stroke-dasharray="176 100" stroke-dashoffset="44" stroke-linecap="round"/>
-  ${text(1250, 178, '65%', 16, '#333', 'middle', 700)}
-  <!-- Leaderboard widget -->
-  ${rect(1120, 230, 260, 200, '#fff', 8)}
-  ${rect(1120, 230, 260, 1, '#e5e5e5')}
-  ${text(1250, 256, 'GOLD LEAGUE', 10, '#FFD700', 'middle', 800)}
-  ${[280, 308, 336].map((y, i) => `
-    ${text(1135, y, `#${i + 3}`, 12, '#aaa', 'start')}
-    ${rect(1160, y - 12, 180, 14, '#f0f0f0', 3)}
-  `).join('')}
-  ${text(720, 855, 'Duolingo · Home', 13, '#ccc', 'middle')}
-</svg>`;
-}
-
-// ─── Duolingo: Lesson ─────────────────────────────────────────────────────
-
-function duolingoLessonSVG() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, '#ffffff')}
-  <!-- Progress bar -->
-  ${rect(0, 0, 1440, 8, '#e5e5e5')}
-  ${rect(0, 0, 900, 8, '#58CC02')}
-  <!-- Close button -->
-  ${rect(24, 20, 28, 28, 'transparent')}
-  <!-- Lesson frame -->
-  ${rect(370, 60, 700, 700, '#fafafa', 16)}
-  <!-- Question prompt -->
-  ${rect(420, 100, 600, 20, '#e5e5e5', 4)}
-  ${rect(420, 130, 460, 20, '#e5e5e5', 4)}
-  <!-- Character illustration -->
-  <circle cx="720" cy="260" r="70" fill="#DDF4FF"/>
-  ${rect(680, 340, 80, 10, '#e0e0e0', 4)}
-  <!-- Answer choices -->
-  ${['Hola', 'Buenos días', 'Adiós', 'Por favor'].map((opt, i) => `
-    ${rect(420, 400 + i * 64, 600, 52, i === 0 ? '#D7FFB8' : '#ffffff', 12)}
-    ${rect(420, 400 + i * 64, 600, 52, i === 0 ? '#58CC02' : '#e5e5e5', 12, 'none')}
-    ${text(720, 432 + i * 64, opt, 14, i === 0 ? '#58A700' : '#4B4B4B', 'middle', 600)}
-  `).join('')}
-  <!-- Feedback banner -->
-  ${rect(0, 760, 1440, 140, '#D7FFB8')}
-  ${text(200, 820, '✓ Great job!', 20, '#58A700', 'start', 700)}
-  ${text(200, 848, 'You got it right.', 13, '#58A700')}
-  ${rect(1060, 780, 200, 48, '#58CC02', 12)}
-  ${text(1160, 812, 'Continue', 14, '#fff', 'middle', 700)}
-  ${text(720, 455, 'Duolingo · Lesson', 13, '#ccc', 'middle')}
-</svg>`;
-}
-
-// ─── Duolingo: Leaderboard ─────────────────────────────────────────────────
-
-function duolingoLeaderboardSVG() {
-  const users = [
-    { name: 'Elena M.', xp: 2840, promoted: true },
-    { name: 'Arjun K.', xp: 2610, promoted: true },
-    { name: 'Sofia R.', xp: 2490, promoted: true },
-    { name: 'You', xp: 1820, promoted: false, you: true },
-    { name: 'Marcus T.', xp: 1670, promoted: false },
-    { name: 'Lena H.', xp: 1540, promoted: false },
-    { name: 'Paul O.', xp: 980, demoted: true },
-    { name: 'Amy C.', xp: 750, demoted: true },
-  ];
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, '#ffffff')}
-  ${rect(0, 0, 1440, 56, '#ffffff')}
-  ${rect(0, 56, 1440, 1, '#e5e5e5')}
-  ${text(720, 34, '🏆 Gold League', 16, '#FFD700', 'middle', 700)}
-  <!-- Timer -->
-  ${rect(1300, 16, 120, 24, '#FFF3E0', 12)}
-  ${text(1360, 32, '⏱ 4d 12h', 11, '#FF9800', 'middle', 600)}
-  <!-- Promotion zone header -->
-  ${rect(370, 70, 700, 22, '#E8F5E9', 0)}
-  ${text(720, 85, '↑ Promotion Zone — top 10 advance', 11, '#58CC02', 'middle', 600)}
-  <!-- Rows -->
-  ${users.map(({ name, xp, promoted, demoted, you }, i) => `
-    ${rect(370, 92 + i * 68, 700, 62, you ? '#FFF9C4' : promoted ? '#F1FFF0' : demoted ? '#FFF0F0' : '#fff', 0)}
-    ${rect(370, 92 + i * 68, 700, 1, '#e5e5e5', 0)}
-    ${text(390, 128 + i * 68, `#${i + 1}`, 13, '#aaa', 'start', 400)}
-    <circle cx="440" cy="122" r="18" fill="${you ? '#FFD700' : promoted ? '#a8d8a8' : '#e0e0e0'}" cy="${115 + i * 68}"/>
-    ${text(465, 118 + i * 68, you ? 'You' : name.charAt(0), 13, '#fff', 'start', 700)}
-    ${text(490, 118 + i * 68, name, 13, you ? '#333' : '#555', 'start', you ? 700 : 400)}
-    ${rect(900, 107 + i * 68, Math.round(xp / 12), 18, promoted ? '#58CC02' : demoted ? '#FF6B6B' : '#e0e0e0', 4)}
-    ${text(1060, 120 + i * 68, `${xp} XP`, 12, '#aaa', 'start')}
-  `).join('')}
-  <!-- Demotion zone -->
-  ${rect(370, 92 + users.length * 68 - 136, 700, 22, '#FFF0F0', 0)}
-  ${text(720, 108 + users.length * 68 - 136, '↓ Demotion Zone — bottom 5 drop down', 11, '#FF6B6B', 'middle', 600)}
-  ${text(720, 855, 'Duolingo · Leaderboard', 13, '#ccc', 'middle')}
-</svg>`;
-}
-
-// ─── Notion: Editor ────────────────────────────────────────────────────────
-
-function notionEditorSVG() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, '#ffffff')}
-  <!-- Sidebar -->
-  ${rect(0, 0, 240, 900, '#f7f7f5')}
-  ${rect(240, 0, 1, 900, '#e9e9e7')}
-  ${text(16, 30, '🏠 Workspace', 12, '#444', 'start', 600)}
-  ${['📋 Getting Started', '📄 Meeting Notes', '🎯 Q2 Goals', '🗄️ Projects DB', '📊 Analytics', '✅ Tasks'].map((p, i) =>
-    text(24, 64 + i * 28, p, 12, i === 2 ? '#000' : '#666', 'start', i === 2 ? 600 : 400)
-  ).join('')}
-  <!-- Cover image -->
-  ${rect(240, 0, 1200, 160, '#DDE4FF')}
-  ${text(840, 88, '🌊', 48, '#aabbff', 'middle')}
-  <!-- Page title -->
-  ${text(440, 208, 'Q2 Goals & OKRs', 32, '#111', 'start', 700)}
-  <!-- Slash command hint -->
-  ${pill(440, 225, 160, 22, '#f0f0ee')}
-  ${text(520, 240, "Type '/' for commands", 11, '#999', 'middle')}
-  <!-- Body text blocks -->
-  ${[270, 295, 320].map(y => rect(440, y, 680 - (y % 50) * 2, 10, '#e0e0e0', 3)).join('')}
-  <!-- H2 -->
-  ${rect(440, 360, 200, 14, '#111', 3)}
-  ${[390, 410, 430].map(y => rect(440, y, 560 - (y % 40), 8, '#d5d5d5', 3)).join('')}
-  <!-- Callout block -->
-  ${rect(440, 460, 720, 80, '#FFF9C4', 6)}
-  ${rect(440, 460, 4, 80, '#FFD600', 0)}
-  ${[480, 500, 520].map(y => rect(460, y, 480 - (y % 30) * 2, 8, '#ccc', 3)).join('')}
-  <!-- Toggle block -->
-  ${rect(440, 560, 720, 40, '#f7f7f5', 4)}
-  ${text(456, 584, '▶ Objectives breakdown', 13, '#555', 'start', 500)}
-  <!-- Drag handle hint -->
-  ${text(424, 292, '⠿', 12, '#ccc', 'start')}
-  ${text(720, 855, 'Notion · Editor', 13, '#ccc', 'middle')}
-</svg>`;
-}
-
-// ─── Notion: Database ─────────────────────────────────────────────────────
-
-function notionDatabaseSVG() {
-  const cols = ['Name', 'Status', 'Owner', 'Due Date', 'Priority', 'Tags'];
-  const colW = [280, 120, 140, 130, 110, 200];
-  const colX = colW.reduce((acc, w, i) => { acc.push(i === 0 ? 240 : acc[i-1] + colW[i-1]); return acc; }, []);
+  const sidebarItems = ['⌂','●','◎','⬡','◷','⊞','◈'];
   const rows = [
-    ['Redesign onboarding flow', '🟢 Done', 'Mia', 'Apr 12', '🔴 High', 'Design, UX'],
-    ['API rate limiting', '🟡 In Progress', 'Alex', 'Apr 18', '🟠 Med', 'Engineering'],
-    ['Q2 roadmap review', '⚪ Not started', 'Sam', 'Apr 25', '🟡 Low', 'Strategy'],
-    ['Fix payment bug', '🔵 In Review', 'Kai', 'Apr 15', '🔴 High', 'Engineering'],
-    ['Write release notes', '⚪ Not started', 'Mia', 'May 1', '🟡 Low', 'Marketing'],
+    { title: 'ENG-412 · Refactor auth middleware', sub: 'Alex commented · 2m ago', dot: PURPLE },
+    { title: 'ENG-408 · Fix payment webhook retry', sub: 'Status changed to In Progress · 5m ago', dot: '#4CAF50' },
+    { title: 'ENG-415 · Add rate limiting to API', sub: 'Assigned to you · 12m ago', dot: PURPLE },
+    { title: 'ENG-401 · Update OpenAPI spec', sub: 'Mia mentioned you · 1h ago', dot: MUTED },
+    { title: 'ENG-399 · Migrate to Postgres 15', sub: 'Status changed to Done · 2h ago', dot: '#4CAF50' },
+    { title: 'ENG-387 · Dashboard load time regression', sub: 'James commented · 3h ago', dot: '#FF5252' },
+    { title: 'ENG-382 · Add dark mode toggle', sub: 'Kai assigned this to you · Yesterday', dot: PURPLE },
+    { title: 'ENG-371 · Refactor notification service', sub: 'Status changed to In Review · Yesterday', dot: '#FFB300' },
+    { title: 'ENG-365 · Integrate Sentry error tracking', sub: 'Lu commented · 2d ago', dot: MUTED },
+    { title: 'ENG-358 · Add CSV export to reports', sub: 'Alex mentioned you · 2d ago', dot: PURPLE },
+    { title: 'ENG-344 · Cache invalidation bug', sub: 'Status changed to Cancelled · 3d ago', dot: FAINT },
+    { title: 'ENG-337 · Redesign settings page', sub: 'Mia commented · 3d ago', dot: MUTED },
   ];
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, '#ffffff')}
-  ${rect(0, 0, 240, 900, '#f7f7f5')}
-  ${rect(240, 0, 1, 900, '#e9e9e7')}
-  <!-- View switcher tabs -->
-  ${['Table', 'Board', 'Timeline', 'Calendar'].map((t, i) => `
-    ${rect(248 + i * 90, 8, 82, 28, i === 0 ? '#ebebea' : 'transparent', 4)}
-    ${text(289 + i * 90, 26, t, 12, i === 0 ? '#111' : '#888', 'middle', i === 0 ? 600 : 400)}
-  `).join('')}
-  <!-- Filter bar -->
-  ${rect(248, 44, 900, 28, 'transparent', 0)}
-  ${pill(252, 48, 70, 20, '#ebebea')}
-  ${text(287, 62, 'Filter', 11, '#888', 'middle')}
-  ${pill(330, 48, 60, 20, '#ebebea')}
-  ${text(360, 62, 'Sort', 11, '#888', 'middle')}
-  <!-- Table header -->
-  ${rect(240, 76, 1200, 32, '#f7f7f5')}
-  ${colX.map((x, i) => `
-    ${rect(x, 76, colW[i], 32, '#f7f7f5', 0)}
-    ${text(x + 8, 96, cols[i], 11, '#888', 'start', 600)}
-    ${i < cols.length - 1 ? rect(x + colW[i] - 1, 76, 1, 32, '#e9e9e7', 0) : ''}
-  `).join('')}
-  ${rect(240, 108, 1200, 1, '#e9e9e7')}
-  <!-- Rows -->
-  ${rows.map((row, ri) => `
-    ${rect(240, 109 + ri * 38, 1200, 38, ri % 2 === 0 ? '#fff' : '#fafaf9', 0)}
-    ${rect(240, 147 + ri * 38, 1200, 1, '#e9e9e7', 0)}
-    ${row.map((cell, ci) => text(colX[ci] + 8, 132 + ri * 38, cell, 12, ci === 0 ? '#111' : '#666', 'start', ci === 0 ? 500 : 400)).join('')}
-  `).join('')}
-  <!-- Add row -->
-  ${rect(240, 109 + rows.length * 38, 1200, 32, '#fff', 0)}
-  ${text(260, 129 + rows.length * 38, '+ New', 12, '#aaa')}
-  ${text(720, 855, 'Notion · Database', 13, '#ccc', 'middle')}
-</svg>`;
+
+  let body = '';
+  // Sidebar
+  body += r(0, 0, 48, H, S1);
+  body += r(48, 0, 1, H, BORDER);
+  sidebarItems.forEach((ic, i) => {
+    const y = 60 + i * 54;
+    if (i === 1) body += r(4, y - 10, 40, 36, S3, 6);
+    body += t(24, y + 14, ic, 16, i === 1 ? TEXT : FAINT, 'middle', 400);
+  });
+
+  // Top bar
+  body += r(49, 0, W - 49, 44, S1);
+  body += line(49, 44, W, 44, BORDER);
+  body += t(68, 26, 'Inbox', 14, TEXT, 'start', 600);
+  body += pill(1320, 12, 96, 20, S3);
+  body += t(1368, 25, '⌘K', 11, MUTED, 'middle', 500);
+
+  // Section header
+  body += r(49, 44, W - 49, 32, S2);
+  body += line(49, 76, W, 76, BORDER);
+  body += t(68, 63, 'TODAY', 10, FAINT, 'start', 700);
+  body += pill(1380, 51, 40, 16, S3);
+  body += t(1400, 62, '12', 10, MUTED, 'middle');
+
+  // Inbox rows
+  rows.forEach((row, i) => {
+    const y = 76 + i * 66;
+    const active = i < 3;
+    body += r(49, y, W - 49, 66, i % 2 === 0 ? S2 : 'transparent');
+    body += line(49, y + 66, W, y + 66, BORDER);
+    // Unread dot
+    if (active) body += circle(64, y + 33, 4, PURPLE);
+    // Avatar
+    body += r(80, y + 16, 32, 32, S3, 16);
+    body += t(96, y + 36, '●', 12, row.dot, 'middle');
+    // Text
+    body += t(124, y + 28, row.title, 13, active ? TEXT : MUTED, 'start', active ? 500 : 400);
+    body += t(124, y + 47, row.sub, 11, FAINT, 'start');
+    // Time
+    body += t(W - 20, y + 28, '', 11, FAINT, 'end');
+    // Done action on hover (shown faintly)
+    if (i === 0) {
+      body += pill(W - 120, y + 18, 52, 22, S3);
+      body += t(W - 94, y + 33, 'Done', 11, MUTED, 'middle');
+      body += pill(W - 62, y + 18, 52, 22, S3);
+      body += t(W - 36, y + 33, 'Snooze', 10, MUTED, 'middle');
+    }
+  });
+
+  // Bottom hint bar
+  body += r(49, H - 36, W - 49, 36, S1);
+  body += line(49, H - 36, W, H - 36, BORDER);
+  body += t(W / 2, H - 14, '⌘K  Open command palette', 11, FAINT, 'middle');
+
+  return svg(body, DARK);
 }
 
-// ─── Notion: Sidebar ──────────────────────────────────────────────────────
+// ── LINEAR ISSUES ─────────────────────────────────────────────────────────
+function linearIssues() {
+  const DARK = '#0f0f10', S1 = '#1a1a1d', S2 = '#222226', S3 = '#2a2a2f', BORDER = '#2e2e34';
+  const PURPLE = '#5E6AD2', TEXT = '#e8e8ea', MUTED = '#888890', FAINT = '#444450';
 
-function notionSidebarSVG() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, '#ffffff')}
-  <!-- Wide sidebar for focus -->
-  ${rect(0, 0, 320, 900, '#f7f7f5')}
-  ${rect(320, 0, 1, 900, '#e9e9e7')}
-  <!-- Workspace header -->
-  ${rect(0, 0, 320, 44, '#f7f7f5')}
-  ${text(16, 26, '🏢 Acme Corp', 13, '#333', 'start', 600)}
-  <!-- Search -->
-  ${rect(8, 52, 304, 28, '#ebebea', 4)}
-  ${text(20, 70, '🔍  Search', 12, '#aaa')}
-  <!-- Teamspace section -->
-  ${rect(0, 90, 320, 1, '#e9e9e7')}
-  ${text(12, 112, '◀ TEAMSPACES', 9, '#aaa', 'start', 700)}
-  ${[
+  let body = '';
+  body += r(0, 0, 48, H, S1);
+  body += r(48, 0, 1, H, BORDER);
+
+  // Left panel — issue list
+  body += r(49, 0, 340, H, S2);
+  body += r(389, 0, 1, H, BORDER);
+  body += r(49, 0, 340, 44, S1);
+  body += line(49, 44, 389, 44, BORDER);
+  body += t(68, 27, 'ENG Issues', 13, TEXT, 'start', 600);
+
+  const issues = [
+    { id: 'ENG-412', title: 'Refactor auth middleware', status: PURPLE, active: true },
+    { id: 'ENG-415', title: 'Add rate limiting to API', status: '#FFB300', active: false },
+    { id: 'ENG-408', title: 'Fix payment webhook retry', status: '#4CAF50', active: false },
+    { id: 'ENG-401', title: 'Update OpenAPI spec', status: MUTED, active: false },
+    { id: 'ENG-399', title: 'Migrate to Postgres 15', status: '#4CAF50', active: false },
+    { id: 'ENG-387', title: 'Dashboard load time', status: '#FF5252', active: false },
+    { id: 'ENG-382', title: 'Add dark mode toggle', status: PURPLE, active: false },
+  ];
+  issues.forEach((issue, i) => {
+    const y = 52 + i * 46;
+    body += r(49, y, 340, 46, issue.active ? S3 : 'transparent');
+    if (issue.active) body += r(49, y, 3, 46, PURPLE);
+    body += circle(74, y + 22, 7, 'none');
+    body += r(68, y + 16, 14, 14, 'none', 7);
+    body += `<rect x="68" y="16" width="14" height="14" rx="7" fill="none" stroke="${issue.status}" stroke-width="2" transform="translate(0,${y})"/>`;
+    body += t(90, y + 27, issue.id, 10, FAINT, 'start');
+    body += t(90, y + 40, issue.title, 11, issue.active ? TEXT : MUTED, 'start');
+  });
+
+  // Main content area
+  body += r(390, 0, 560, H, DARK);
+  body += r(390, 0, 560, 44, S1);
+  body += line(390, 44, 950, 44, BORDER);
+  body += t(410, 27, 'ENG-412', 11, FAINT);
+  body += t(470, 27, '/', 11, FAINT);
+  body += t(480, 27, 'Refactor auth middleware for token refresh', 12, TEXT);
+
+  // Issue title
+  body += t(410, 90, 'Refactor auth middleware for token refresh', 20, TEXT, 'start', 700);
+
+  // Description paragraphs
+  const lines = [
+    'The current JWT middleware does not gracefully handle token expiry edge cases.',
+    'Users are getting logged out mid-session when access tokens expire during',
+    'long-running operations. We need to implement automatic token refresh.',
+    '',
+    'Acceptance criteria:',
+    '• Refresh token flow implemented on 401 response',
+    '• Existing sessions not interrupted during normal use',
+    '• Refresh token rotation enabled',
+  ];
+  lines.forEach((ln, i) => {
+    body += t(410, 124 + i * 20, ln || '', 12, ln ? MUTED : TEXT, 'start');
+  });
+
+  // Code block
+  body += r(410, 300, 500, 100, S2, 6);
+  body += r(410, 300, 500, 1, BORDER);
+  body += t(426, 320, 'const refreshToken = async (token) => {', 11, '#7ec8e3', 'start');
+  body += t(426, 338, '  const res = await fetch(\'/api/refresh\', {', 11, MUTED, 'start');
+  body += t(426, 356, '    headers: { Authorization: `Bearer ${token}` }', 11, MUTED, 'start');
+  body += t(426, 374, '  });', 11, MUTED, 'start');
+  body += t(426, 392, '  return res.json();', 11, MUTED, 'start');
+
+  // Activity log
+  body += line(410, 430, 950, 430, BORDER);
+  body += t(410, 452, 'Activity', 11, FAINT, 'start', 600);
+  const activity = [
+    { avatar: 'A', text: 'Alex changed status to In Progress', time: '2m ago' },
+    { avatar: 'M', text: 'Mia commented: "Should we also handle 403 here?"', time: '14m ago' },
+    { avatar: 'K', text: 'Kai assigned to Alex', time: '1h ago' },
+    { avatar: 'A', text: 'Alex created this issue', time: '2h ago' },
+  ];
+  activity.forEach((a, i) => {
+    const y = 468 + i * 56;
+    body += r(410, y, 28, 28, S3, 14);
+    body += t(424, y + 18, a.avatar, 11, PURPLE, 'middle', 700);
+    body += t(446, y + 13, a.text, 12, MUTED);
+    body += t(446, y + 27, a.time, 10, FAINT);
+  });
+
+  // Right rail
+  body += r(950, 0, 1, H, BORDER);
+  body += r(951, 0, W - 951, H, S1);
+  const fields = [
+    { label: 'Status', value: '◎ In Progress', color: '#FFB300' },
+    { label: 'Priority', value: '⬆ High', color: '#FF5252' },
+    { label: 'Assignee', value: '● Alex Chen', color: TEXT },
+    { label: 'Cycle', value: 'Sprint 24', color: MUTED },
+    { label: 'Label', value: 'Engineering', color: PURPLE },
+    { label: 'Due date', value: 'Apr 18', color: MUTED },
+  ];
+  fields.forEach((f, i) => {
+    const y = 60 + i * 56;
+    body += t(971, y, f.label, 10, FAINT, 'start', 600);
+    body += r(971, y + 8, W - 991, 28, S2, 4);
+    body += t(983, y + 25, f.value, 12, f.color, 'start');
+  });
+
+  return svg(body, DARK);
+}
+
+// ── LINEAR CYCLES ─────────────────────────────────────────────────────────
+function linearCycles() {
+  const DARK = '#0f0f10', S1 = '#1a1a1d', S2 = '#222226', S3 = '#2a2a2f', BORDER = '#2e2e34';
+  const PURPLE = '#5E6AD2', TEXT = '#e8e8ea', MUTED = '#888890', FAINT = '#444450';
+  const GREEN = '#4CAF50';
+
+  let body = '';
+  body += r(0, 0, 48, H, S1);
+  body += r(48, 0, 1, H, BORDER);
+  body += r(49, 0, W - 49, 44, S1);
+  body += line(49, 44, W, 44, BORDER);
+  body += t(68, 27, 'Cycles', 14, TEXT, 'start', 600);
+
+  // Tabs
+  const tabs = ['Active', 'Upcoming', 'Completed'];
+  tabs.forEach((tab, i) => {
+    const x = 68 + i * 110;
+    if (i === 0) {
+      body += r(x - 8, 12, 96, 20, S3, 4);
+      body += r(x - 8, 40, 96, 4, PURPLE, 2);
+    }
+    body += t(x + 40, 26, tab, 12, i === 0 ? TEXT : MUTED, 'middle', i === 0 ? 600 : 400);
+  });
+
+  const cycles = [
+    { name: 'Sprint 24', range: 'Apr 8 – Apr 21', pct: 64, done: 18, total: 28, active: true },
+    { name: 'Sprint 25', range: 'Apr 22 – May 5', pct: 0, done: 0, total: 22, active: false },
+  ];
+
+  cycles.forEach((cy, i) => {
+    const y = 70 + i * 220;
+    body += r(68, y, W - 136, 190, S2, 8);
+    body += line(68, y + 44, W - 68, y + 44, BORDER);
+
+    // Header
+    body += t(88, y + 28, cy.name, 15, TEXT, 'start', 600);
+    body += t(88, y + 42, cy.range, 11, MUTED, 'start');
+    if (cy.active) {
+      body += pill(W - 200, y + 14, 60, 20, `${PURPLE}33`);
+      body += t(W - 170, y + 27, 'Active', 11, PURPLE, 'middle', 500);
+    }
+
+    // Stats row
+    body += t(88, y + 68, `${cy.done}`, 22, TEXT, 'start', 700);
+    body += t(88 + (cy.done > 9 ? 26 : 16), y + 68, `/${cy.total} issues`, 13, MUTED, 'start');
+
+    // Scope creep badge
+    if (cy.active) {
+      body += pill(250, y + 52, 130, 20, `${FAINT}88`);
+      body += t(315, y + 65, '3 added after start', 10, MUTED, 'middle');
+    }
+
+    // Progress bar
+    body += r(88, y + 90, W - 224, 10, S3, 5);
+    if (cy.pct > 0) body += r(88, y + 90, Math.round((W - 224) * cy.pct / 100), 10, PURPLE, 5);
+    body += t(W - 120, y + 99, `${cy.pct}%`, 11, MUTED, 'end');
+
+    // Mini issue list
+    const issueColors = [GREEN, PURPLE, '#FFB300', MUTED, GREEN, GREEN];
+    for (let j = 0; j < 6; j++) {
+      const ix = 88 + j * 180, iy = y + 122;
+      body += r(ix, iy, 14, 14, 'none', 7);
+      body += `<rect x="${ix}" y="${iy}" width="14" height="14" rx="7" fill="none" stroke="${issueColors[j]}" stroke-width="1.5"/>`;
+      body += r(ix + 20, iy + 3, 120 + (j % 3) * 20, 8, S3, 4);
+    }
+  });
+
+  return svg(body, DARK);
+}
+
+// ── DUOLINGO HOME ─────────────────────────────────────────────────────────
+function duolingoHome() {
+  const BG = '#ffffff', NAV = '#ffffff', BORDER = '#e5e7eb';
+  const GREEN = '#58CC02', DGREEN = '#46a302', GRAY = '#afafaf';
+  const TEXT = '#3c3c3c', MUTED = '#777', LIGHT = '#f7f7f7';
+
+  let body = '';
+  // Nav
+  body += r(0, 0, W, 56, NAV);
+  body += line(0, 56, W, 56, BORDER);
+  // Logo
+  body += r(32, 14, 34, 28, GREEN, 6);
+  body += t(49, 32, 'D', 18, '#fff', 'middle', 800);
+  body += t(76, 32, 'duolingo', 16, TEXT, 'start', 700);
+  // Nav icons
+  body += t(560, 32, '🔥', 16, TEXT, 'middle');
+  body += t(600, 32, '47', 14, TEXT, 'middle', 700);
+  body += t(680, 32, '💎', 14, TEXT, 'middle');
+  body += t(720, 32, '350', 14, TEXT, 'middle', 700);
+  body += pill(900, 16, 120, 24, `${GREEN}22`);
+  body += t(960, 31, '👑 Gold League', 11, GREEN, 'middle', 600);
+  body += pill(1280, 16, 80, 24, GREEN);
+  body += t(1320, 31, 'START', 11, '#fff', 'middle', 700);
+
+  // Left sidebar
+  body += r(0, 56, 220, H - 56, LIGHT);
+  body += line(220, 56, 220, H, BORDER);
+  body += t(24, 90, '🇪🇸  SPANISH', 11, GREEN, 'start', 800);
+  body += t(24, 108, 'Section 1 · Basics', 10, MUTED, 'start');
+
+  const skills = [
+    { label: 'Basics 1', done: true, y: 130 },
+    { label: 'Travel', done: true, y: 194 },
+    { label: 'Food', done: false, y: 258 },
+    { label: 'People', done: false, y: 322, locked: true },
+  ];
+  skills.forEach(sk => {
+    const filled = sk.done;
+    body += r(50, sk.y, 120, 44, filled ? GREEN : sk.locked ? '#e0e0e0' : LIGHT, 22);
+    body += line(50, sk.y, 170, sk.y, filled ? DGREEN : BORDER);
+    body += line(50, sk.y + 44, 170, sk.y + 44, filled ? DGREEN : BORDER);
+    body += t(110, sk.y + 26, filled ? '✓' : sk.locked ? '🔒' : sk.label, 13, filled ? '#fff' : MUTED, 'middle', 700);
+    if (!filled && !sk.locked) body += t(110, sk.y + 38, sk.label, 10, MUTED, 'middle');
+  });
+
+  // Main lesson path
+  const lessonX = 380, lessonW = 540;
+  // Continue button — hero CTA
+  body += r(lessonX + 70, 80, lessonW - 140, 80, GREEN, 12);
+  body += r(lessonX + 70, 148, lessonW - 140, 12, DGREEN, 12);
+  body += t(lessonX + lessonW / 2, 128, 'CONTINUE', 18, '#fff', 'middle', 800);
+  body += t(lessonX + lessonW / 2, 148, 'Section 2 · Lesson 1', 11, `${DGREEN}cc`, 'middle');
+
+  // Lesson nodes
+  const nodes = [
+    { y: 230, label: 'Greetings', done: true },
+    { y: 320, label: 'Numbers', done: false, active: true },
+    { y: 410, label: 'Colors', done: false },
+    { y: 500, label: 'Family', done: false, locked: true },
+  ];
+  nodes.forEach((n, i) => {
+    const cx = lessonX + lessonW / 2 + (i % 2 === 0 ? 30 : -30);
+    body += circle(cx, n.y, 40, n.done ? GREEN : n.active ? '#fff' : LIGHT);
+    if (n.active) body += `<circle cx="${cx}" cy="${n.y}" r="40" fill="none" stroke="${GREEN}" stroke-width="3"/>`;
+    body += t(cx, n.y + 6, n.done ? '✓' : n.active ? '▶' : '🔒', 18, n.done ? '#fff' : n.active ? GREEN : GRAY, 'middle', 700);
+    body += t(cx, n.y + 55, n.label, 11, n.done ? GREEN : MUTED, 'middle');
+  });
+
+  // Right sidebar
+  body += r(W - 300, 56, 300, H - 56, LIGHT);
+  body += line(W - 300, 56, W - 300, H, BORDER);
+
+  // XP ring
+  body += t(W - 150, 110, 'Daily Goal', 12, MUTED, 'middle', 600);
+  body += `<circle cx="${W - 150}" cy="180" r="50" fill="none" stroke="${BORDER}" stroke-width="10"/>`;
+  body += `<circle cx="${W - 150}" cy="180" r="50" fill="none" stroke="${GREEN}" stroke-width="10" stroke-dasharray="${Math.round(314 * 0.65)} 314" stroke-dashoffset="78" stroke-linecap="round"/>`;
+  body += t(W - 150, 188, '65 / 100 XP', 12, TEXT, 'middle', 700);
+
+  // Streak freeze ad
+  body += r(W - 280, 256, 260, 80, '#fff', 8);
+  body += line(W - 280, 256, W - 20, 256, BORDER);
+  body += line(W - 280, 336, W - 20, 336, BORDER);
+  body += line(W - 280, 256, W - 280, 336, BORDER);
+  body += line(W - 20, 256, W - 20, 336, BORDER);
+  body += t(W - 150, 284, '🛡️ Streak Freeze', 12, TEXT, 'middle', 600);
+  body += t(W - 150, 302, 'Protect your streak', 11, MUTED, 'middle');
+  body += pill(W - 200, 314, 100, 18, GREEN);
+  body += t(W - 150, 326, 'Equip', 11, '#fff', 'middle', 700);
+
+  // Leaderboard widget
+  body += r(W - 280, 356, 260, 200, '#fff', 8);
+  body += line(W - 280, 356, W - 20, 356, BORDER);
+  body += line(W - 280, 556, W - 20, 556, BORDER);
+  body += line(W - 280, 356, W - 280, 556, BORDER);
+  body += line(W - 20, 356, W - 20, 556, BORDER);
+  body += t(W - 150, 382, '🏆 Gold League', 12, '#f4b942', 'middle', 700);
+  body += t(W - 150, 400, '#4 of 30 · Top 15%', 11, MUTED, 'middle');
+  const lbUsers = ['Elena M.  2840', 'Arjun K.   2610', 'Sofia R.    2490', '→ You         1820'];
+  lbUsers.forEach((u, i) => {
+    const isYou = i === 3;
+    body += r(W - 274, 414 + i * 34, 254, 30, isYou ? `${GREEN}18` : 'transparent', 4);
+    body += t(W - 262, 433 + i * 34, `${i + 1}`, 11, isYou ? GREEN : MUTED, 'start', isYou ? 700 : 400);
+    body += t(W - 245, 433 + i * 34, u, 11, isYou ? TEXT : MUTED, 'start', isYou ? 600 : 400);
+  });
+
+  return svg(body, BG);
+}
+
+// ── DUOLINGO LESSON ───────────────────────────────────────────────────────
+function duolingoLesson() {
+  const BG = '#ffffff', GREEN = '#58CC02', DGREEN = '#46a302';
+  const RED = '#FF4B4B', TEXT = '#3c3c3c', MUTED = '#777', BORDER = '#e5e7eb';
+  const CORRECT_BG = '#D7FFB8', CORRECT_BORDER = '#58CC02';
+
+  let body = '';
+  // Progress bar
+  body += r(0, 0, W, 10, '#e5e7eb');
+  body += r(0, 0, Math.round(W * 0.62), 10, GREEN);
+
+  // Close & hearts
+  body += t(32, 40, '✕', 18, MUTED, 'start');
+  body += t(W - 32, 40, '❤️❤️❤️', 18, TEXT, 'end');
+
+  // Question area
+  body += t(W / 2, 100, 'Translate this sentence', 14, MUTED, 'middle', 400);
+  body += t(W / 2, 146, '"I eat breakfast every morning."', 22, TEXT, 'middle', 700);
+
+  // Character / audio
+  body += circle(W / 2, 240, 70, '#DDF4FF');
+  body += t(W / 2, 252, '🔊', 32, '#1CB0F6', 'middle');
+  body += pill(W / 2 - 80, 328, 160, 32, '#DDF4FF');
+  body += t(W / 2, 349, 'Tap to hear', 12, '#1CB0F6', 'middle');
+
+  // Answer choices
+  const choices = [
+    { text: 'Como el desayuno todos los días.', correct: true },
+    { text: 'Yo tengo hambre por la mañana.', correct: false },
+    { text: 'Me gusta el café con leche.', correct: false },
+    { text: 'Ellos comen juntos cada semana.', correct: false },
+  ];
+  choices.forEach((ch, i) => {
+    const col = i % 2, row2 = Math.floor(i / 2);
+    const x = 320 + col * 420, y = 390 + row2 * 80;
+    const bg = ch.correct ? CORRECT_BG : '#fff';
+    const border = ch.correct ? CORRECT_BORDER : BORDER;
+    body += r(x, y, 380, 60, bg, 12);
+    body += `<rect x="${x}" y="${y}" width="380" height="60" rx="12" fill="none" stroke="${border}" stroke-width="2"/>`;
+    body += t(x + 190, y + 35, ch.text, 13, ch.correct ? '#2D7A00' : TEXT, 'middle', ch.correct ? 600 : 400);
+  });
+
+  // Feedback banner
+  body += r(0, H - 140, W, 140, CORRECT_BG);
+  body += line(0, H - 140, W, H - 140, CORRECT_BORDER);
+  body += t(60, H - 92, '✓  Correct!', 20, '#2D7A00', 'start', 700);
+  body += t(60, H - 64, 'Great job! Keep it up.', 14, '#2D7A00', 'start');
+  body += r(W - 220, H - 116, 160, 48, GREEN, 12);
+  body += r(W - 220, H - 84, 160, 16, DGREEN, 12);
+  body += t(W - 140, H - 82, 'CONTINUE', 14, '#fff', 'middle', 800);
+
+  return svg(body, BG);
+}
+
+// ── DUOLINGO LEADERBOARD ──────────────────────────────────────────────────
+function duolingoLeaderboard() {
+  const BG = '#ffffff', GREEN = '#58CC02', RED = '#FF4B4B';
+  const TEXT = '#3c3c3c', MUTED = '#777', BORDER = '#e5e7eb', LIGHT = '#f7f7f7';
+  const GOLD = '#f4b942', PROMO = '#D7FFB8', DEMOTE = '#FFEBEB';
+
+  let body = '';
+  // Nav
+  body += r(0, 0, W, 56, '#fff');
+  body += line(0, 56, W, 56, BORDER);
+  body += t(W / 2, 34, '🏆  Gold League', 20, GOLD, 'middle', 700);
+  body += pill(W - 200, 16, 160, 24, '#FFF3E0');
+  body += t(W - 120, 31, '⏱  4 days 12 hrs left', 11, '#FF9800', 'middle', 600);
+
+  // Promotion zone label
+  body += r(320, 64, 800, 24, `${GREEN}18`);
+  body += t(720, 80, '↑  PROMOTION ZONE  —  Top 10 advance to Diamond League', 11, GREEN, 'middle', 700);
+
+  const users = [
+    { name: 'Elena M.', xp: 2840, you: false, pos: 1 },
+    { name: 'Arjun K.', xp: 2610, you: false, pos: 2 },
+    { name: 'Sofia R.', xp: 2490, you: false, pos: 3 },
+    { name: 'Marcus T.', xp: 1940, you: false, pos: 4 },
+    { name: 'Lena H.', xp: 1820, you: true,  pos: 5 },
+    { name: 'James O.', xp: 1670, you: false, pos: 6 },
+    { name: 'Priya S.', xp: 1540, you: false, pos: 7 },
+    { name: 'Will B.', xp: 980,  you: false, pos: 8, demote: true },
+    { name: 'Amy C.', xp: 750,  you: false, pos: 9, demote: true },
+    { name: 'Tom N.', xp: 490,  you: false, pos: 10, demote: true },
+  ];
+
+  body += r(320, 88, 800, 24, `${RED}15`);
+  body += t(720, 814, '↓  DEMOTION ZONE  —  Bottom 5 drop to Gold League', 11, RED, 'middle', 700);
+
+  users.forEach((u, i) => {
+    const y = 88 + i * 66;
+    const bg = u.you ? '#FFFDE7' : i < 3 ? PROMO : u.demote ? DEMOTE : (i % 2 === 0 ? LIGHT : '#fff');
+    body += r(320, y, 800, 66, bg);
+    body += line(320, y, 1120, y, BORDER);
+
+    // Rank
+    body += t(350, y + 38, `#${u.pos}`, 14, u.you ? GOLD : i < 3 ? GREEN : MUTED, 'start', 700);
+
+    // Avatar
+    const avBg = u.you ? GOLD : i < 3 ? GREEN : '#d0d0d0';
+    body += circle(420, y + 33, 22, avBg);
+    body += t(420, y + 39, u.you ? 'Y' : u.name[0], 14, '#fff', 'middle', 700);
+
+    // Name
+    body += t(452, y + 30, u.you ? `${u.name} (You)` : u.name, 14, u.you ? TEXT : TEXT, 'start', u.you ? 700 : 400);
+
+    // XP bar
+    const barW = Math.round(400 * u.xp / 2840);
+    body += r(640, y + 20, 400, 16, '#e5e7eb', 8);
+    body += r(640, y + 20, barW, 16, u.you ? GOLD : i < 3 ? GREEN : u.demote ? RED : '#a0d0ff', 8);
+    body += t(1052, y + 33, `${u.xp.toLocaleString()} XP`, 12, MUTED, 'start');
+  });
+
+  body += line(320, 88 + users.length * 66, 1120, 88 + users.length * 66, BORDER);
+
+  return svg(body, BG);
+}
+
+// ── NOTION EDITOR ─────────────────────────────────────────────────────────
+function notionEditor() {
+  const BG = '#ffffff', SIDEBAR = '#f7f7f5', BORDER = '#e9e9e7';
+  const TEXT = '#37352f', MUTED = '#9b9b9b', FAINT = '#d0d0cc';
+  const ORANGE = '#E8572A';
+
+  let body = '';
+  // Sidebar
+  body += r(0, 0, 240, H, SIDEBAR);
+  body += line(240, 0, 240, H, BORDER);
+
+  // Workspace header
+  body += r(0, 0, 240, 48, SIDEBAR);
+  body += line(0, 48, 240, 48, BORDER);
+  body += t(16, 28, '🏢', 16, TEXT, 'start');
+  body += t(40, 28, 'Acme Corp', 13, TEXT, 'start', 600);
+  body += t(220, 28, '···', 14, MUTED, 'end');
+
+  // Search
+  body += r(8, 56, 224, 28, '#ebebea', 4);
+  body += t(20, 74, '🔍  Quick Find', 12, MUTED, 'start');
+
+  // Sidebar nav items
+  const navItems = ['🏠  Home', '📥  Inbox', '⚙️  Settings'];
+  navItems.forEach((item, i) => {
+    body += t(16, 110 + i * 28, item, 12, MUTED, 'start');
+  });
+
+  body += line(0, 198, 240, 198, BORDER);
+  body += t(12, 218, 'TEAMSPACES', 9, MUTED, 'start', 700);
+
+  const pages = [
     { icon: '📋', name: 'Engineering', depth: 0, open: true },
     { icon: '📄', name: 'Roadmap Q2', depth: 1 },
-    { icon: '📄', name: 'Architecture Docs', depth: 1 },
+    { icon: '🗄️', name: 'Sprint Tracker', depth: 1, active: true },
+    { icon: '📋', name: 'Design', depth: 0 },
+    { icon: '📋', name: 'Marketing', depth: 0 },
+  ];
+  pages.forEach((p, i) => {
+    const y = 228 + i * 30;
+    const bg = p.active ? '#ebebea' : 'transparent';
+    body += r(0, y - 2, 240, 26, bg);
+    body += t(12 + p.depth * 14, y + 14, p.open ? '▾' : p.depth === 0 ? '▸' : '', 9, MUTED, 'start');
+    body += t(26 + p.depth * 14, y + 14, `${p.icon}  ${p.name}`, 12, p.active ? TEXT : MUTED, 'start', p.active ? 600 : 400);
+  });
+
+  // Cover image
+  body += r(240, 0, W - 240, 120, '#dde4ff');
+  body += t((240 + W) / 2, 68, '🌊', 52, '#aabbff', 'middle');
+
+  // Page icon + title area
+  body += t(500, 164, '🎯', 40, TEXT, 'start');
+  body += t(500, 220, 'Q2 Goals & OKRs', 32, TEXT, 'start', 700);
+
+  // Slash command hint row
+  body += r(500, 234, 220, 24, '#f5f5f3', 4);
+  body += t(510, 250, "Type  '/'  for commands", 12, FAINT, 'start');
+
+  // Body content blocks
+  const textBlocks = [
+    { y: 280, w: 680, h: 12, color: '#d0d0cc' },
+    { y: 300, w: 520, h: 10, color: '#d8d8d5' },
+    { y: 318, w: 600, h: 10, color: '#d0d0cc' },
+  ];
+  textBlocks.forEach(b => {
+    // Drag handle
+    body += t(480, b.y + 10, '⠿', 12, '#ddd', 'start');
+    body += r(500, b.y, b.w, b.h, b.color, 4);
+  });
+
+  // H2
+  body += t(496, 360, '▸', 10, MUTED, 'start');
+  body += r(510, 352, 220, 14, '#37352f', 4);
+
+  body += r(500, 380, 640, 10, '#d8d8d5', 4);
+  body += r(500, 398, 480, 10, '#d0d0cc', 4);
+
+  // Callout block
+  body += r(500, 426, 720, 80, '#FFF9C4', 6);
+  body += r(500, 426, 4, 80, '#FFD600');
+  body += t(518, 452, '💡', 14);
+  body += r(538, 444, 500, 10, '#ccca7a', 4);
+  body += r(538, 462, 380, 8, '#d9d780', 4);
+  body += r(538, 476, 440, 8, '#ccca7a', 4);
+
+  // Toggle block
+  body += r(500, 526, 720, 40, '#f7f7f5', 4);
+  body += line(500, 526, 1220, 526, BORDER);
+  body += line(500, 566, 1220, 566, BORDER);
+  body += t(514, 550, '▶  Objectives breakdown (click to expand)', 13, TEXT, 'start', 500);
+
+  // Database preview
+  body += r(500, 586, 720, 100, '#f7f7f5', 6);
+  body += line(500, 586, 1220, 586, BORDER);
+  body += t(516, 608, '🗄️  Key Results Tracker', 12, TEXT, 'start', 600);
+  body += t(516, 626, '12 items · Last edited just now', 10, MUTED, 'start');
+  const tags = ['Table', 'Board', 'Calendar'];
+  tags.forEach((tag, i) => {
+    body += pill(516 + i * 72, 638, 64, 18, i === 0 ? '#ebebea' : 'transparent');
+    body += t(548 + i * 72, 650, tag, 10, i === 0 ? TEXT : MUTED, 'middle');
+  });
+
+  return svg(body, BG);
+}
+
+// ── NOTION DATABASE ───────────────────────────────────────────────────────
+function notionDatabase() {
+  const BG = '#ffffff', SIDEBAR = '#f7f7f5', BORDER = '#e9e9e7';
+  const TEXT = '#37352f', MUTED = '#9b9b9b', FAINT = '#d0d0cc';
+
+  const colDefs = [
+    { label: 'Name', w: 320 },
+    { label: 'Status', w: 130 },
+    { label: 'Owner', w: 130 },
+    { label: 'Due Date', w: 120 },
+    { label: 'Priority', w: 110 },
+    { label: 'Tags', w: 200 },
+  ];
+  const colX = colDefs.reduce((acc, c, i) => {
+    acc.push(i === 0 ? 240 : acc[i - 1] + colDefs[i - 1].w);
+    return acc;
+  }, []);
+
+  const dbRows = [
+    { name: 'Redesign onboarding flow', status: '🟢  Done', statusC: '#2ecc71', owner: 'Mia', due: 'Apr 12', pri: '🔴  High', priC: '#e74c3c', tags: 'Design, UX' },
+    { name: 'API rate limiting', status: '🟡  In Progress', statusC: '#f39c12', owner: 'Alex', due: 'Apr 18', pri: '🟠  Med', priC: '#e67e22', tags: 'Engineering' },
+    { name: 'Q2 roadmap review', status: '⚪  Not started', statusC: MUTED, owner: 'Sam', due: 'Apr 25', pri: '🟡  Low', priC: '#f1c40f', tags: 'Strategy' },
+    { name: 'Fix payment webhook bug', status: '🔵  In Review', statusC: '#3498db', owner: 'Kai', due: 'Apr 15', pri: '🔴  High', priC: '#e74c3c', tags: 'Engineering' },
+    { name: 'Write release notes', status: '⚪  Not started', statusC: MUTED, owner: 'Mia', due: 'May 1', pri: '🟡  Low', priC: '#f1c40f', tags: 'Marketing' },
+    { name: 'Customer interview synthesis', status: '🟡  In Progress', statusC: '#f39c12', owner: 'Jo', due: 'Apr 20', pri: '🟠  Med', priC: '#e67e22', tags: 'Research' },
+  ];
+
+  let body = '';
+  // Sidebar
+  body += r(0, 0, 240, H, SIDEBAR);
+  body += line(240, 0, 240, H, BORDER);
+  body += t(16, 28, '🏢  Acme Corp', 13, TEXT, 'start', 600);
+  body += line(0, 40, 240, 40, BORDER);
+  const sidePages = ['🗄️  Projects DB', '📋  Engineering', '📋  Design', '📋  Marketing'];
+  sidePages.forEach((p, i) => {
+    body += r(0, 50 + i * 28, 240, 26, i === 0 ? '#ebebea' : 'transparent');
+    body += t(16, 67 + i * 28, p, 12, i === 0 ? TEXT : MUTED, 'start', i === 0 ? 600 : 400);
+  });
+
+  // Title
+  body += t(260, 36, '🗄️  Projects DB', 18, TEXT, 'start', 700);
+
+  // View tabs + toolbar
+  const views = ['Table', 'Board', 'Timeline', 'Calendar', 'Gallery'];
+  views.forEach((v, i) => {
+    body += r(260 + i * 90, 48, 82, 26, i === 0 ? '#ebebea' : 'transparent', 4);
+    body += t(301 + i * 90, 65, v, 12, i === 0 ? TEXT : MUTED, 'middle', i === 0 ? 600 : 400);
+  });
+
+  // Filter chips
+  body += pill(260, 82, 70, 22, '#ebebea');
+  body += t(295, 96, '🔍 Filter', 11, TEXT, 'middle');
+  body += pill(338, 82, 56, 22, '#ebebea');
+  body += t(366, 96, 'Sort', 11, MUTED, 'middle');
+  body += pill(402, 82, 110, 22, '#dbeafe');
+  body += t(457, 96, '● Status: Active', 10, '#1d4ed8', 'middle');
+  body += t(502, 96, '×', 11, '#1d4ed8', 'start');
+
+  // Table header
+  body += r(240, 112, W - 240, 32, SIDEBAR);
+  body += line(240, 112, W, 112, BORDER);
+  body += line(240, 144, W, 144, BORDER);
+  colDefs.forEach((col, i) => {
+    body += t(colX[i] + 8, 132, col.label, 11, MUTED, 'start', 600);
+    if (i < colDefs.length - 1) body += line(colX[i] + col.w, 112, colX[i] + col.w, H, BORDER);
+  });
+
+  // Table rows
+  dbRows.forEach((row, ri) => {
+    const y = 144 + ri * 40;
+    body += r(240, y, W - 240, 40, ri % 2 === 0 ? '#fff' : '#fafaf9');
+    body += line(240, y + 40, W, y + 40, BORDER);
+    body += t(colX[0] + 8, y + 25, row.name, 13, TEXT, 'start', 500);
+    body += t(colX[1] + 8, y + 25, row.status, 12, row.statusC, 'start');
+    body += t(colX[2] + 8, y + 25, row.owner, 12, MUTED, 'start');
+    body += t(colX[3] + 8, y + 25, row.due, 12, MUTED, 'start');
+    body += t(colX[4] + 8, y + 25, row.pri, 12, row.priC, 'start');
+    // Tags as pill(s)
+    row.tags.split(', ').forEach((tag, ti) => {
+      body += pill(colX[5] + 8 + ti * 90, y + 12, 84, 18, '#f1f5f9');
+      body += t(colX[5] + 50 + ti * 90, y + 24, tag, 10, '#64748b', 'middle');
+    });
+  });
+
+  // Add row
+  const addY = 144 + dbRows.length * 40;
+  body += r(240, addY, W - 240, 32, '#fff');
+  body += line(240, addY + 32, W, addY + 32, BORDER);
+  body += t(260, addY + 21, '+ New', 12, MUTED);
+
+  return svg(body, BG);
+}
+
+// ── NOTION SIDEBAR ────────────────────────────────────────────────────────
+function notionSidebar() {
+  const BG = '#ffffff', SIDEBAR = '#f7f7f5', BORDER = '#e9e9e7';
+  const TEXT = '#37352f', MUTED = '#9b9b9b', ORANGE = '#E8572A';
+
+  let body = '';
+  // Wide sidebar context
+  body += r(0, 0, 320, H, SIDEBAR);
+  body += line(320, 0, 320, H, BORDER);
+
+  // Workspace
+  body += r(0, 0, 320, 48, SIDEBAR);
+  body += line(0, 48, 320, 48, BORDER);
+  body += circle(20, 24, 12, '#635BFF');
+  body += t(20, 28, 'A', 11, '#fff', 'middle', 700);
+  body += t(38, 28, 'Acme Corp', 13, TEXT, 'start', 600);
+  body += t(300, 28, '···', 14, MUTED, 'end');
+
+  // Search
+  body += r(8, 56, 304, 28, '#ebebea', 4);
+  body += t(20, 74, '🔍  Quick Find          ⌘K', 12, MUTED, 'start');
+
+  // Nav
+  ['🏠  Home', '📥  Inbox  (3)', '⚙️  Settings & Members'].forEach((n, i) => {
+    body += t(16, 106 + i * 28, n, 12, MUTED, 'start');
+  });
+
+  body += line(0, 192, 320, 192, BORDER);
+
+  // Teamspaces section
+  body += t(12, 210, 'TEAMSPACES', 9, MUTED, 'start', 700);
+
+  const ts = [
+    { icon: '📋', name: 'Engineering', depth: 0, open: true },
+    { icon: '📄', name: 'Roadmap Q2', depth: 1 },
     { icon: '🗄️', name: 'Sprint Tracker', depth: 1 },
+    { icon: '📄', name: 'Architecture', depth: 1 },
     { icon: '📋', name: 'Design', depth: 0, open: true },
     { icon: '📄', name: 'Design System', depth: 1 },
-    { icon: '📄', name: 'Brand Guidelines', depth: 1 },
+    { icon: '📄', name: 'Brand Guide', depth: 1, active: true },
     { icon: '📋', name: 'Marketing', depth: 0 },
-  ].map(({ icon, name, depth, open }, i) => `
-    ${rect(0, 126 + i * 30, 320, 30, i === 1 ? '#ebebea' : 'transparent', 0)}
-    ${text(12 + depth * 16, 145 + i * 30, open !== undefined ? (open ? '▼' : '▶') : '', 9, '#aaa')}
-    ${text(28 + depth * 16, 145 + i * 30, `${icon} ${name}`, 12, depth === 0 ? '#333' : '#666', 'start', depth === 0 ? 600 : 400)}
-  `).join('')}
-  <!-- Private section -->
-  ${rect(0, 380, 320, 1, '#e9e9e7')}
-  ${text(12, 402, '▲ PRIVATE', 9, '#aaa', 'start', 700)}
-  ${[
-    { icon: '📝', name: 'My Notes', depth: 0 },
-    { icon: '✅', name: 'Personal Tasks', depth: 0 },
-    { icon: '📎', name: 'Reading List', depth: 0 },
-  ].map(({ icon, name }, i) => `
-    ${text(28, 426 + i * 30, `${icon} ${name}`, 12, '#666', 'start')}
-  `).join('')}
-  <!-- Add new -->
-  ${rect(8, 530, 304, 28, 'transparent', 4)}
-  ${text(20, 548, '+ New page', 12, '#aaa')}
-  <!-- Main area preview -->
-  ${rect(340, 60, 800, 24, '#e0e0e0', 4)}
-  ${rect(340, 100, 600, 14, '#e0e0e0', 4)}
-  ${[130, 150, 170].map(y => rect(340, y, 500 - y + 130, 10, '#ececec', 3)).join('')}
-  ${text(720, 855, 'Notion · Sidebar', 13, '#ccc', 'middle')}
-</svg>`;
+    { icon: '📋', name: 'Finance', depth: 0 },
+  ];
+  ts.forEach((p, i) => {
+    const y = 220 + i * 30;
+    if (p.active) body += r(0, y - 2, 320, 26, '#ebebea');
+    body += t(10 + p.depth * 14, y + 14, p.open ? '▾' : '▸', 9, MUTED, 'start');
+    body += t(24 + p.depth * 14, y + 14, `${p.icon}  ${p.name}`, 12, p.active ? TEXT : MUTED, 'start', p.active ? 600 : 400);
+    // Hover actions (shown on active)
+    if (p.active) {
+      body += t(290, y + 14, '+ ···', 11, MUTED, 'end');
+    }
+  });
+
+  // Private section
+  body += line(0, 506, 320, 506, BORDER);
+  body += t(12, 524, 'PRIVATE', 9, MUTED, 'start', 700);
+
+  const priv = [
+    { icon: '📝', name: 'My Notes' },
+    { icon: '✅', name: 'Personal Tasks' },
+    { icon: '📎', name: 'Reading List' },
+  ];
+  priv.forEach((p, i) => {
+    body += t(24, 540 + i * 30, `${p.icon}  ${p.name}`, 12, MUTED, 'start');
+  });
+
+  // Add new page
+  body += r(8, 638, 304, 28, 'transparent', 4);
+  body += t(16, 656, '+ Add a page', 12, MUTED, 'start');
+
+  // Main content preview (right of sidebar)
+  body += r(320, 0, W - 320, H, '#ffffff');
+  body += r(320, 0, W - 320, 56, SIDEBAR);
+  body += line(320, 56, W, 56, BORDER);
+  body += t(340, 32, '📄  Brand Guide', 14, TEXT, 'start', 600);
+
+  // Page content
+  body += r(400, 100, 600, 20, TEXT, 4);
+  body += r(400, 136, 520, 12, '#d0d0cc', 4);
+  body += r(400, 156, 480, 10, '#d8d8d5', 4);
+  body += r(400, 174, 540, 10, '#d0d0cc', 4);
+  body += r(400, 204, 300, 14, TEXT, 4);
+  body += r(400, 226, 560, 10, '#d8d8d5', 4);
+  body += r(400, 244, 440, 10, '#d0d0cc', 4);
+
+  return svg(body, BG);
 }
 
-// ─── Stripe: Dashboard ────────────────────────────────────────────────────
+// ── STRIPE DASHBOARD ──────────────────────────────────────────────────────
+function stripeDashboard() {
+  const NAV_BG = '#0a2540', BG = '#f6f9fc', CARD = '#ffffff';
+  const BORDER = '#e0e6eb', TEXT = '#0a2540', MUTED = '#6b7c93';
+  const PURPLE = '#635BFF', GREEN = '#09825d', LIGHT_PURPLE = '#f5f4ff';
 
-function stripeDashboardSVG() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, '#f6f9fc')}
-  <!-- Left nav -->
-  ${rect(0, 0, 200, 900, '#0a2540')}
-  ${text(16, 36, '⚡ stripe', 18, '#635BFF', 'start', 800)}
-  ${['Overview', 'Payments', 'Customers', 'Products', 'Reports', 'Radar', 'Connect', 'Billing', 'Issuing', 'Terminal'].map((item, i) => `
-    ${rect(0, 60 + i * 40, 200, 36, i === 0 ? 'rgba(255,255,255,0.1)' : 'transparent', 0)}
-    ${text(16, 82 + i * 40, item, 12, i === 0 ? '#fff' : '#94a3b8', 'start', i === 0 ? 600 : 400)}
-  `).join('')}
-  <!-- Top header -->
-  ${rect(200, 0, 1240, 52, '#fff')}
-  ${rect(200, 52, 1240, 1, '#e0e0e0')}
-  ${text(220, 30, 'Overview', 16, '#0a2540', 'start', 600)}
-  ${pill(1200, 14, 120, 24, '#635BFF')}
-  ${text(1260, 30, '+ New', 12, '#fff', 'middle', 600)}
-  <!-- Metric cards -->
-  ${[
-    { label: 'Gross volume', val: '€24,831', change: '+18%', x: 220 },
-    { label: 'Net volume', val: '€22,140', change: '+14%', x: 530 },
-    { label: 'New customers', val: '143', change: '+32%', x: 840 },
-  ].map(({ label, val, change, x }) => `
-    ${rect(x, 72, 290, 100, '#fff', 8)}
-    ${text(x + 16, 98, label, 11, '#6b7280', 'start')}
-    ${text(x + 16, 128, val, 22, '#0a2540', 'start', 700)}
-    ${pill(x + 16, 140, 56, 18, '#dcfce7')}
-    ${text(x + 44, 152, change, 11, '#16a34a', 'middle', 600)}
-  `).join('')}
-  <!-- Revenue chart -->
-  ${rect(220, 190, 880, 280, '#fff', 8)}
-  ${text(236, 216, 'Gross volume', 12, '#6b7280', 'start', 600)}
-  ${text(236, 232, '€24,831', 20, '#0a2540', 'start', 700)}
-  <!-- Chart bars -->
-  ${Array.from({length: 28}, (_, i) => {
-    const h = 40 + Math.abs(Math.sin(i * 0.7) * 160);
-    return rect(248 + i * 30, 430 - h, 22, h, '#635BFF', 3) +
-           rect(248 + i * 30, 430 - h, 22, h, 'rgba(99,91,255,0.2)', 3);
-  }).join('')}
-  ${rect(220, 440, 880, 1, '#e0e0e0')}
-  <!-- Recent activity -->
-  ${rect(1120, 72, 300, 400, '#fff', 8)}
-  ${text(1136, 98, 'Recent activity', 12, '#6b7280', 'start', 600)}
-  ${Array.from({length: 6}, (_, i) => `
-    ${rect(1136, 112 + i * 56, 268, 48, '#f8fafc', 4)}
-    ${text(1152, 134 + i * 56, `Card payment`, 12, '#0a2540', 'start')}
-    ${text(1152, 150 + i * 56, `€${(120 + i * 37).toFixed(2)}`, 11, '#6b7280', 'start')}
-    ${text(1380, 134 + i * 56, `${i + 1}m ago`, 11, '#6b7280', 'end')}
-  `).join('')}
-  ${text(720, 855, 'Stripe · Dashboard', 13, '#bbb', 'middle')}
-</svg>`;
+  let body = '';
+  // Left nav
+  body += r(0, 0, 200, H, NAV_BG);
+  // Logo
+  body += t(24, 38, '⚡', 20, PURPLE, 'start');
+  body += t(48, 38, 'stripe', 18, '#fff', 'start', 700);
+
+  const navItems = [
+    { label: 'Overview', active: true },
+    { label: 'Payments' },
+    { label: 'Customers' },
+    { label: 'Products' },
+    { label: 'Reports' },
+    { label: 'Radar' },
+    { label: 'Connect' },
+    { label: 'Billing' },
+    { label: 'Issuing' },
+    { label: 'Terminal' },
+  ];
+  navItems.forEach((n, i) => {
+    if (n.active) body += r(0, 58 + i * 42, 200, 36, 'rgba(255,255,255,0.1)');
+    body += t(20, 80 + i * 42, n.label, 13, n.active ? '#fff' : '#8898aa', 'start', n.active ? 600 : 400);
+  });
+
+  // Top bar
+  body += r(200, 0, W - 200, 52, CARD);
+  body += line(200, 52, W, 52, BORDER);
+  body += t(220, 30, 'Overview', 17, TEXT, 'start', 600);
+  // Date range selector
+  body += r(W - 260, 14, 140, 24, '#f6f9fc', 4);
+  body += line(W - 260, 14, W - 120, 14, BORDER);
+  body += t(W - 192, 29, 'Last 30 days  ▾', 12, MUTED, 'middle');
+  // New button
+  body += pill(W - 110, 14, 90, 24, PURPLE);
+  body += t(W - 65, 29, '+ New', 12, '#fff', 'middle', 600);
+
+  // Metric cards
+  const metrics = [
+    { label: 'Gross volume', val: '€24,831', change: '+18%', cx: 220 },
+    { label: 'Net volume',   val: '€22,140', change: '+14%', cx: 530 },
+    { label: 'New customers', val: '143',    change: '+32%', cx: 840 },
+  ];
+  metrics.forEach(m => {
+    body += r(m.cx, 68, 290, 100, CARD, 6);
+    body += line(m.cx, 68, m.cx + 290, 68, BORDER);
+    body += line(m.cx, 168, m.cx + 290, 168, BORDER);
+    body += line(m.cx, 68, m.cx, 168, BORDER);
+    body += line(m.cx + 290, 68, m.cx + 290, 168, BORDER);
+    body += t(m.cx + 14, 92, m.label, 11, MUTED, 'start');
+    body += t(m.cx + 14, 128, m.val, 24, TEXT, 'start', 700);
+    body += pill(m.cx + 14, 140, 54, 20, '#ecfdf3');
+    body += t(m.cx + 41, 153, m.change, 11, '#16a34a', 'middle', 600);
+  });
+
+  // Revenue chart
+  body += r(220, 178, 880, 300, CARD, 6);
+  body += line(220, 178, 1100, 178, BORDER);
+  body += line(220, 478, 1100, 478, BORDER);
+  body += line(220, 178, 220, 478, BORDER);
+  body += line(1100, 178, 1100, 478, BORDER);
+  body += t(236, 202, 'Gross volume', 12, MUTED, 'start', 500);
+  body += t(236, 228, '€24,831', 22, TEXT, 'start', 700);
+  body += pill(236, 238, 54, 18, '#ecfdf3');
+  body += t(263, 249, '+18%', 10, '#16a34a', 'middle', 600);
+
+  // Chart
+  const chartData = [40, 55, 45, 70, 60, 85, 55, 75, 90, 65, 80, 95, 70, 88, 75, 100, 80, 92, 68, 85, 78, 96, 72, 88, 82, 94, 76, 90, 84, 98];
+  const chartH = 160, chartY = 460, chartX0 = 240, barW = 26;
+  // Area fill
+  let areaPath = `M ${chartX0} ${chartY}`;
+  chartData.forEach((d, i) => {
+    areaPath += ` L ${chartX0 + i * 28 + 13} ${chartY - Math.round(d * chartH / 100)}`;
+  });
+  areaPath += ` L ${chartX0 + (chartData.length - 1) * 28 + 13} ${chartY} Z`;
+  body += `<path d="${areaPath}" fill="${PURPLE}" opacity="0.15"/>`;
+  // Line
+  let linePath = '';
+  chartData.forEach((d, i) => {
+    const cx = chartX0 + i * 28 + 13;
+    const cy = chartY - Math.round(d * chartH / 100);
+    linePath += (i === 0 ? 'M' : 'L') + ` ${cx} ${cy} `;
+  });
+  body += `<path d="${linePath}" fill="none" stroke="${PURPLE}" stroke-width="2"/>`;
+  // X axis labels
+  ['Mar 7','Mar 14','Mar 21','Mar 28','Apr 4'].forEach((lbl, i) => {
+    body += t(chartX0 + i * 6 * 28, chartY + 14, lbl, 9, MUTED, 'start');
+  });
+
+  // Recent activity
+  body += r(1110, 68, 310, 420, CARD, 6);
+  body += line(1110, 68, 1420, 68, BORDER);
+  body += line(1110, 488, 1420, 488, BORDER);
+  body += line(1110, 68, 1110, 488, BORDER);
+  body += line(1420, 68, 1420, 488, BORDER);
+  body += t(1126, 94, 'Recent activity', 12, MUTED, 'start', 600);
+  const txns = [
+    { desc: 'Card payment', amount: '€149.00', time: '1m ago', icon: '💳' },
+    { desc: 'Subscription',  amount: '€49.00',  time: '3m ago', icon: '🔄' },
+    { desc: 'Card payment', amount: '€82.50',  time: '8m ago', icon: '💳' },
+    { desc: 'Card payment', amount: '€220.00', time: '12m ago', icon: '💳' },
+    { desc: 'Refund',        amount: '-€49.00', time: '18m ago', icon: '↩' },
+    { desc: 'Subscription',  amount: '€99.00',  time: '25m ago', icon: '🔄' },
+  ];
+  txns.forEach((tx, i) => {
+    const y = 106 + i * 62;
+    body += r(1126, y, 278, 52, '#f6f9fc', 6);
+    body += t(1138, y + 22, tx.icon, 14, TEXT, 'start');
+    body += t(1158, y + 20, tx.desc, 13, TEXT, 'start', 500);
+    body += t(1158, y + 36, tx.time, 11, MUTED, 'start');
+    body += t(1390, y + 22, tx.amount, 13, tx.amount.startsWith('-') ? '#cf4500' : TEXT, 'end', 600);
+  });
+
+  return svg(body, BG);
 }
 
-// ─── Stripe: Checkout ─────────────────────────────────────────────────────
+// ── STRIPE CHECKOUT ───────────────────────────────────────────────────────
+function stripeCheckout() {
+  const BG = '#f6f9fc', CARD = '#ffffff', BORDER = '#d0d7de';
+  const TEXT = '#0a2540', MUTED = '#6b7c93', PURPLE = '#635BFF';
+  const GREEN = '#09825d', LIGHT_GREEN = '#ecfdf3';
 
-function stripeCheckoutSVG() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, '#f6f9fc')}
-  <!-- Two-column checkout -->
-  ${rect(160, 60, 520, 780, '#fff', 12)}
-  ${rect(720, 60, 560, 780, '#fff', 12)}
-  <!-- Left: Order summary -->
-  ${text(196, 104, 'Order summary', 14, '#0a2540', 'start', 600)}
-  ${rect(196, 120, 448, 120, '#f8fafc', 8)}
-  ${rect(196, 120, 80, 80, '#635BFF', 8)}
-  ${text(292, 160, 'Pro Plan · Monthly', 13, '#0a2540', 'start', 600)}
-  ${text(292, 178, 'Up to 10 users · Unlimited projects', 11, '#6b7280', 'start')}
-  ${text(196, 268, 'Subtotal', 12, '#6b7280', 'start')}
-  ${text(624, 268, '€49.00', 12, '#0a2540', 'end')}
-  ${text(196, 290, 'Tax (20%)', 12, '#6b7280', 'start')}
-  ${text(624, 290, '€9.80', 12, '#0a2540', 'end')}
-  ${rect(196, 304, 448, 1, '#e0e0e0', 0)}
-  ${text(196, 325, 'Total', 14, '#0a2540', 'start', 700)}
-  ${text(624, 325, '€58.80', 16, '#0a2540', 'end', 700)}
-  <!-- Right: Payment form -->
-  ${text(756, 104, 'Payment details', 14, '#0a2540', 'start', 600)}
-  ${text(756, 135, 'Email', 11, '#374151', 'start', 500)}
-  ${rect(756, 148, 488, 36, '#fff', 4)}
-  ${rect(756, 148, 488, 36, '#e0e0e0', 4, 'stroke')}
-  ${text(756, 208, 'Card information', 11, '#374151', 'start', 500)}
-  ${rect(756, 220, 488, 36, '#fff', 4)}
-  ${rect(756, 220, 488, 36, '#635BFF', 4, 'stroke')}
-  ${text(772, 242, '4242 4242 4242 4242', 13, '#0a2540', 'start')}
-  ${rect(756, 258, 236, 36, '#fff', 4)}
-  ${rect(756, 258, 236, 36, '#e0e0e0', 4, 'stroke')}
-  ${text(772, 280, '12/27', 13, '#0a2540', 'start')}
-  ${rect(1004, 258, 240, 36, '#fff', 4)}
-  ${rect(1004, 258, 240, 36, '#e0e0e0', 4, 'stroke')}
-  ${text(1020, 280, 'CVC', 13, '#aaa', 'start')}
-  <!-- Inline error -->
-  ${text(756, 308, '✓ Valid card number', 11, '#16a34a', 'start')}
-  <!-- Submit button -->
-  ${rect(756, 700, 488, 48, '#635BFF', 8)}
-  ${text(1000, 730, 'Pay €58.80', 14, '#fff', 'middle', 700)}
-  ${text(720, 855, 'Stripe · Checkout', 13, '#bbb', 'middle')}
-</svg>`;
+  let body = '';
+  // Two column layout
+  body += r(0, 0, W / 2, H, '#f6f9fc');
+  body += r(W / 2, 0, W / 2, H, '#fff');
+  body += line(W / 2, 0, W / 2, H, BORDER);
+
+  // Left: Order summary
+  body += t(180, 60, 'Order summary', 15, TEXT, 'start', 600);
+
+  // Product card
+  body += r(180, 78, 480, 120, CARD, 8);
+  body += line(180, 78, 660, 78, BORDER); body += line(180, 198, 660, 198, BORDER);
+  body += line(180, 78, 180, 198, BORDER); body += line(660, 78, 660, 198, BORDER);
+  body += r(196, 94, 80, 80, `${PURPLE}33`, 8);
+  body += t(236, 142, '⚡', 28, PURPLE, 'middle');
+  body += t(290, 118, 'Pro Plan · Monthly', 14, TEXT, 'start', 600);
+  body += t(290, 140, 'Up to 10 users', 12, MUTED, 'start');
+  body += t(290, 158, 'Unlimited projects', 12, MUTED, 'start');
+  body += t(640, 118, '€49.00', 14, TEXT, 'end', 600);
+
+  // Line items
+  body += line(180, 216, 660, 216, BORDER);
+  [['Subtotal', '€49.00'], ['Tax (20% VAT)', '€9.80']].forEach(([lbl, val], i) => {
+    body += t(180, 240 + i * 24, lbl, 12, MUTED, 'start');
+    body += t(660, 240 + i * 24, val, 12, MUTED, 'end');
+  });
+  body += line(180, 290, 660, 290, BORDER);
+  body += t(180, 313, 'Total due today', 15, TEXT, 'start', 600);
+  body += t(660, 313, '€58.80', 16, TEXT, 'end', 700);
+
+  // Secure badge
+  body += t(420, 360, '🔒  Powered by Stripe · Secure checkout', 11, MUTED, 'middle');
+
+  // Right: Payment form
+  const fx = W / 2 + 60, fw = W / 2 - 120;
+  body += t(fx, 60, 'Payment details', 15, TEXT, 'start', 600);
+
+  // Email
+  body += t(fx, 94, 'Email address', 11, TEXT, 'start', 500);
+  body += r(fx, 102, fw, 38, CARD, 4);
+  body += `<rect x="${fx}" y="102" width="${fw}" height="38" rx="4" fill="none" stroke="${BORDER}" stroke-width="1.5"/>`;
+  body += t(fx + 12, 125, 'alex@acmecorp.io', 13, TEXT, 'start');
+
+  // Card number
+  body += t(fx, 158, 'Card information', 11, TEXT, 'start', 500);
+  body += r(fx, 166, fw, 40, CARD, 4);
+  body += `<rect x="${fx}" y="166" width="${fw}" height="40" rx="4" fill="none" stroke="${PURPLE}" stroke-width="2"/>`;
+  body += t(fx + 12, 190, '4242  4242  4242  4242', 14, TEXT, 'start', 500);
+  body += t(fx + fw - 12, 190, '💳', 16, MUTED, 'end');
+
+  // Expiry + CVC
+  body += r(fx, 210, fw / 2 - 6, 38, CARD, 4);
+  body += `<rect x="${fx}" y="210" width="${fw / 2 - 6}" height="38" rx="4" fill="none" stroke="${BORDER}" stroke-width="1.5"/>`;
+  body += t(fx + 12, 233, '12 / 27', 13, TEXT, 'start');
+  body += r(fx + fw / 2 + 6, 210, fw / 2 - 6, 38, CARD, 4);
+  body += `<rect x="${fx + fw / 2 + 6}" y="210" width="${fw / 2 - 6}" height="38" rx="4" fill="none" stroke="${BORDER}" stroke-width="1.5"/>`;
+  body += t(fx + fw / 2 + 18, 233, 'CVC', 13, MUTED, 'start');
+
+  // Validation tick
+  body += t(fx, 262, '✓  Valid card number', 11, GREEN, 'start');
+
+  // Cardholder name
+  body += t(fx, 286, 'Cardholder name', 11, TEXT, 'start', 500);
+  body += r(fx, 294, fw, 38, CARD, 4);
+  body += `<rect x="${fx}" y="294" width="${fw}" height="38" rx="4" fill="none" stroke="${BORDER}" stroke-width="1.5"/>`;
+  body += t(fx + 12, 317, 'Alex Chen', 13, TEXT, 'start');
+
+  // Billing address header
+  body += t(fx, 350, 'Billing address', 11, TEXT, 'start', 500);
+  body += r(fx, 358, fw, 38, CARD, 4);
+  body += `<rect x="${fx}" y="358" width="${fw}" height="38" rx="4" fill="none" stroke="${BORDER}" stroke-width="1.5"/>`;
+  body += t(fx + 12, 381, '🇩🇪  Germany', 13, TEXT, 'start');
+
+  // Apple Pay button
+  body += r(fx, 420, fw, 44, '#000', 8);
+  body += t(fx + fw / 2, 447, ' Pay  €58.80', 15, '#fff', 'middle', 600);
+
+  // Divider
+  body += line(fx, 476, fx + fw / 2 - 40, 476, BORDER);
+  body += t(fx + fw / 2, 480, 'or pay with card', 11, MUTED, 'middle');
+  body += line(fx + fw / 2 + 40, 476, fx + fw, 476, BORDER);
+
+  // Submit button
+  body += r(fx, 500, fw, 48, PURPLE, 8);
+  body += r(fx, 528, fw, 20, '#4f46e5', 8);
+  body += t(fx + fw / 2, 529, `Pay €58.80`, 15, '#fff', 'middle', 700);
+
+  body += t(fx + fw / 2, 572, '🔒  Your payment info is encrypted and secure.', 11, MUTED, 'middle');
+
+  return svg(body, BG);
 }
 
-// ─── Stripe: Payment Links ────────────────────────────────────────────────
+// ── STRIPE PAYMENT LINKS ──────────────────────────────────────────────────
+function stripePaymentLinks() {
+  const NAV_BG = '#0a2540', BG = '#f6f9fc', CARD = '#ffffff';
+  const BORDER = '#e0e6eb', TEXT = '#0a2540', MUTED = '#6b7c93';
+  const PURPLE = '#635BFF', LIGHT_PURPLE = '#f5f4ff';
 
-function stripePaymentLinksSVG() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, '#f6f9fc')}
-  ${rect(0, 0, 200, 900, '#0a2540')}
-  ${text(16, 36, '⚡ stripe', 18, '#635BFF', 'start', 800)}
-  ${rect(200, 0, 1240, 52, '#fff')}
-  ${rect(200, 52, 1240, 1, '#e0e0e0')}
-  ${text(220, 30, 'Create payment link', 16, '#0a2540', 'start', 600)}
-  <!-- Form left column -->
-  ${rect(220, 72, 520, 780, '#fff', 8)}
-  ${text(240, 112, 'Product', 11, '#374151', 'start', 600)}
-  ${rect(240, 124, 480, 48, '#f8fafc', 6)}
-  ${text(256, 152, '+ Add product', 13, '#635BFF', 'start')}
-  ${text(240, 192, 'Price', 11, '#374151', 'start', 600)}
-  ${rect(240, 204, 480, 36, '#fff', 4)}
-  ${rect(240, 204, 480, 36, '#e0e0e0', 4)}
-  ${text(256, 226, '€ 49.00', 13, '#0a2540', 'start')}
-  ${text(240, 262, 'Currency', 11, '#374151', 'start', 600)}
-  ${rect(240, 274, 480, 36, '#fff', 4)}
-  ${rect(240, 274, 480, 36, '#e0e0e0', 4)}
-  ${text(256, 296, '🇪🇺  EUR — Euro', 13, '#0a2540', 'start')}
-  ${rect(240, 330, 480, 28, '#f3f4f6', 4)}
-  ${text(256, 348, '▼ Advanced options', 12, '#635BFF', 'start')}
-  ${text(240, 390, 'After payment', 11, '#374151', 'start', 600)}
-  ${['Show confirmation page', 'Redirect to URL', 'Don\'t show anything'].map((opt, i) => `
-    <circle cx="252" cy="${415 + i * 32}" r="7" fill="${i === 0 ? '#635BFF' : '#fff'}" stroke="${i === 0 ? '#635BFF' : '#d0d0d0'}" stroke-width="2"/>
-    ${text(266, 420 + i * 32, opt, 12, '#374151', 'start')}
-  `).join('')}
-  ${rect(240, 720, 480, 44, '#635BFF', 8)}
-  ${text(480, 748, 'Create link', 14, '#fff', 'middle', 700)}
-  <!-- Live preview right -->
-  ${rect(780, 72, 620, 780, '#fff', 8)}
-  ${text(800, 102, 'Preview', 11, '#6b7280', 'start', 600)}
-  ${rect(830, 120, 520, 640, '#f6f9fc', 8)}
-  ${rect(830, 120, 520, 1, '#e0e0e0', 0)}
-  ${text(1090, 172, 'Pro Plan', 18, '#0a2540', 'middle', 700)}
-  ${text(1090, 200, '€49.00 / month', 14, '#6b7280', 'middle')}
-  ${rect(870, 230, 440, 36, '#635BFF', 8)}
-  ${text(1090, 252, 'Subscribe', 13, '#fff', 'middle', 700)}
-  ${text(1090, 290, '— or pay with card —', 11, '#aaa', 'middle')}
-  ${rect(870, 308, 440, 32, '#fff', 4)}
-  ${rect(870, 308, 440, 32, '#e0e0e0', 4)}
-  ${text(886, 328, 'Card number', 11, '#aaa', 'start')}
-  ${text(720, 855, 'Stripe · Payment Links', 13, '#bbb', 'middle')}
-</svg>`;
+  let body = '';
+  // Nav
+  body += r(0, 0, 200, H, NAV_BG);
+  body += t(24, 38, '⚡  stripe', 16, '#fff', 'start', 700);
+  ['Overview','Payments','Payment Links','Customers','Products'].forEach((n, i) => {
+    if (i === 2) body += r(0, 62 + i * 42, 200, 36, 'rgba(255,255,255,0.1)');
+    body += t(20, 84 + i * 42, n, 13, i === 2 ? '#fff' : '#8898aa', 'start', i === 2 ? 600 : 400);
+  });
+
+  // Top bar
+  body += r(200, 0, W - 200, 52, CARD);
+  body += line(200, 52, W, 52, BORDER);
+  body += t(220, 30, 'Create payment link', 16, TEXT, 'start', 600);
+
+  // Form panel (left)
+  body += r(220, 68, 520, H - 88, CARD, 8);
+  body += line(220, 68, 740, 68, BORDER);
+  body += line(220, H - 20, 740, H - 20, BORDER);
+  body += line(220, 68, 220, H - 20, BORDER);
+  body += line(740, 68, 740, H - 20, BORDER);
+
+  // Form fields
+  const formFields = [
+    { label: 'Product', val: 'Pro Plan — €49/month', icon: '📦' },
+    { label: 'Price', val: '€  49.00' },
+    { label: 'Currency', val: '🇪🇺  EUR — Euro' },
+    { label: 'Billing period', val: 'Monthly  ▾' },
+  ];
+  formFields.forEach((f, i) => {
+    const y = 92 + i * 64;
+    body += t(244, y, f.label, 11, TEXT, 'start', 500);
+    body += r(244, y + 8, 472, 36, '#f6f9fc', 4);
+    body += `<rect x="244" y="${y + 8}" width="472" height="36" rx="4" fill="none" stroke="${BORDER}" stroke-width="1.5"/>`;
+    body += t(258, y + 30, f.val, 13, TEXT, 'start');
+  });
+
+  // Advanced options
+  body += r(244, 364, 472, 32, LIGHT_PURPLE, 4);
+  body += t(480, 384, '▼  Advanced options', 12, PURPLE, 'middle');
+
+  // After payment
+  body += t(244, 422, 'After payment', 11, TEXT, 'start', 500);
+  const radioOpts = ['Show confirmation page', 'Redirect to URL', 'Don\'t show anything'];
+  radioOpts.forEach((opt, i) => {
+    body += `<circle cx="256" cy="${440 + i * 30}" r="7" fill="${i === 0 ? PURPLE : '#fff'}" stroke="${i === 0 ? PURPLE : BORDER}" stroke-width="2"/>`;
+    if (i === 0) body += circle(256, 440, 3, '#fff');
+    body += t(270, 445 + i * 30, opt, 12, TEXT, 'start');
+  });
+
+  // CTA
+  body += r(244, H - 76, 472, 48, PURPLE, 8);
+  body += r(244, H - 48, 472, 20, '#4f46e5', 8);
+  body += t(480, H - 44, 'Create link', 15, '#fff', 'middle', 700);
+
+  // Live preview (right panel)
+  body += r(760, 68, W - 780, H - 88, CARD, 8);
+  body += line(760, 68, W - 20, 68, BORDER);
+  body += line(760, H - 20, W - 20, H - 20, BORDER);
+  body += line(760, 68, 760, H - 20, BORDER);
+  body += line(W - 20, 68, W - 20, H - 20, BORDER);
+  body += t(780, 96, 'Preview', 11, MUTED, 'start', 600);
+
+  // Checkout preview mock
+  const px = 840, pw = W - 900;
+  body += r(px, 112, pw, H - 152, '#f6f9fc', 8);
+  body += line(px, 112, px + pw, 112, BORDER);
+  body += line(px, H - 40, px + pw, H - 40, BORDER);
+  body += line(px, 112, px, H - 40, BORDER);
+  body += line(px + pw, 112, px + pw, H - 40, BORDER);
+
+  // Preview content
+  body += t(px + pw / 2, 152, '⚡', 24, PURPLE, 'middle');
+  body += t(px + pw / 2, 194, 'Pro Plan', 18, TEXT, 'middle', 700);
+  body += t(px + pw / 2, 218, '€49.00 / month', 13, MUTED, 'middle');
+  body += r(px + 24, 234, pw - 48, 40, '#000', 8);
+  body += t(px + pw / 2, 259,  ' Pay  €49.00', 13, '#fff', 'middle', 600);
+  body += line(px + 24, 288, px + pw / 2 - 30, 288, BORDER);
+  body += t(px + pw / 2, 292, 'or', 10, MUTED, 'middle');
+  body += line(px + pw / 2 + 20, 288, px + pw - 24, 288, BORDER);
+  // Mini card form
+  body += r(px + 24, 304, pw - 48, 30, CARD, 4);
+  body += `<rect x="${px + 24}" y="304" width="${pw - 48}" height="30" rx="4" fill="none" stroke="${BORDER}" stroke-width="1.5"/>`;
+  body += t(px + 36, 323, 'Card number', 11, MUTED, 'start');
+  body += r(px + 24, 342, (pw - 56) / 2, 28, CARD, 4);
+  body += `<rect x="${px + 24}" y="342" width="${(pw - 56) / 2}" height="28" rx="4" fill="none" stroke="${BORDER}" stroke-width="1.5"/>`;
+  body += r(px + 32 + (pw - 56) / 2, 342, (pw - 56) / 2, 28, CARD, 4);
+  body += `<rect x="${px + 32 + (pw - 56) / 2}" y="342" width="${(pw - 56) / 2}" height="28" rx="4" fill="none" stroke="${BORDER}" stroke-width="1.5"/>`;
+  body += r(px + 24, 378, pw - 48, 40, PURPLE, 8);
+  body += t(px + pw / 2, 403, 'Subscribe', 13, '#fff', 'middle', 700);
+  body += t(px + pw / 2, 438, '🔒  Secure checkout by Stripe', 10, MUTED, 'middle');
+
+  return svg(body, BG);
 }
 
-// ─── Generic fallback ──────────────────────────────────────────────────────
-
+// ── Generic fallback ───────────────────────────────────────────────────────
 function genericSVG(screen) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
-  ${rect(0, 0, 1440, 900, SURFACE)}
-  ${text(720, 440, screen.label, 24, MUTED, 'middle', 600)}
-  ${text(720, 472, 'Run scripts/fetch-screenshots.js to capture real screenshots', 13, FAINT, 'middle')}
-</svg>`;
+  return svg(
+    t(W / 2, H / 2, screen.label, 24, '#444450', 'middle', 600) +
+    t(W / 2, H / 2 + 32, 'Run scripts/fetch-screenshots.js for real screenshots', 13, '#35353c', 'middle'),
+    '#0f0f10'
+  );
 }
 
 function renderPanel(screen, annotation, navigate, appId) {
