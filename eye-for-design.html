@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eye for Design — UX Teardowns</title>
+  <style>
+/* ─── Design Tokens ─────────────────────────────────────────────────────── */
+:root {
+  --app-accent: #5E6AD2;
+
+  --bg: #0f0f10;
+  --surface: #1a1a1d;
+  --surface-2: #242428;
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #e8e8ea;
+  --text-muted: #8a8a90;
+  --text-faint: #55555c;
+
+  --nav-h: 52px;
+  --screen-nav-h: 44px;
+  --panel-w: 380px;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+img { display: block; }
+
+/* ─── App Nav ────────────────────────────────────────────────────────────── */
+.app-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  background: rgba(15, 15, 16, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.brand svg { opacity: 0.6; }
+
+.app-switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.app-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.app-tab:hover { color: var(--text); background: var(--surface-2); }
+
+.app-tab.active {
+  color: var(--app-accent);
+  background: color-mix(in srgb, var(--app-accent) 12%, transparent);
+}
+
+.app-tab .app-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ─── Screen Nav ─────────────────────────────────────────────────────────── */
+.screen-nav-wrapper {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 90;
+  background: rgba(15, 15, 16, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+}
+
+.screen-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: var(--screen-nav-h);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.screen-nav::-webkit-scrollbar { display: none; }
+
+.screen-tab {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color 0.15s, background 0.15s;
+  position: relative;
+}
+
+.screen-tab:hover { color: var(--text); background: var(--surface-2); }
+
+.screen-tab.active {
+  color: var(--text);
+}
+
+.screen-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 14px;
+  right: 14px;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--app-accent);
+  transform: translateY(calc(var(--screen-nav-h) / 2 - 6px));
+}
+
+/* ─── Main Layout ────────────────────────────────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr var(--panel-w);
+  min-height: calc(100vh - var(--nav-h) - var(--screen-nav-h));
+}
+
+/* ─── Viewer ─────────────────────────────────────────────────────────────── */
+.viewer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.viewer-context {
+  font-size: 12px;
+  color: var(--text-faint);
+  min-height: 18px;
+  font-style: italic;
+}
+
+.viewer-frame {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.viewer-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  transition: opacity 0.3s ease;
+}
+
+.viewer-frame img.loading { opacity: 0; }
+
+.viewer-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--surface) 25%,
+    var(--surface-2) 50%,
+    var(--surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: var(--radius-lg);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.viewer-skeleton.hidden { opacity: 0; pointer-events: none; }
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── Callout Markers ────────────────────────────────────────────────────── */
+.callout-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--app-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.15s var(--ease-out), box-shadow 0.15s ease;
+  z-index: 10;
+  letter-spacing: -0.3px;
+}
+
+.callout-marker:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.callout-marker.active {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.callout-marker.active::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 2px solid var(--app-accent);
+  animation: pulse-ring 1.4s var(--ease-out) infinite;
+}
+
+@keyframes pulse-ring {
+  0%   { opacity: 0.7; transform: scale(0.9); }
+  100% { opacity: 0;   transform: scale(1.6); }
+}
+
+/* ─── Side Panel ─────────────────────────────────────────────────────────── */
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border);
+  height: calc(100vh - var(--nav-h) - var(--screen-nav-h));
+  position: sticky;
+  top: calc(var(--nav-h) + var(--screen-nav-h));
+  overflow: hidden;
+}
+
+/* Detail zone */
+.panel-detail {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.panel-empty-state {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  padding: 24px;
+}
+
+.panel-empty-state p {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 220px;
+  line-height: 1.6;
+}
+
+.panel-annotation-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--app-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-bottom: 12px;
+}
+
+.panel-annotation-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.panel-annotation-analysis {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.panel-principles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.principle-tag {
+  padding: 3px 9px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 500;
+  background: color-mix(in srgb, var(--app-accent) 15%, transparent);
+  color: var(--app-accent);
+  border: 1px solid color-mix(in srgb, var(--app-accent) 25%, transparent);
+}
+
+.panel-sources {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+
+.panel-sources-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+}
+
+.source-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 4px 0;
+  transition: color 0.15s;
+}
+
+.source-link:hover { color: var(--app-accent); }
+
+.source-link::before {
+  content: '↗';
+  font-size: 11px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* Index zone */
+.panel-index {
+  border-top: 1px solid var(--border);
+  overflow-y: auto;
+  max-height: 240px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.panel-index-header {
+  padding: 12px 16px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+}
+
+.annotation-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  text-align: left;
+  border-radius: 0;
+  transition: background 0.12s;
+  cursor: pointer;
+}
+
+.annotation-item:hover { background: var(--surface); }
+
+.annotation-item.active { background: color-mix(in srgb, var(--app-accent) 8%, transparent); }
+
+.annotation-item-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--app-accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+
+.annotation-item.active .annotation-item-num { opacity: 1; }
+
+.annotation-item-title {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.3;
+  transition: color 0.12s;
+}
+
+.annotation-item.active .annotation-item-title,
+.annotation-item:hover .annotation-item-title { color: var(--text); }
+
+/* ─── Accent Color Transition ────────────────────────────────────────────── */
+:root { transition: --app-accent 0.3s ease; }
+
+/* ─── Reduced Motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .callout-marker,
+  .callout-marker::after,
+  .viewer-skeleton,
+  .viewer-frame img { transition: none; animation: none; }
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .side-panel {
+    position: static;
+    height: auto;
+    max-height: 50vh;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .panel-index { max-height: 180px; }
+
+  :root { --panel-w: 0px; }
+}
+
+  </style>
+</head>
+<body>
+
+  <header class="app-nav" id="app-nav">
+    <a class="brand" href="#">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="10" cy="10" r="3.5" fill="currentColor"/>
+        <line x1="10" y1="1" x2="10" y2="4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="10" y1="15.5" x2="10" y2="19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="1" y1="10" x2="4.5" y2="10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="15.5" y1="10" x2="19" y2="10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Eye for Design
+    </a>
+    <nav class="app-switcher" id="app-switcher" aria-label="App switcher"></nav>
+  </header>
+
+  <div class="screen-nav-wrapper">
+    <nav class="screen-nav" id="screen-nav" aria-label="Screen navigation"></nav>
+  </div>
+
+  <main class="layout">
+    <div class="viewer-column">
+      <div class="viewer-context" id="viewer-context"></div>
+      <div class="viewer-frame" id="viewer-frame">
+        <img id="viewer-img" src="" alt="App screenshot" />
+        <div class="viewer-skeleton" id="viewer-skeleton" aria-hidden="true"></div>
+      </div>
+    </div>
+    <aside class="side-panel" id="side-panel">
+      <div class="panel-detail" id="panel-detail">
+        <div class="panel-empty-state">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <circle cx="20" cy="20" r="16" stroke="var(--app-accent)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+            <circle cx="20" cy="20" r="6" fill="var(--app-accent)" opacity="0.2"/>
+            <text x="20" y="24" text-anchor="middle" font-size="10" font-weight="700" fill="var(--app-accent)" opacity="0.8" font-family="system-ui,sans-serif">1</text>
+          </svg>
+          <p>Click a numbered marker on the screenshot to explore the UX decision behind it.</p>
+        </div>
+      </div>
+      <div class="panel-index" id="panel-index"></div>
+    </aside>
+  </main>
+
+  <script>
+(function () {
+'use strict';
+
+// ── Data files ─────────────────────────────────────────────────────────────
+
+const linearData = {
+  id: 'linear',
+  name: 'Linear',
+  tagline: 'Issue tracking built for speed',
+  accentColor: '#5E6AD2',
+  screens: [
+    {
+      id: 'inbox',
+      label: 'Inbox',
+      imageUrl: 'assets/screenshots/linear/inbox.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'The first screen users land on — surfaces unread notifications and action items without requiring navigation.',
+      annotations: [
+        {
+          id: 'linear-inbox-1',
+          x: 6.5,
+          y: 38,
+          label: '1',
+          title: 'Icon-only sidebar at rest',
+          analysis: 'Linear collapses the global sidebar to icon-only by default. This is a deliberate application of progressive disclosure: the full labels are available via hover or expanding the rail, but hidden until needed. The result is more horizontal room for the content that actually matters — the issue list — without losing navigational orientation. Users who know where they are don\'t need the label; those who are learning can hover to reveal it.',
+          sources: [
+            { label: 'NNG: Progressive Disclosure', url: 'https://www.nngroup.com/articles/progressive-disclosure/' },
+            { label: 'NNG: Icon Usability', url: 'https://www.nngroup.com/articles/icon-usability/' }
+          ],
+          principles: ['Progressive Disclosure', 'Spatial Memory', 'Visual Hierarchy']
+        },
+        {
+          id: 'linear-inbox-2',
+          x: 50,
+          y: 12,
+          label: '2',
+          title: 'Grouped, scannable notification rows',
+          analysis: 'Inbox items are grouped by issue, not by notification type. This matches how a developer\'s mental model works: "what happened to issue ENG-412?" rather than "what did Alice comment on?". Each row shows just enough — title, actor, timestamp — and relies on a single click to expand. This is Miller\'s Law in practice: chunking related signals into one scannable row rather than exploding them into separate items.',
+          sources: [
+            { label: 'Laws of UX: Miller\'s Law', url: 'https://lawsofux.com/millers-law/' },
+            { label: 'NNG: Chunking', url: 'https://www.nngroup.com/articles/chunking/' }
+          ],
+          principles: ['Miller\'s Law', 'Information Scent', 'Cognitive Load']
+        },
+        {
+          id: 'linear-inbox-3',
+          x: 88,
+          y: 19,
+          label: '3',
+          title: 'Done / Archive actions at the row level',
+          analysis: 'Hovering a notification reveals "Done" and "Snooze" actions inline, without a modal or separate page. This is direct manipulation: the action lives where the object lives. Linear avoids the common antipattern of sending users to a separate "notification settings" page to triage their inbox. The Doherty Threshold (< 400ms response time) is met because the action is instant and the item disappears immediately, giving satisfying closure.',
+          sources: [
+            { label: 'Laws of UX: Doherty Threshold', url: 'https://lawsofux.com/doherty-threshold/' },
+            { label: 'NNG: Direct Manipulation', url: 'https://www.nngroup.com/articles/direct-manipulation/' }
+          ],
+          principles: ['Direct Manipulation', 'Doherty Threshold', 'Efficiency']
+        },
+        {
+          id: 'linear-inbox-4',
+          x: 50,
+          y: 96,
+          label: '4',
+          title: '⌘K command palette hint',
+          analysis: 'The keyboard shortcut hint is persistently visible at the bottom of the UI — a quiet but powerful teacher. Rather than burying power-user features in a help doc or onboarding modal, Linear surfaces them at the moment the user has run out of content to look at (the bottom). This is sometimes called "progressive onboarding": the system teaches as the user gains confidence, not before.',
+          sources: [
+            { label: 'NNG: Progressive Disclosure in Interfaces', url: 'https://www.nngroup.com/articles/progressive-disclosure/' }
+          ],
+          principles: ['Progressive Disclosure', 'Learnability', 'Expert Efficiency']
+        }
+      ]
+    },
+    {
+      id: 'issues',
+      label: 'Issue Detail',
+      imageUrl: 'assets/screenshots/linear/issues.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'The core workspace — where teams spend the majority of their time writing, triaging, and updating issues.',
+      annotations: [
+        {
+          id: 'linear-issues-1',
+          x: 72,
+          y: 18,
+          label: '1',
+          title: 'Metadata in a right-rail, not inline',
+          analysis: 'Status, priority, assignee, cycle, and label all live in a structured right column, never interrupting the prose of the issue description. This respects the "F-pattern" reading behavior: users scan the left side for the narrative, and look right only when they need to act on metadata. Mixing metadata inline with prose (as many tools do) forces eye movement that breaks reading flow.',
+          sources: [
+            { label: 'NNG: F-Pattern Scanning', url: 'https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/' },
+            { label: 'NNG: Layered Information Architecture', url: 'https://www.nngroup.com/articles/ia-vs-navigation/' }
+          ],
+          principles: ['F-Pattern', 'Visual Hierarchy', 'Cognitive Load']
+        },
+        {
+          id: 'linear-issues-2',
+          x: 35,
+          y: 35,
+          label: '2',
+          title: 'Markdown-rendered description',
+          analysis: 'The issue body renders markdown immediately — no "preview" tab required. This is a common but important UX decision: forcing users into a separate preview mode adds friction and breaks the creative flow of writing. Rendering inline signals that the product trusts users and respects their time. The editing affordance (pencil icon) appears on hover, keeping the surface clean at rest.',
+          sources: [
+            { label: 'NNG: Efficiency of Use', url: 'https://www.nngroup.com/articles/efficiency-vs-effectiveness/' }
+          ],
+          principles: ['Efficiency', 'Direct Manipulation', 'WYSIWYG']
+        },
+        {
+          id: 'linear-issues-3',
+          x: 72,
+          y: 55,
+          label: '3',
+          title: 'Compact status selector',
+          analysis: 'Clicking "Status" opens a small dropdown with all states, not a modal. Each state has a distinct icon shape and color, not just a label — this is redundant coding, where both color and shape carry the same meaning. This matters for accessibility and for glanceability: users can distinguish "In Progress" from "Done" even while focused elsewhere on the page.',
+          sources: [
+            { label: 'NNG: Redundant Coding', url: 'https://www.nngroup.com/articles/color-enhance-design/' }
+          ],
+          principles: ['Redundant Coding', 'Accessibility', 'Fitts\'s Law']
+        },
+        {
+          id: 'linear-issues-4',
+          x: 35,
+          y: 80,
+          label: '4',
+          title: 'Activity log with comment thread',
+          analysis: 'All changes — status updates, assignments, comments — appear in a single chronological log. This gives the issue a full audit trail without separate tabs for "history" and "comments". Users can follow the narrative of an issue\'s life without switching contexts. The mild visual distinction between automated events (status changed) and human comments (avatar-led) maintains parsability.',
+          sources: [
+            { label: 'NNG: Visibility of System Status', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
+          ],
+          principles: ['Visibility of System Status', 'Audit Trail', 'Narrative Cohesion']
+        }
+      ]
+    },
+    {
+      id: 'cycles',
+      label: 'Cycles',
+      imageUrl: 'assets/screenshots/linear/cycles.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'Linear\'s version of sprints — designed to feel lighter-weight and less ceremonial than traditional sprint tooling.',
+      annotations: [
+        {
+          id: 'linear-cycles-1',
+          x: 50,
+          y: 22,
+          label: '1',
+          title: 'Progress bar as primary status signal',
+          analysis: 'Each cycle has a prominent horizontal progress bar showing completion percentage. This is a direct application of the Gestalt principle of continuity — the bar is pre-attentive: users grasp the state of the cycle before they\'ve consciously processed any text. Status numbers (12/28 issues) appear alongside but are secondary to the visual.',
+          sources: [
+            { label: 'Laws of UX: Pre-attentive Processing', url: 'https://lawsofux.com/aesthetic-usability-effect/' },
+            { label: 'NNG: Data Visualization', url: 'https://www.nngroup.com/articles/data-visualization-for-teams/' }
+          ],
+          principles: ['Pre-attentive Attributes', 'Gestalt: Continuity', 'Status Visibility']
+        },
+        {
+          id: 'linear-cycles-2',
+          x: 50,
+          y: 50,
+          label: '2',
+          title: 'Active / Upcoming / Completed tabs',
+          analysis: 'Cycles are partitioned into three clearly labeled time states. This solves a real problem in sprint tools: "where is the last sprint\'s data?" The consistent tab pattern (same as issues, projects) means users transfer their mental model from one area of Linear to another — this is Jakob\'s Law: familiarity from one part of the product reduces the learning cost in another.',
+          sources: [
+            { label: 'Laws of UX: Jakob\'s Law', url: 'https://lawsofux.com/jakobs-law/' }
+          ],
+          principles: ['Jakob\'s Law', 'Consistency', 'Mental Model Transfer']
+        },
+        {
+          id: 'linear-cycles-3',
+          x: 82,
+          y: 38,
+          label: '3',
+          title: 'Scope creep indicator',
+          analysis: 'Issues added after the cycle started appear with a subtle "added after start" badge. This is a small but sophisticated design decision: it surfaces information that was previously invisible in most PM tools, enabling teams to reason about whether their cycle was well-scoped or if scope crept. Making invisible data visible is one of the highest-leverage things a product interface can do.',
+          sources: [
+            { label: 'NNG: Visibility Heuristic', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
+          ],
+          principles: ['Visibility of System Status', 'Sensemaking', 'Data Transparency']
+        }
+      ]
+    }
+  ]
+};
+
+const duolingoData = {
+  id: 'duolingo',
+  name: 'Duolingo',
+  tagline: 'Language learning that actually sticks',
+  accentColor: '#58CC02',
+  screens: [
+    {
+      id: 'home',
+      label: 'Home',
+      imageUrl: 'assets/screenshots/duolingo/home.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'The first screen after login — the daily hub that users return to dozens of times across weeks and months.',
+      annotations: [
+        {
+          id: 'duolingo-home-1',
+          x: 50,
+          y: 18,
+          label: '1',
+          title: 'Streak counter front and center',
+          analysis: 'The streak — number of consecutive days practiced — is displayed prominently in the header with a fire emoji and a bold number. This is a masterclass in variable reward schedules, a behavioral psychology concept popularized by B.F. Skinner. The streak creates loss aversion: the longer the streak, the more psychologically painful it is to break. Duolingo has found that streak is the single most powerful retention mechanic in the product.',
+          sources: [
+            { label: 'NNG: Gamification in UX', url: 'https://www.nngroup.com/articles/gamification/' },
+            { label: 'BJ Fogg: Behavior Design', url: 'https://behaviordesign.stanford.edu/' }
+          ],
+          principles: ['Loss Aversion', 'Variable Reward', 'Habit Formation']
+        },
+        {
+          id: 'duolingo-home-2',
+          x: 50,
+          y: 45,
+          label: '2',
+          title: 'Single prominent CTA: Continue',
+          analysis: 'The page has one dominant action: "Continue" or "Start Lesson". This is Hick\'s Law in practice — the time to make a decision grows logarithmically with the number of choices. By removing every possible alternative (grammar notes, vocabulary lists, settings), Duolingo eliminates the decision fatigue that causes users to leave without completing a lesson. The path of least resistance is always the right path.',
+          sources: [
+            { label: 'Laws of UX: Hick\'s Law', url: 'https://lawsofux.com/hicks-law/' },
+            { label: 'NNG: Decision Making & UX', url: 'https://www.nngroup.com/articles/decision-making/' }
+          ],
+          principles: ['Hick\'s Law', 'Choice Reduction', 'Goal Gradient']
+        },
+        {
+          id: 'duolingo-home-3',
+          x: 15,
+          y: 65,
+          label: '3',
+          title: 'League and XP leaderboard tease',
+          analysis: 'A persistent left-rail widget shows the user\'s current league position and XP progress relative to peers. Social comparison is a powerful motivator, but Duolingo is careful: it shows your percentile in a friendly, encouraging frame, not a shame-inducing one. "You\'re in the top 20%!" works better than "12 people are ahead of you." The design avoids the dark pattern of social pressure while still leveraging social motivation.',
+          sources: [
+            { label: 'NNG: Social Proof in UX', url: 'https://www.nngroup.com/articles/social-proof/' }
+          ],
+          principles: ['Social Proof', 'Extrinsic Motivation', 'Ethical Gamification']
+        },
+        {
+          id: 'duolingo-home-4',
+          x: 85,
+          y: 65,
+          label: '4',
+          title: 'Daily goal progress ring',
+          analysis: 'A circular progress indicator shows how much of the daily XP goal has been completed. The ring is never shown as empty — even one XP lights up a segment. This is the Goal Gradient Effect: people put in more effort as they approach a goal. By making progress immediately visible from the first action, Duolingo creates a sense of momentum that persists across the session.',
+          sources: [
+            { label: 'Laws of UX: Goal Gradient Effect', url: 'https://lawsofux.com/goal-gradient-effect/' }
+          ],
+          principles: ['Goal Gradient Effect', 'Progress Indicators', 'Intrinsic Motivation']
+        }
+      ]
+    },
+    {
+      id: 'lesson',
+      label: 'Lesson',
+      imageUrl: 'assets/screenshots/duolingo/lesson.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'The core learning experience — an exercise screen within an active lesson.',
+      annotations: [
+        {
+          id: 'duolingo-lesson-1',
+          x: 50,
+          y: 8,
+          label: '1',
+          title: 'Progress bar at the top',
+          analysis: 'A thin green progress bar at the top of the lesson screen shows how many exercises remain. It grows with each correct answer. This is a classic application of the Zeigarnik Effect: people are more likely to stay motivated to finish something they\'ve already started. By making progress visible from the very first question, Duolingo increases lesson completion rates.',
+          sources: [
+            { label: 'Laws of UX: Zeigarnik Effect', url: 'https://lawsofux.com/zeigarnik-effect/' }
+          ],
+          principles: ['Zeigarnik Effect', 'Progress Visibility', 'Completion Motivation']
+        },
+        {
+          id: 'duolingo-lesson-2',
+          x: 50,
+          y: 45,
+          label: '2',
+          title: 'Large tap targets, generous spacing',
+          analysis: 'Answer choices are large, rounded tiles with significant padding. This is Fitts\'s Law: the time to tap a target is a function of its distance and size. On mobile, Duolingo makes targets generously large (minimum 44px touch target, often much larger), reducing the motor effort required to interact. The spacing between choices prevents accidental taps — an often-overlooked detail in mobile UX.',
+          sources: [
+            { label: 'Laws of UX: Fitts\'s Law', url: 'https://lawsofux.com/fittss-law/' },
+            { label: 'Apple HIG: Touch Targets', url: 'https://developer.apple.com/design/human-interface-guidelines/accessibility' }
+          ],
+          principles: ['Fitts\'s Law', 'Touch Target Size', 'Error Prevention']
+        },
+        {
+          id: 'duolingo-lesson-3',
+          x: 50,
+          y: 88,
+          label: '3',
+          title: 'Correct / incorrect feedback panel',
+          analysis: 'When an answer is submitted, a large banner slides up from the bottom: green for correct ("Great job!"), red for incorrect (showing the right answer). This is immediate, unambiguous feedback — a foundational UX principle from Nielsen\'s heuristics. The red state doesn\'t feel punishing because the tone is encouraging ("The correct answer is...") and the user can immediately try the next question. The delay before the next question (≈ 800ms) is calibrated to the Doherty Threshold — long enough to feel the feedback, short enough to maintain flow.',
+          sources: [
+            { label: 'NNG: Heuristic #1 — Visibility of System Status', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' },
+            { label: 'Laws of UX: Doherty Threshold', url: 'https://lawsofux.com/doherty-threshold/' }
+          ],
+          principles: ['Immediate Feedback', 'Doherty Threshold', 'Error Recovery']
+        }
+      ]
+    },
+    {
+      id: 'leaderboard',
+      label: 'Leaderboard',
+      imageUrl: 'assets/screenshots/duolingo/leaderboard.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'The weekly XP competition — a league system where users compete to earn promotion or avoid demotion.',
+      annotations: [
+        {
+          id: 'duolingo-leaderboard-1',
+          x: 50,
+          y: 20,
+          label: '1',
+          title: 'Promotion / demotion zone visualization',
+          analysis: 'The leaderboard uses distinct colored zones to show who is being promoted (top 10, highlighted green) and who is at risk of demotion (bottom 5, highlighted red). This is a brilliant use of spatial position and color to communicate two separate signals simultaneously. Users in the middle zone are unaffected, reducing anxiety; users at the edges get actionable information about what to do.',
+          sources: [
+            { label: 'NNG: Data Visualization', url: 'https://www.nngroup.com/articles/data-visualization-for-teams/' }
+          ],
+          principles: ['Redundant Coding', 'Zone Demarcation', 'Actionable Feedback']
+        },
+        {
+          id: 'duolingo-leaderboard-2',
+          x: 50,
+          y: 50,
+          label: '2',
+          title: 'User\'s own row is always visible',
+          analysis: 'Regardless of the user\'s position, their row is always pinned to be visible (either in its natural position or floating). This removes the anxiety of hunting for oneself in a long list. The design respects the primary question users ask when they open the leaderboard: "Where am I?" — answering it instantly without requiring any scrolling.',
+          sources: [
+            { label: 'NNG: Recognition over Recall', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
+          ],
+          principles: ['Recognition over Recall', 'User-Centered Design', 'Anxiety Reduction']
+        },
+        {
+          id: 'duolingo-leaderboard-3',
+          x: 50,
+          y: 80,
+          label: '3',
+          title: 'Timer creates urgency without pressure',
+          analysis: 'A countdown timer shows time remaining in the league week. This creates time-bound urgency — a classic motivational lever — but Duolingo frames it positively ("5 days left to climb!") rather than as a threat. The timer is visible but not dominant, sitting below the fold so users focused on their rank aren\'t distracted. This balance between urgency and calm is hard to get right and Duolingo calibrates it well.',
+          sources: [
+            { label: 'NNG: Urgency in UX', url: 'https://www.nngroup.com/articles/urgency/' }
+          ],
+          principles: ['Scarcity / Urgency', 'Positive Framing', 'Time Pressure']
+        }
+      ]
+    }
+  ]
+};
+
+const notionData = {
+  id: 'notion',
+  name: 'Notion',
+  tagline: 'The all-in-one workspace',
+  accentColor: '#E8572A',
+  screens: [
+    {
+      id: 'editor',
+      label: 'Editor',
+      imageUrl: 'assets/screenshots/notion/editor.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'The core document editor — where most Notion users spend the majority of their time.',
+      annotations: [
+        {
+          id: 'notion-editor-1',
+          x: 50,
+          y: 30,
+          label: '1',
+          title: 'Distraction-free writing surface',
+          analysis: 'Notion\'s editor defaults to a wide, centered text column with significant margins and no visible UI chrome. This is a direct design choice to support deep focus work. The "empty" space is not wasted — it is a signal that this is a space for thinking, not a dashboard for monitoring. The principle at play is "progressive reduction": UI elements appear only when the user needs them (on hover or on /).',
+          sources: [
+            { label: 'NNG: Aesthetic-Usability Effect', url: 'https://www.nngroup.com/articles/aesthetic-usability-effect/' },
+            { label: 'UX Collective: Whitespace', url: 'https://uxdesign.cc/white-space-is-not-your-enemy-b406b3b0f04c' }
+          ],
+          principles: ['Aesthetic-Usability Effect', 'Progressive Reduction', 'Focus Support']
+        },
+        {
+          id: 'notion-editor-2',
+          x: 8,
+          y: 50,
+          label: '2',
+          title: 'Slash command as universal entry point',
+          analysis: 'Typing "/" anywhere in the editor opens a command palette for inserting any block type — headers, databases, callouts, toggles, embeds. This is a single, memorable affordance that replaces a complex toolbar. It scales infinitely: as Notion adds new block types, users don\'t need to relearn a new toolbar position. The "/" pattern has become so standard (Slack, Linear, Figma) that it qualifies as an industry-wide mental model transfer.',
+          sources: [
+            { label: 'Laws of UX: Jakob\'s Law', url: 'https://lawsofux.com/jakobs-law/' },
+            { label: 'NNG: Command Palettes', url: 'https://www.nngroup.com/articles/command-palettes/' }
+          ],
+          principles: ['Jakob\'s Law', 'Discoverability', 'Scalable Affordances']
+        },
+        {
+          id: 'notion-editor-3',
+          x: 50,
+          y: 65,
+          label: '3',
+          title: 'Block-level drag handles',
+          analysis: 'Every paragraph, heading, and block has a drag handle (⠿) that appears on hover, to the left of the block. Hovering this also reveals a "+" button to insert a block above. This is direct manipulation at the block level: users can reorganize page content by dragging, an interaction that maps to the mental model of "things on a page." The handles are hidden at rest to avoid cluttering the reading experience.',
+          sources: [
+            { label: 'NNG: Direct Manipulation', url: 'https://www.nngroup.com/articles/direct-manipulation/' }
+          ],
+          principles: ['Direct Manipulation', 'WYSIWYG', 'Affordance Visibility']
+        },
+        {
+          id: 'notion-editor-4',
+          x: 50,
+          y: 10,
+          label: '4',
+          title: 'Page emoji and cover image',
+          analysis: 'Each page can have an emoji icon and a full-width cover image. These may seem decorative, but they serve a key navigational function: visual distinctiveness. When a user has 50+ pages in their sidebar, page icons act as visual landmarks that dramatically speed up recognition vs. scanning through text titles alone. This is the Picture Superiority Effect — images are processed and recalled far faster than words.',
+          sources: [
+            { label: 'NNG: Recognition vs. Recall', url: 'https://www.nngroup.com/articles/recognition-and-recall/' }
+          ],
+          principles: ['Picture Superiority Effect', 'Recognition over Recall', 'Visual Wayfinding']
+        }
+      ]
+    },
+    {
+      id: 'database',
+      label: 'Database',
+      imageUrl: 'assets/screenshots/notion/database.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'Notion\'s most powerful feature — a structured data table that can be viewed as a table, board, calendar, or gallery.',
+      annotations: [
+        {
+          id: 'notion-database-1',
+          x: 50,
+          y: 12,
+          label: '1',
+          title: 'Multiple view switcher',
+          analysis: 'Databases can be viewed as Table, Board, Timeline, Calendar, List, or Gallery. The view switcher lives in a top tab bar, persistent and prominent. The genius is that the underlying data is the same — only the representation changes. This matches a key cognitive science insight: the same information is easier or harder to reason about depending on its representation. Users choose the view that matches their current mental task.',
+          sources: [
+            { label: 'NNG: Multiple Views of Information', url: 'https://www.nngroup.com/articles/information-scent/' }
+          ],
+          principles: ['Cognitive Fit', 'Multiple Representations', 'User Control']
+        },
+        {
+          id: 'notion-database-2',
+          x: 25,
+          y: 50,
+          label: '2',
+          title: 'Inline property editing',
+          analysis: 'Clicking any cell in the table allows immediate in-place editing. No separate "edit mode" is required. This is a low-friction, high-efficiency pattern: the display state and edit state are the same. Contrast this with older enterprise tools (Jira, Confluence) that require navigating to a "details" page to edit most fields. The time savings compound significantly across power users.',
+          sources: [
+            { label: 'NNG: Efficiency of Use', url: 'https://www.nngroup.com/articles/efficiency-vs-effectiveness/' }
+          ],
+          principles: ['Direct Manipulation', 'Efficiency', 'Reduced Friction']
+        },
+        {
+          id: 'notion-database-3',
+          x: 75,
+          y: 88,
+          label: '3',
+          title: 'Filter and sort toolbar',
+          analysis: 'The filter and sort controls live in a persistent toolbar above the table. Filters are shown as chips — active filters are visible at a glance, and each chip has an "x" to remove it. This creates transparency: users always know what data they\'re looking at and why some rows may be missing. The "visibility of system status" heuristic is critical in data tools where users can easily get confused about what they\'re seeing.',
+          sources: [
+            { label: 'NNG: Heuristic #1 — Visibility of System Status', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
+          ],
+          principles: ['Visibility of System Status', 'Filter Transparency', 'User Control']
+        }
+      ]
+    },
+    {
+      id: 'sidebar',
+      label: 'Sidebar',
+      imageUrl: 'assets/screenshots/notion/sidebar.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'The global navigation panel — where users orient themselves and move between pages in their workspace.',
+      annotations: [
+        {
+          id: 'notion-sidebar-1',
+          x: 12,
+          y: 35,
+          label: '1',
+          title: 'Nested, collapsible page tree',
+          analysis: 'Notion\'s sidebar shows pages nested to unlimited depth, with each level collapsible via a triangle toggle. This is a classic information architecture pattern, but Notion\'s implementation has an important nuance: the nesting is determined by the user, not by Notion. This is the "end-user information architecture" approach, which creates high flexibility but also notorious disorganization for new users who haven\'t developed a personal system.',
+          sources: [
+            { label: 'NNG: Information Architecture', url: 'https://www.nngroup.com/articles/ia-vs-navigation/' }
+          ],
+          principles: ['Infinite Nesting', 'User Control', 'Organizational Flexibility']
+        },
+        {
+          id: 'notion-sidebar-2',
+          x: 12,
+          y: 60,
+          label: '2',
+          title: 'Hover-revealed action row',
+          analysis: 'Each page in the sidebar reveals a "..." menu and a "+" new subpage button on hover. At rest, these are invisible — the sidebar shows only titles and icons. This is an application of "hover disclosure" and is appropriate here because creating and managing pages are secondary actions; navigating to pages is primary. Hiding secondary actions until hover keeps the sidebar scannable without removing functionality.',
+          sources: [
+            { label: 'NNG: Progressive Disclosure', url: 'https://www.nngroup.com/articles/progressive-disclosure/' }
+          ],
+          principles: ['Progressive Disclosure', 'Hover Revelation', 'Visual Hierarchy']
+        },
+        {
+          id: 'notion-sidebar-3',
+          x: 12,
+          y: 85,
+          label: '3',
+          title: 'Teamspaces vs. private pages separation',
+          analysis: 'The sidebar is divided into "Teamspaces" (shared) and "Private" (personal) sections. This is a critically important information architecture decision: it mirrors the mental model most knowledge workers already have ("this is my stuff" vs. "this is our stuff"). The visual separation prevents the anxiety of accidentally sharing private work, and helps users orient at a glance.',
+          sources: [
+            { label: 'NNG: Mental Models', url: 'https://www.nngroup.com/articles/mental-models/' }
+          ],
+          principles: ['Mental Model Alignment', 'Anxiety Reduction', 'Information Architecture']
+        }
+      ]
+    }
+  ]
+};
+
+const stripeData = {
+  id: 'stripe',
+  name: 'Stripe',
+  tagline: 'Financial infrastructure for the internet',
+  accentColor: '#635BFF',
+  screens: [
+    {
+      id: 'dashboard',
+      label: 'Dashboard',
+      imageUrl: 'assets/screenshots/stripe/dashboard.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'The Stripe Dashboard home — the command center for revenue, payments, and business health.',
+      annotations: [
+        {
+          id: 'stripe-dashboard-1',
+          x: 50,
+          y: 20,
+          label: '1',
+          title: 'Revenue chart as the hero element',
+          analysis: 'The most prominent element on the dashboard is a time-series revenue chart. This is a deliberate signal about what Stripe thinks matters most to their users: money. In most dashboards, the hero position is contested by many metrics. Stripe makes an editorial decision and owns it. This reduces cognitive load by establishing a hierarchy: revenue first, everything else secondary. The design is saying "we know why you\'re here."',
+          sources: [
+            { label: 'NNG: Dashboard Design', url: 'https://www.nngroup.com/articles/dashboard-design/' }
+          ],
+          principles: ['Visual Hierarchy', 'Editorial Clarity', 'Cognitive Load Reduction']
+        },
+        {
+          id: 'stripe-dashboard-2',
+          x: 15,
+          y: 50,
+          label: '2',
+          title: 'Left-rail navigation with icon + label',
+          analysis: 'Unlike Linear (icon-only) or Notion (text-only), Stripe shows both icon and label in its left nav — always. This is because Stripe\'s users are often infrequent: accountants, finance teams, and founders who log in a few times a week, not hourly. Icon-only navigation works for daily power users who build spatial memory; labeled navigation is more appropriate for intermittent users who need words to orient. The design is calibrated to the usage pattern.',
+          sources: [
+            { label: 'NNG: Icon Usability', url: 'https://www.nngroup.com/articles/icon-usability/' },
+            { label: 'NNG: Navigation Design Patterns', url: 'https://www.nngroup.com/articles/navigation-cognitive-strain/' }
+          ],
+          principles: ['Icon + Label Pattern', 'User Frequency Calibration', 'Wayfinding']
+        },
+        {
+          id: 'stripe-dashboard-3',
+          x: 50,
+          y: 55,
+          label: '3',
+          title: 'Metric cards with comparison periods',
+          analysis: 'Each summary card (Gross volume, Net volume, New customers) shows both the absolute number and the percentage change vs. the previous period. This is a fundamental principle of data design: a number alone is meaningless without context. "€14,230" tells you nothing; "€14,230 (+12% vs. last month)" is actionable. Stripe bakes this context into every metric display.',
+          sources: [
+            { label: 'NNG: Data Presentation', url: 'https://www.nngroup.com/articles/data-visualization-for-teams/' }
+          ],
+          principles: ['Contextual Data', 'Benchmark Comparison', 'Actionable Metrics']
+        },
+        {
+          id: 'stripe-dashboard-4',
+          x: 85,
+          y: 35,
+          label: '4',
+          title: 'Recent activity feed',
+          analysis: 'A right-rail activity feed shows the 5 most recent transactions in real time. This serves a specific use case: "did that payment just go through?" — a question Stripe users ask constantly. Rather than requiring navigation to the Payments page, the dashboard surfaces this answer immediately. The design respects the user\'s most common task (monitoring recent activity) by making it zero-click accessible.',
+          sources: [
+            { label: 'NNG: Visibility of System Status', url: 'https://www.nngroup.com/articles/ten-usability-heuristics/' }
+          ],
+          principles: ['Zero-Click Access', 'Visibility of System Status', 'Task-Centered Design']
+        }
+      ]
+    },
+    {
+      id: 'checkout',
+      label: 'Checkout',
+      imageUrl: 'assets/screenshots/stripe/checkout.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'Stripe\'s hosted checkout page — used by millions of merchants, optimized obsessively for conversion.',
+      annotations: [
+        {
+          id: 'stripe-checkout-1',
+          x: 50,
+          y: 15,
+          label: '1',
+          title: 'Order summary above the fold',
+          analysis: 'The right column of Stripe Checkout shows exactly what the user is paying for — product name, image, price, and any discounts — before any payment fields. This builds confidence: the user knows what they\'re committing to before they\'ve entered a single character. Baymard Institute research shows that order summary confusion is a top-5 driver of checkout abandonment. Stripe solves this by making it unmissable.',
+          sources: [
+            { label: 'Baymard: Checkout Usability', url: 'https://baymard.com/research/checkout-usability' },
+            { label: 'NNG: Trust in E-Commerce', url: 'https://www.nngroup.com/articles/ecommerce-trust/' }
+          ],
+          principles: ['Trust Building', 'Commitment Transparency', 'Conversion Optimization']
+        },
+        {
+          id: 'stripe-checkout-2',
+          x: 30,
+          y: 45,
+          label: '2',
+          title: 'Single-column form with logical grouping',
+          analysis: 'Payment form fields run in a single column, grouped by type (email, card details, billing address). Research by Baymard shows that single-column forms have 15.4% higher completion rates than multi-column forms. The grouping into labeled sections (Payment details, Billing address) uses the Gestalt principle of proximity — related fields feel related because they\'re close together, under a shared label.',
+          sources: [
+            { label: 'Baymard: Form Field Design', url: 'https://baymard.com/blog/avoid-multi-column-forms' },
+            { label: 'Laws of UX: Law of Proximity', url: 'https://lawsofux.com/law-of-proximity/' }
+          ],
+          principles: ['Law of Proximity', 'Form Completion Rate', 'Gestalt Grouping']
+        },
+        {
+          id: 'stripe-checkout-3',
+          x: 30,
+          y: 80,
+          label: '3',
+          title: 'Real-time inline validation',
+          analysis: 'As users type card details, Stripe validates them inline and immediately — card type is detected after 1 digit, expiry date is auto-formatted, CVC length is checked on blur. Errors appear below the specific field, not in a summary at the top. This is the gold standard for form feedback: tell users what\'s wrong as soon as possible, as close to the error as possible, without interrupting their flow.',
+          sources: [
+            { label: 'NNG: Form Validation & Errors', url: 'https://www.nngroup.com/articles/errors-forms/' },
+            { label: 'Baymard: Inline Validation', url: 'https://baymard.com/blog/inline-form-validation' }
+          ],
+          principles: ['Inline Validation', 'Error Prevention', 'Immediate Feedback']
+        }
+      ]
+    },
+    {
+      id: 'payment-links',
+      label: 'Payment Links',
+      imageUrl: 'assets/screenshots/stripe/payment-links.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      context: 'The Payment Links creation flow — Stripe\'s no-code tool for accepting payments without a website.',
+      annotations: [
+        {
+          id: 'stripe-payment-links-1',
+          x: 35,
+          y: 30,
+          label: '1',
+          title: 'Live preview alongside the form',
+          analysis: 'The left side of the screen is a form; the right side is a live preview of the checkout page that updates as you type. This is the highest-impact UX pattern in creation flows: showing the output as you build it eliminates the anxiety of "I wonder what this will look like." It also catches errors before they go live, reducing support burden. The design collapses the distance between creation and validation.',
+          sources: [
+            { label: 'NNG: WYSIWYG Editing', url: 'https://www.nngroup.com/articles/direct-manipulation/' }
+          ],
+          principles: ['WYSIWYG', 'Live Preview', 'Error Prevention']
+        },
+        {
+          id: 'stripe-payment-links-2',
+          x: 35,
+          y: 60,
+          label: '2',
+          title: 'Sensible defaults eliminate configuration',
+          analysis: 'Most fields in the payment link form are pre-filled with reasonable defaults: currency is auto-detected from account locale, tax collection is pre-configured from account settings, and billing address is "required" by default. This is a profound UX principle: the best interface is one where the user doesn\'t have to configure anything. Defaults represent the design team\'s informed opinion about what most users want, freeing users from decision fatigue.',
+          sources: [
+            { label: 'Laws of UX: Occam\'s Razor', url: 'https://lawsofux.com/' },
+            { label: 'NNG: Defaults in Design', url: 'https://www.nngroup.com/articles/the-power-of-defaults/' }
+          ],
+          principles: ['Smart Defaults', 'Decision Fatigue Reduction', 'Opinionated Design']
+        },
+        {
+          id: 'stripe-payment-links-3',
+          x: 35,
+          y: 88,
+          label: '3',
+          title: 'Progressive complexity via "Advanced options"',
+          analysis: 'Simple use cases are served by a short, clean form. Advanced configurations (custom fields, upsells, tax IDs, trial periods) are hidden behind an "Advanced options" disclosure. This is a textbook application of progressive disclosure: the interface is approachable for simple use cases while retaining full power for complex ones. The key is that the collapse is always accessible — power users aren\'t sent to a different page.',
+          sources: [
+            { label: 'NNG: Progressive Disclosure', url: 'https://www.nngroup.com/articles/progressive-disclosure/' }
+          ],
+          principles: ['Progressive Disclosure', 'Layered Complexity', 'Beginner & Expert Paths']
+        }
+      ]
+    }
+  ]
+};
+
+const apps = [linearData, duolingoData, notionData, stripeData];
+const appsById = Object.fromEntries(apps.map(function(a) { return [a.id, a]; }));
+
+// ── Components ─────────────────────────────────────────────────────────────
+
+function renderNav(apps, activeApp, activeScreen, navigate) {
+  renderAppNav(apps, activeApp, navigate);
+  renderScreenNav(activeApp, activeScreen, navigate);
+}
+
+function renderAppNav(apps, activeApp, navigate) {
+  const switcher = document.getElementById('app-switcher');
+  switcher.innerHTML = '';
+
+  for (const app of apps) {
+    const btn = document.createElement('button');
+    btn.className = 'app-tab' + (app.id === activeApp.id ? ' active' : '');
+    btn.setAttribute('aria-current', app.id === activeApp.id ? 'page' : 'false');
+    btn.innerHTML = `<span class="app-dot" aria-hidden="true"></span>${app.name}`;
+    btn.addEventListener('click', () => navigate(app.id));
+    switcher.appendChild(btn);
+  }
+}
+
+function renderScreenNav(app, activeScreen, navigate) {
+  const nav = document.getElementById('screen-nav');
+  nav.innerHTML = '';
+
+  for (const screen of app.screens) {
+    const btn = document.createElement('button');
+    btn.className = 'screen-tab' + (screen.id === activeScreen.id ? ' active' : '');
+    btn.setAttribute('aria-current', screen.id === activeScreen.id ? 'true' : 'false');
+    btn.textContent = screen.label;
+    btn.addEventListener('click', () => navigate(app.id, screen.id));
+    nav.appendChild(btn);
+  }
+}
+
+function renderViewer(screen, activeAnnotationId) {
+  const frame = document.getElementById('viewer-frame');
+  const img = document.getElementById('viewer-img');
+  const skeleton = document.getElementById('viewer-skeleton');
+  const context = document.getElementById('viewer-context');
+
+  // Lock aspect ratio via padding-bottom trick
+  frame.style.paddingBottom = `${(screen.imageHeight / screen.imageWidth) * 100}%`;
+
+  // Update context text
+  context.textContent = screen.context || '';
+
+  // Load image — fall back to SVG wireframe if it fails
+  const targetSrc = screen.imageUrl;
+  if (img.dataset.src !== targetSrc) {
+    img.dataset.src = targetSrc;
+    skeleton.classList.remove('hidden');
+    img.classList.add('loading');
+    img.alt = `${screen.label} screenshot`;
+
+    const probe = new Image();
+    probe.onload = () => {
+      img.src = probe.src;
+      img.classList.remove('loading');
+      skeleton.classList.add('hidden');
+    };
+    probe.onerror = () => {
+      img.src = makePlaceholder(screen);
+      img.classList.remove('loading');
+      skeleton.classList.add('hidden');
+    };
+    probe.src = targetSrc;
+  }
+
+  // Remove existing markers
+  frame.querySelectorAll('.callout-marker').forEach(m => m.remove());
+
+  // Render markers
+  for (const annotation of screen.annotations) {
+    const marker = document.createElement('button');
+    marker.className = 'callout-marker' + (annotation.id === activeAnnotationId ? ' active' : '');
+    marker.style.left = `${annotation.x}%`;
+    marker.style.top = `${annotation.y}%`;
+    marker.textContent = annotation.label;
+    marker.setAttribute('aria-label', `Marker ${annotation.label}: ${annotation.title}`);
+    marker.dataset.annotationId = annotation.id;
+    frame.appendChild(marker);
+  }
+}
+
+// ─── Placeholder SVG wireframes ────────────────────────────────────────────
+// Generated when the actual screenshot PNG hasn't been captured yet.
+// Each template loosely matches the layout of the real screen so annotation
+// coordinates still make spatial sense.
+
+const PLACEHOLDERS = {
+  'linear/inbox': linearInboxSVG,
+  'linear/issues': linearIssuesSVG,
+  'linear/cycles': linearCyclesSVG,
+  'duolingo/home': duolingoHomeSVG,
+  'duolingo/lesson': duolingoLessonSVG,
+  'duolingo/leaderboard': duolingoLeaderboardSVG,
+  'notion/editor': notionEditorSVG,
+  'notion/database': notionDatabaseSVG,
+  'notion/sidebar': notionSidebarSVG,
+  'stripe/dashboard': stripeDashboardSVG,
+  'stripe/checkout': stripeCheckoutSVG,
+  'stripe/payment-links': stripePaymentLinksSVG,
+};
+
+function makePlaceholder(screen) {
+  const key = screen.imageUrl
+    .replace('assets/screenshots/', '')
+    .replace('.png', '');
+  const fn = PLACEHOLDERS[key];
+  const svg = fn ? fn() : genericSVG(screen);
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
+
+// ─── Shared SVG helpers ────────────────────────────────────────────────────
+
+const BG = '#0f0f10';
+const SURFACE = '#1a1a1d';
+const S2 = '#242428';
+const S3 = '#2e2e33';
+const BORDER = '#2a2a2e';
+const TEXT = '#e8e8ea';
+const MUTED = '#55555c';
+const FAINT = '#35353c';
+
+function rect(x, y, w, h, fill, rx = 4) {
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" rx="${rx}"/>`;
+}
+
+function text(x, y, content, size = 11, fill = MUTED, anchor = 'start', weight = 400) {
+  return `<text x="${x}" y="${y}" font-size="${size}" fill="${fill}" text-anchor="${anchor}" font-weight="${weight}" font-family="system-ui,sans-serif">${content}</text>`;
+}
+
+function pill(x, y, w, h, fill) {
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" rx="${h / 2}"/>`;
+}
+
+function row(y, h = 28, indent = 0) {
+  return rect(indent, y, 1440 - indent, h, S2, 0);
+}
+
+// ─── Linear: Inbox ────────────────────────────────────────────────────────
+
+function linearInboxSVG() {
+  const rows = [130, 175, 220, 265, 310, 355, 400, 445, 490, 535, 580, 625, 670, 715, 760, 805, 850];
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, BG)}
+  <!-- Sidebar -->
+  ${rect(0, 0, 48, 900, SURFACE)}
+  ${[90, 150, 210, 270, 330, 390, 450].map(y => rect(12, y, 24, 24, S3, 6)).join('')}
+  <!-- Top bar -->
+  ${rect(48, 0, 1392, 44, SURFACE)}
+  ${text(70, 26, 'Inbox', 13, TEXT, 'start', 600)}
+  ${rect(1360, 12, 60, 20, S3, 4)}
+  <!-- Section divider -->
+  ${rect(48, 44, 1392, 1, BORDER)}
+  <!-- Inbox rows -->
+  ${rows.map((y, i) => `
+    ${rect(48, y, 1392, 40, i % 3 === 0 ? S2 : 'transparent', 0)}
+    ${rect(60, y + 10, 20, 20, S3, 10)}
+    ${rect(88, y + 12, 180 + (i % 4) * 40, 8, S3, 4)}
+    ${rect(88, y + 25, 120 + (i % 3) * 30, 6, FAINT, 3)}
+    ${pill(1340, y + 14, 50, 14, S3)}
+  `).join('')}
+  <!-- Watermark -->
+  ${text(744, 455, 'Linear · Inbox', 14, FAINT, 'middle', 400)}
+</svg>`;
+}
+
+// ─── Linear: Issues ────────────────────────────────────────────────────────
+
+function linearIssuesSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, BG)}
+  ${rect(0, 0, 48, 900, SURFACE)}
+  ${[90, 150, 210, 270, 330, 390].map(y => rect(12, y, 24, 24, S3, 6)).join('')}
+  <!-- Top bar -->
+  ${rect(48, 0, 900, 44, SURFACE)}
+  ${rect(48, 44, 900, 1, BORDER)}
+  <!-- Issue title -->
+  ${text(68, 78, 'Refactor auth middleware for token refresh', 17, TEXT, 'start', 600)}
+  <!-- Body -->
+  ${[110, 128, 146].map(y => rect(68, y, 600 - (y % 40) * 3, 10, S3, 4)).join('')}
+  ${[170, 188, 206].map(y => rect(68, y, 500 - (y % 30) * 2, 10, S3, 4)).join('')}
+  <!-- Code block -->
+  ${rect(68, 230, 660, 120, SURFACE, 6)}
+  ${[250, 265, 280, 310].map(y => rect(84, y, 400 + (y % 50) * 2, 8, S3, 3)).join('')}
+  <!-- Activity -->
+  ${[400, 450, 500, 550, 600, 650, 700, 750, 800].map(y => `
+    ${rect(60, y, 28, 28, S3, 14)}
+    ${rect(96, y + 6, 350 + (y % 50) * 2, 8, S3, 4)}
+    ${rect(96, y + 19, 200, 6, FAINT, 3)}
+  `).join('')}
+  <!-- Right rail -->
+  ${rect(948, 0, 492, 900, SURFACE)}
+  ${rect(948, 0, 1, 900, BORDER)}
+  ${['Status', 'Priority', 'Assignee', 'Cycle', 'Label', 'Due date'].map((label, i) => `
+    ${text(968, 60 + i * 50, label, 11, MUTED)}
+    ${rect(1060, 44 + i * 50, 360, 24, S3, 4)}
+  `).join('')}
+  ${text(720, 455, 'Linear · Issue Detail', 14, FAINT, 'middle')}
+</svg>`;
+}
+
+// ─── Linear: Cycles ────────────────────────────────────────────────────────
+
+function linearCyclesSVG() {
+  const cycles = [
+    { label: 'Sprint 24 · Active', pct: 62, y: 80 },
+    { label: 'Sprint 25 · Upcoming', pct: 0, y: 240 },
+    { label: 'Sprint 23 · Completed', pct: 100, y: 400 },
+  ];
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, BG)}
+  ${rect(0, 0, 48, 900, SURFACE)}
+  ${rect(48, 0, 1392, 44, SURFACE)}
+  ${text(68, 26, 'Cycles', 13, TEXT, 'start', 600)}
+  <!-- Tabs -->
+  ${['Active', 'Upcoming', 'Completed'].map((t, i) => `
+    ${rect(68 + i * 100, 50, 88, 28, i === 0 ? S2 : 'transparent', 4)}
+    ${text(112 + i * 100, 69, t, 12, i === 0 ? TEXT : MUTED, 'middle')}
+  `).join('')}
+  ${cycles.map(({ label, pct, y }) => `
+    ${rect(68, y, 1300, 130, SURFACE, 8)}
+    ${text(88, y + 26, label, 13, TEXT, 'start', 600)}
+    ${text(88, y + 44, `${Math.round(pct * 0.28)}/28 issues`, 11, MUTED)}
+    <!-- Progress bar -->
+    ${rect(88, y + 64, 1220, 12, S3, 6)}
+    ${pct > 0 ? rect(88, y + 64, Math.round(1220 * pct / 100), 12, '#5E6AD2', 6) : ''}
+    ${text(1320, y + 74, `${pct}%`, 11, MUTED, 'end')}
+  `).join('')}
+  ${text(720, 600, 'Linear · Cycles', 14, FAINT, 'middle')}
+</svg>`;
+}
+
+// ─── Duolingo: Home ────────────────────────────────────────────────────────
+
+function duolingoHomeSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, '#ffffff')}
+  <!-- Nav -->
+  ${rect(0, 0, 1440, 56, '#ffffff')}
+  ${rect(0, 56, 1440, 1, '#e5e5e5')}
+  <!-- Logo area -->
+  ${rect(32, 14, 120, 28, '#58CC02', 6)}
+  ${text(92, 32, 'duolingo', 14, '#ffffff', 'middle', 700)}
+  <!-- Streak display -->
+  ${rect(540, 14, 80, 28, '#FFF3E0', 14)}
+  ${text(580, 32, '🔥 47', 13, '#FF9800', 'middle', 700)}
+  <!-- Gems -->
+  ${rect(640, 14, 70, 28, '#E8F5E9', 14)}
+  ${text(675, 32, '💎 350', 12, '#58CC02', 'middle', 600)}
+  <!-- Main layout: left rail + center + right rail -->
+  ${rect(0, 56, 220, 844, '#fafafa')}
+  ${rect(220, 56, 1, 844, '#e5e5e5')}
+  ${rect(1100, 56, 1, 844, '#e5e5e5')}
+  ${rect(1100, 56, 340, 844, '#fafafa')}
+  <!-- Left rail: course tree -->
+  ${text(30, 100, 'SPANISH', 10, '#58CC02', 'start', 800)}
+  ${[130, 200, 270, 340, 410, 480, 550, 620].map((y, i) => `
+    ${rect(60, y, 100, 44, i % 4 === 0 ? '#58CC02' : i % 4 === 1 ? '#e5e5e5' : '#f0f0f0', 22)}
+    ${text(110, y + 26, i === 0 ? '✓' : '🔒', 14, i === 0 ? '#fff' : '#bbb', 'middle')}
+  `).join('')}
+  <!-- Center: lesson path -->
+  ${[140, 260, 380, 500, 620, 740].map((y, i) => `
+    ${rect(520 - (i % 2) * 60, y, 400 + (i % 2) * 120, 80, i === 0 ? '#58CC02' : '#f0f0f0', 12)}
+    ${rect(660 - (i % 2) * 30, y + 25, 120, 30, i === 0 ? '#46a302' : '#e0e0e0', 8)}
+    ${text(720, y + 47, i === 0 ? 'Continue' : `Unit ${i + 1}`, 13, i === 0 ? '#fff' : '#999', 'middle', i === 0 ? 700 : 400)}
+  `).join('')}
+  <!-- Right rail: XP progress ring -->
+  ${text(1250, 100, 'Daily Goal', 12, '#aaa', 'middle', 600)}
+  <circle cx="1250" cy="170" r="44" fill="none" stroke="#e5e5e5" stroke-width="8"/>
+  <circle cx="1250" cy="170" r="44" fill="none" stroke="#58CC02" stroke-width="8" stroke-dasharray="176 100" stroke-dashoffset="44" stroke-linecap="round"/>
+  ${text(1250, 178, '65%', 16, '#333', 'middle', 700)}
+  <!-- Leaderboard widget -->
+  ${rect(1120, 230, 260, 200, '#fff', 8)}
+  ${rect(1120, 230, 260, 1, '#e5e5e5')}
+  ${text(1250, 256, 'GOLD LEAGUE', 10, '#FFD700', 'middle', 800)}
+  ${[280, 308, 336].map((y, i) => `
+    ${text(1135, y, `#${i + 3}`, 12, '#aaa', 'start')}
+    ${rect(1160, y - 12, 180, 14, '#f0f0f0', 3)}
+  `).join('')}
+  ${text(720, 855, 'Duolingo · Home', 13, '#ccc', 'middle')}
+</svg>`;
+}
+
+// ─── Duolingo: Lesson ─────────────────────────────────────────────────────
+
+function duolingoLessonSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, '#ffffff')}
+  <!-- Progress bar -->
+  ${rect(0, 0, 1440, 8, '#e5e5e5')}
+  ${rect(0, 0, 900, 8, '#58CC02')}
+  <!-- Close button -->
+  ${rect(24, 20, 28, 28, 'transparent')}
+  <!-- Lesson frame -->
+  ${rect(370, 60, 700, 700, '#fafafa', 16)}
+  <!-- Question prompt -->
+  ${rect(420, 100, 600, 20, '#e5e5e5', 4)}
+  ${rect(420, 130, 460, 20, '#e5e5e5', 4)}
+  <!-- Character illustration -->
+  <circle cx="720" cy="260" r="70" fill="#DDF4FF"/>
+  ${rect(680, 340, 80, 10, '#e0e0e0', 4)}
+  <!-- Answer choices -->
+  ${['Hola', 'Buenos días', 'Adiós', 'Por favor'].map((opt, i) => `
+    ${rect(420, 400 + i * 64, 600, 52, i === 0 ? '#D7FFB8' : '#ffffff', 12)}
+    ${rect(420, 400 + i * 64, 600, 52, i === 0 ? '#58CC02' : '#e5e5e5', 12, 'none')}
+    ${text(720, 432 + i * 64, opt, 14, i === 0 ? '#58A700' : '#4B4B4B', 'middle', 600)}
+  `).join('')}
+  <!-- Feedback banner -->
+  ${rect(0, 760, 1440, 140, '#D7FFB8')}
+  ${text(200, 820, '✓ Great job!', 20, '#58A700', 'start', 700)}
+  ${text(200, 848, 'You got it right.', 13, '#58A700')}
+  ${rect(1060, 780, 200, 48, '#58CC02', 12)}
+  ${text(1160, 812, 'Continue', 14, '#fff', 'middle', 700)}
+  ${text(720, 455, 'Duolingo · Lesson', 13, '#ccc', 'middle')}
+</svg>`;
+}
+
+// ─── Duolingo: Leaderboard ─────────────────────────────────────────────────
+
+function duolingoLeaderboardSVG() {
+  const users = [
+    { name: 'Elena M.', xp: 2840, promoted: true },
+    { name: 'Arjun K.', xp: 2610, promoted: true },
+    { name: 'Sofia R.', xp: 2490, promoted: true },
+    { name: 'You', xp: 1820, promoted: false, you: true },
+    { name: 'Marcus T.', xp: 1670, promoted: false },
+    { name: 'Lena H.', xp: 1540, promoted: false },
+    { name: 'Paul O.', xp: 980, demoted: true },
+    { name: 'Amy C.', xp: 750, demoted: true },
+  ];
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, '#ffffff')}
+  ${rect(0, 0, 1440, 56, '#ffffff')}
+  ${rect(0, 56, 1440, 1, '#e5e5e5')}
+  ${text(720, 34, '🏆 Gold League', 16, '#FFD700', 'middle', 700)}
+  <!-- Timer -->
+  ${rect(1300, 16, 120, 24, '#FFF3E0', 12)}
+  ${text(1360, 32, '⏱ 4d 12h', 11, '#FF9800', 'middle', 600)}
+  <!-- Promotion zone header -->
+  ${rect(370, 70, 700, 22, '#E8F5E9', 0)}
+  ${text(720, 85, '↑ Promotion Zone — top 10 advance', 11, '#58CC02', 'middle', 600)}
+  <!-- Rows -->
+  ${users.map(({ name, xp, promoted, demoted, you }, i) => `
+    ${rect(370, 92 + i * 68, 700, 62, you ? '#FFF9C4' : promoted ? '#F1FFF0' : demoted ? '#FFF0F0' : '#fff', 0)}
+    ${rect(370, 92 + i * 68, 700, 1, '#e5e5e5', 0)}
+    ${text(390, 128 + i * 68, `#${i + 1}`, 13, '#aaa', 'start', 400)}
+    <circle cx="440" cy="122" r="18" fill="${you ? '#FFD700' : promoted ? '#a8d8a8' : '#e0e0e0'}" cy="${115 + i * 68}"/>
+    ${text(465, 118 + i * 68, you ? 'You' : name.charAt(0), 13, '#fff', 'start', 700)}
+    ${text(490, 118 + i * 68, name, 13, you ? '#333' : '#555', 'start', you ? 700 : 400)}
+    ${rect(900, 107 + i * 68, Math.round(xp / 12), 18, promoted ? '#58CC02' : demoted ? '#FF6B6B' : '#e0e0e0', 4)}
+    ${text(1060, 120 + i * 68, `${xp} XP`, 12, '#aaa', 'start')}
+  `).join('')}
+  <!-- Demotion zone -->
+  ${rect(370, 92 + users.length * 68 - 136, 700, 22, '#FFF0F0', 0)}
+  ${text(720, 108 + users.length * 68 - 136, '↓ Demotion Zone — bottom 5 drop down', 11, '#FF6B6B', 'middle', 600)}
+  ${text(720, 855, 'Duolingo · Leaderboard', 13, '#ccc', 'middle')}
+</svg>`;
+}
+
+// ─── Notion: Editor ────────────────────────────────────────────────────────
+
+function notionEditorSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, '#ffffff')}
+  <!-- Sidebar -->
+  ${rect(0, 0, 240, 900, '#f7f7f5')}
+  ${rect(240, 0, 1, 900, '#e9e9e7')}
+  ${text(16, 30, '🏠 Workspace', 12, '#444', 'start', 600)}
+  ${['📋 Getting Started', '📄 Meeting Notes', '🎯 Q2 Goals', '🗄️ Projects DB', '📊 Analytics', '✅ Tasks'].map((p, i) =>
+    text(24, 64 + i * 28, p, 12, i === 2 ? '#000' : '#666', 'start', i === 2 ? 600 : 400)
+  ).join('')}
+  <!-- Cover image -->
+  ${rect(240, 0, 1200, 160, '#DDE4FF')}
+  ${text(840, 88, '🌊', 48, '#aabbff', 'middle')}
+  <!-- Page title -->
+  ${text(440, 208, 'Q2 Goals & OKRs', 32, '#111', 'start', 700)}
+  <!-- Slash command hint -->
+  ${pill(440, 225, 160, 22, '#f0f0ee')}
+  ${text(520, 240, "Type '/' for commands", 11, '#999', 'middle')}
+  <!-- Body text blocks -->
+  ${[270, 295, 320].map(y => rect(440, y, 680 - (y % 50) * 2, 10, '#e0e0e0', 3)).join('')}
+  <!-- H2 -->
+  ${rect(440, 360, 200, 14, '#111', 3)}
+  ${[390, 410, 430].map(y => rect(440, y, 560 - (y % 40), 8, '#d5d5d5', 3)).join('')}
+  <!-- Callout block -->
+  ${rect(440, 460, 720, 80, '#FFF9C4', 6)}
+  ${rect(440, 460, 4, 80, '#FFD600', 0)}
+  ${[480, 500, 520].map(y => rect(460, y, 480 - (y % 30) * 2, 8, '#ccc', 3)).join('')}
+  <!-- Toggle block -->
+  ${rect(440, 560, 720, 40, '#f7f7f5', 4)}
+  ${text(456, 584, '▶ Objectives breakdown', 13, '#555', 'start', 500)}
+  <!-- Drag handle hint -->
+  ${text(424, 292, '⠿', 12, '#ccc', 'start')}
+  ${text(720, 855, 'Notion · Editor', 13, '#ccc', 'middle')}
+</svg>`;
+}
+
+// ─── Notion: Database ─────────────────────────────────────────────────────
+
+function notionDatabaseSVG() {
+  const cols = ['Name', 'Status', 'Owner', 'Due Date', 'Priority', 'Tags'];
+  const colW = [280, 120, 140, 130, 110, 200];
+  const colX = colW.reduce((acc, w, i) => { acc.push(i === 0 ? 240 : acc[i-1] + colW[i-1]); return acc; }, []);
+  const rows = [
+    ['Redesign onboarding flow', '🟢 Done', 'Mia', 'Apr 12', '🔴 High', 'Design, UX'],
+    ['API rate limiting', '🟡 In Progress', 'Alex', 'Apr 18', '🟠 Med', 'Engineering'],
+    ['Q2 roadmap review', '⚪ Not started', 'Sam', 'Apr 25', '🟡 Low', 'Strategy'],
+    ['Fix payment bug', '🔵 In Review', 'Kai', 'Apr 15', '🔴 High', 'Engineering'],
+    ['Write release notes', '⚪ Not started', 'Mia', 'May 1', '🟡 Low', 'Marketing'],
+  ];
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, '#ffffff')}
+  ${rect(0, 0, 240, 900, '#f7f7f5')}
+  ${rect(240, 0, 1, 900, '#e9e9e7')}
+  <!-- View switcher tabs -->
+  ${['Table', 'Board', 'Timeline', 'Calendar'].map((t, i) => `
+    ${rect(248 + i * 90, 8, 82, 28, i === 0 ? '#ebebea' : 'transparent', 4)}
+    ${text(289 + i * 90, 26, t, 12, i === 0 ? '#111' : '#888', 'middle', i === 0 ? 600 : 400)}
+  `).join('')}
+  <!-- Filter bar -->
+  ${rect(248, 44, 900, 28, 'transparent', 0)}
+  ${pill(252, 48, 70, 20, '#ebebea')}
+  ${text(287, 62, 'Filter', 11, '#888', 'middle')}
+  ${pill(330, 48, 60, 20, '#ebebea')}
+  ${text(360, 62, 'Sort', 11, '#888', 'middle')}
+  <!-- Table header -->
+  ${rect(240, 76, 1200, 32, '#f7f7f5')}
+  ${colX.map((x, i) => `
+    ${rect(x, 76, colW[i], 32, '#f7f7f5', 0)}
+    ${text(x + 8, 96, cols[i], 11, '#888', 'start', 600)}
+    ${i < cols.length - 1 ? rect(x + colW[i] - 1, 76, 1, 32, '#e9e9e7', 0) : ''}
+  `).join('')}
+  ${rect(240, 108, 1200, 1, '#e9e9e7')}
+  <!-- Rows -->
+  ${rows.map((row, ri) => `
+    ${rect(240, 109 + ri * 38, 1200, 38, ri % 2 === 0 ? '#fff' : '#fafaf9', 0)}
+    ${rect(240, 147 + ri * 38, 1200, 1, '#e9e9e7', 0)}
+    ${row.map((cell, ci) => text(colX[ci] + 8, 132 + ri * 38, cell, 12, ci === 0 ? '#111' : '#666', 'start', ci === 0 ? 500 : 400)).join('')}
+  `).join('')}
+  <!-- Add row -->
+  ${rect(240, 109 + rows.length * 38, 1200, 32, '#fff', 0)}
+  ${text(260, 129 + rows.length * 38, '+ New', 12, '#aaa')}
+  ${text(720, 855, 'Notion · Database', 13, '#ccc', 'middle')}
+</svg>`;
+}
+
+// ─── Notion: Sidebar ──────────────────────────────────────────────────────
+
+function notionSidebarSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, '#ffffff')}
+  <!-- Wide sidebar for focus -->
+  ${rect(0, 0, 320, 900, '#f7f7f5')}
+  ${rect(320, 0, 1, 900, '#e9e9e7')}
+  <!-- Workspace header -->
+  ${rect(0, 0, 320, 44, '#f7f7f5')}
+  ${text(16, 26, '🏢 Acme Corp', 13, '#333', 'start', 600)}
+  <!-- Search -->
+  ${rect(8, 52, 304, 28, '#ebebea', 4)}
+  ${text(20, 70, '🔍  Search', 12, '#aaa')}
+  <!-- Teamspace section -->
+  ${rect(0, 90, 320, 1, '#e9e9e7')}
+  ${text(12, 112, '◀ TEAMSPACES', 9, '#aaa', 'start', 700)}
+  ${[
+    { icon: '📋', name: 'Engineering', depth: 0, open: true },
+    { icon: '📄', name: 'Roadmap Q2', depth: 1 },
+    { icon: '📄', name: 'Architecture Docs', depth: 1 },
+    { icon: '🗄️', name: 'Sprint Tracker', depth: 1 },
+    { icon: '📋', name: 'Design', depth: 0, open: true },
+    { icon: '📄', name: 'Design System', depth: 1 },
+    { icon: '📄', name: 'Brand Guidelines', depth: 1 },
+    { icon: '📋', name: 'Marketing', depth: 0 },
+  ].map(({ icon, name, depth, open }, i) => `
+    ${rect(0, 126 + i * 30, 320, 30, i === 1 ? '#ebebea' : 'transparent', 0)}
+    ${text(12 + depth * 16, 145 + i * 30, open !== undefined ? (open ? '▼' : '▶') : '', 9, '#aaa')}
+    ${text(28 + depth * 16, 145 + i * 30, `${icon} ${name}`, 12, depth === 0 ? '#333' : '#666', 'start', depth === 0 ? 600 : 400)}
+  `).join('')}
+  <!-- Private section -->
+  ${rect(0, 380, 320, 1, '#e9e9e7')}
+  ${text(12, 402, '▲ PRIVATE', 9, '#aaa', 'start', 700)}
+  ${[
+    { icon: '📝', name: 'My Notes', depth: 0 },
+    { icon: '✅', name: 'Personal Tasks', depth: 0 },
+    { icon: '📎', name: 'Reading List', depth: 0 },
+  ].map(({ icon, name }, i) => `
+    ${text(28, 426 + i * 30, `${icon} ${name}`, 12, '#666', 'start')}
+  `).join('')}
+  <!-- Add new -->
+  ${rect(8, 530, 304, 28, 'transparent', 4)}
+  ${text(20, 548, '+ New page', 12, '#aaa')}
+  <!-- Main area preview -->
+  ${rect(340, 60, 800, 24, '#e0e0e0', 4)}
+  ${rect(340, 100, 600, 14, '#e0e0e0', 4)}
+  ${[130, 150, 170].map(y => rect(340, y, 500 - y + 130, 10, '#ececec', 3)).join('')}
+  ${text(720, 855, 'Notion · Sidebar', 13, '#ccc', 'middle')}
+</svg>`;
+}
+
+// ─── Stripe: Dashboard ────────────────────────────────────────────────────
+
+function stripeDashboardSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, '#f6f9fc')}
+  <!-- Left nav -->
+  ${rect(0, 0, 200, 900, '#0a2540')}
+  ${text(16, 36, '⚡ stripe', 18, '#635BFF', 'start', 800)}
+  ${['Overview', 'Payments', 'Customers', 'Products', 'Reports', 'Radar', 'Connect', 'Billing', 'Issuing', 'Terminal'].map((item, i) => `
+    ${rect(0, 60 + i * 40, 200, 36, i === 0 ? 'rgba(255,255,255,0.1)' : 'transparent', 0)}
+    ${text(16, 82 + i * 40, item, 12, i === 0 ? '#fff' : '#94a3b8', 'start', i === 0 ? 600 : 400)}
+  `).join('')}
+  <!-- Top header -->
+  ${rect(200, 0, 1240, 52, '#fff')}
+  ${rect(200, 52, 1240, 1, '#e0e0e0')}
+  ${text(220, 30, 'Overview', 16, '#0a2540', 'start', 600)}
+  ${pill(1200, 14, 120, 24, '#635BFF')}
+  ${text(1260, 30, '+ New', 12, '#fff', 'middle', 600)}
+  <!-- Metric cards -->
+  ${[
+    { label: 'Gross volume', val: '€24,831', change: '+18%', x: 220 },
+    { label: 'Net volume', val: '€22,140', change: '+14%', x: 530 },
+    { label: 'New customers', val: '143', change: '+32%', x: 840 },
+  ].map(({ label, val, change, x }) => `
+    ${rect(x, 72, 290, 100, '#fff', 8)}
+    ${text(x + 16, 98, label, 11, '#6b7280', 'start')}
+    ${text(x + 16, 128, val, 22, '#0a2540', 'start', 700)}
+    ${pill(x + 16, 140, 56, 18, '#dcfce7')}
+    ${text(x + 44, 152, change, 11, '#16a34a', 'middle', 600)}
+  `).join('')}
+  <!-- Revenue chart -->
+  ${rect(220, 190, 880, 280, '#fff', 8)}
+  ${text(236, 216, 'Gross volume', 12, '#6b7280', 'start', 600)}
+  ${text(236, 232, '€24,831', 20, '#0a2540', 'start', 700)}
+  <!-- Chart bars -->
+  ${Array.from({length: 28}, (_, i) => {
+    const h = 40 + Math.abs(Math.sin(i * 0.7) * 160);
+    return rect(248 + i * 30, 430 - h, 22, h, '#635BFF', 3) +
+           rect(248 + i * 30, 430 - h, 22, h, 'rgba(99,91,255,0.2)', 3);
+  }).join('')}
+  ${rect(220, 440, 880, 1, '#e0e0e0')}
+  <!-- Recent activity -->
+  ${rect(1120, 72, 300, 400, '#fff', 8)}
+  ${text(1136, 98, 'Recent activity', 12, '#6b7280', 'start', 600)}
+  ${Array.from({length: 6}, (_, i) => `
+    ${rect(1136, 112 + i * 56, 268, 48, '#f8fafc', 4)}
+    ${text(1152, 134 + i * 56, `Card payment`, 12, '#0a2540', 'start')}
+    ${text(1152, 150 + i * 56, `€${(120 + i * 37).toFixed(2)}`, 11, '#6b7280', 'start')}
+    ${text(1380, 134 + i * 56, `${i + 1}m ago`, 11, '#6b7280', 'end')}
+  `).join('')}
+  ${text(720, 855, 'Stripe · Dashboard', 13, '#bbb', 'middle')}
+</svg>`;
+}
+
+// ─── Stripe: Checkout ─────────────────────────────────────────────────────
+
+function stripeCheckoutSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, '#f6f9fc')}
+  <!-- Two-column checkout -->
+  ${rect(160, 60, 520, 780, '#fff', 12)}
+  ${rect(720, 60, 560, 780, '#fff', 12)}
+  <!-- Left: Order summary -->
+  ${text(196, 104, 'Order summary', 14, '#0a2540', 'start', 600)}
+  ${rect(196, 120, 448, 120, '#f8fafc', 8)}
+  ${rect(196, 120, 80, 80, '#635BFF', 8)}
+  ${text(292, 160, 'Pro Plan · Monthly', 13, '#0a2540', 'start', 600)}
+  ${text(292, 178, 'Up to 10 users · Unlimited projects', 11, '#6b7280', 'start')}
+  ${text(196, 268, 'Subtotal', 12, '#6b7280', 'start')}
+  ${text(624, 268, '€49.00', 12, '#0a2540', 'end')}
+  ${text(196, 290, 'Tax (20%)', 12, '#6b7280', 'start')}
+  ${text(624, 290, '€9.80', 12, '#0a2540', 'end')}
+  ${rect(196, 304, 448, 1, '#e0e0e0', 0)}
+  ${text(196, 325, 'Total', 14, '#0a2540', 'start', 700)}
+  ${text(624, 325, '€58.80', 16, '#0a2540', 'end', 700)}
+  <!-- Right: Payment form -->
+  ${text(756, 104, 'Payment details', 14, '#0a2540', 'start', 600)}
+  ${text(756, 135, 'Email', 11, '#374151', 'start', 500)}
+  ${rect(756, 148, 488, 36, '#fff', 4)}
+  ${rect(756, 148, 488, 36, '#e0e0e0', 4, 'stroke')}
+  ${text(756, 208, 'Card information', 11, '#374151', 'start', 500)}
+  ${rect(756, 220, 488, 36, '#fff', 4)}
+  ${rect(756, 220, 488, 36, '#635BFF', 4, 'stroke')}
+  ${text(772, 242, '4242 4242 4242 4242', 13, '#0a2540', 'start')}
+  ${rect(756, 258, 236, 36, '#fff', 4)}
+  ${rect(756, 258, 236, 36, '#e0e0e0', 4, 'stroke')}
+  ${text(772, 280, '12/27', 13, '#0a2540', 'start')}
+  ${rect(1004, 258, 240, 36, '#fff', 4)}
+  ${rect(1004, 258, 240, 36, '#e0e0e0', 4, 'stroke')}
+  ${text(1020, 280, 'CVC', 13, '#aaa', 'start')}
+  <!-- Inline error -->
+  ${text(756, 308, '✓ Valid card number', 11, '#16a34a', 'start')}
+  <!-- Submit button -->
+  ${rect(756, 700, 488, 48, '#635BFF', 8)}
+  ${text(1000, 730, 'Pay €58.80', 14, '#fff', 'middle', 700)}
+  ${text(720, 855, 'Stripe · Checkout', 13, '#bbb', 'middle')}
+</svg>`;
+}
+
+// ─── Stripe: Payment Links ────────────────────────────────────────────────
+
+function stripePaymentLinksSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, '#f6f9fc')}
+  ${rect(0, 0, 200, 900, '#0a2540')}
+  ${text(16, 36, '⚡ stripe', 18, '#635BFF', 'start', 800)}
+  ${rect(200, 0, 1240, 52, '#fff')}
+  ${rect(200, 52, 1240, 1, '#e0e0e0')}
+  ${text(220, 30, 'Create payment link', 16, '#0a2540', 'start', 600)}
+  <!-- Form left column -->
+  ${rect(220, 72, 520, 780, '#fff', 8)}
+  ${text(240, 112, 'Product', 11, '#374151', 'start', 600)}
+  ${rect(240, 124, 480, 48, '#f8fafc', 6)}
+  ${text(256, 152, '+ Add product', 13, '#635BFF', 'start')}
+  ${text(240, 192, 'Price', 11, '#374151', 'start', 600)}
+  ${rect(240, 204, 480, 36, '#fff', 4)}
+  ${rect(240, 204, 480, 36, '#e0e0e0', 4)}
+  ${text(256, 226, '€ 49.00', 13, '#0a2540', 'start')}
+  ${text(240, 262, 'Currency', 11, '#374151', 'start', 600)}
+  ${rect(240, 274, 480, 36, '#fff', 4)}
+  ${rect(240, 274, 480, 36, '#e0e0e0', 4)}
+  ${text(256, 296, '🇪🇺  EUR — Euro', 13, '#0a2540', 'start')}
+  ${rect(240, 330, 480, 28, '#f3f4f6', 4)}
+  ${text(256, 348, '▼ Advanced options', 12, '#635BFF', 'start')}
+  ${text(240, 390, 'After payment', 11, '#374151', 'start', 600)}
+  ${['Show confirmation page', 'Redirect to URL', 'Don\'t show anything'].map((opt, i) => `
+    <circle cx="252" cy="${415 + i * 32}" r="7" fill="${i === 0 ? '#635BFF' : '#fff'}" stroke="${i === 0 ? '#635BFF' : '#d0d0d0'}" stroke-width="2"/>
+    ${text(266, 420 + i * 32, opt, 12, '#374151', 'start')}
+  `).join('')}
+  ${rect(240, 720, 480, 44, '#635BFF', 8)}
+  ${text(480, 748, 'Create link', 14, '#fff', 'middle', 700)}
+  <!-- Live preview right -->
+  ${rect(780, 72, 620, 780, '#fff', 8)}
+  ${text(800, 102, 'Preview', 11, '#6b7280', 'start', 600)}
+  ${rect(830, 120, 520, 640, '#f6f9fc', 8)}
+  ${rect(830, 120, 520, 1, '#e0e0e0', 0)}
+  ${text(1090, 172, 'Pro Plan', 18, '#0a2540', 'middle', 700)}
+  ${text(1090, 200, '€49.00 / month', 14, '#6b7280', 'middle')}
+  ${rect(870, 230, 440, 36, '#635BFF', 8)}
+  ${text(1090, 252, 'Subscribe', 13, '#fff', 'middle', 700)}
+  ${text(1090, 290, '— or pay with card —', 11, '#aaa', 'middle')}
+  ${rect(870, 308, 440, 32, '#fff', 4)}
+  ${rect(870, 308, 440, 32, '#e0e0e0', 4)}
+  ${text(886, 328, 'Card number', 11, '#aaa', 'start')}
+  ${text(720, 855, 'Stripe · Payment Links', 13, '#bbb', 'middle')}
+</svg>`;
+}
+
+// ─── Generic fallback ──────────────────────────────────────────────────────
+
+function genericSVG(screen) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" style="font-family:system-ui,sans-serif">
+  ${rect(0, 0, 1440, 900, SURFACE)}
+  ${text(720, 440, screen.label, 24, MUTED, 'middle', 600)}
+  ${text(720, 472, 'Run scripts/fetch-screenshots.js to capture real screenshots', 13, FAINT, 'middle')}
+</svg>`;
+}
+
+function renderPanel(screen, annotation, navigate, appId) {
+  renderDetail(annotation);
+  renderIndex(screen, annotation, navigate, appId);
+}
+
+function renderDetail(annotation) {
+  const detail = document.getElementById('panel-detail');
+
+  if (!annotation) {
+    detail.innerHTML = `
+      <div class="panel-empty-state">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <circle cx="20" cy="20" r="16" stroke="var(--app-accent)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.5"/>
+          <circle cx="20" cy="20" r="6" fill="var(--app-accent)" opacity="0.2"/>
+          <text x="20" y="24" text-anchor="middle" font-size="10" font-weight="700" fill="var(--app-accent)" opacity="0.8" font-family="system-ui,sans-serif">1</text>
+        </svg>
+        <p>Click a numbered marker on the screenshot to explore the UX decision behind it.</p>
+      </div>`;
+    return;
+  }
+
+  const sourcesHtml = annotation.sources && annotation.sources.length
+    ? `<div class="panel-sources">
+        <div class="panel-sources-label">Sources</div>
+        ${annotation.sources.map(s =>
+          `<a class="source-link" href="${escapeAttr(s.url)}" target="_blank" rel="noopener noreferrer">${escape(s.label)}</a>`
+        ).join('')}
+      </div>`
+    : '';
+
+  const principlesHtml = annotation.principles && annotation.principles.length
+    ? `<div class="panel-principles">
+        ${annotation.principles.map(p => `<span class="principle-tag">${escape(p)}</span>`).join('')}
+      </div>`
+    : '';
+
+  detail.innerHTML = `
+    <div class="panel-annotation-label" aria-hidden="true">${escape(annotation.label)}</div>
+    <h2 class="panel-annotation-title">${escape(annotation.title)}</h2>
+    <p class="panel-annotation-analysis">${escape(annotation.analysis)}</p>
+    ${principlesHtml}
+    ${sourcesHtml}`;
+
+  detail.scrollTop = 0;
+}
+
+function renderIndex(screen, activeAnnotation, navigate, appId) {
+  const index = document.getElementById('panel-index');
+
+  index.innerHTML = `<div class="panel-index-header">All annotations</div>`;
+
+  for (const annotation of screen.annotations) {
+    const isActive = activeAnnotation && annotation.id === activeAnnotation.id;
+    const btn = document.createElement('button');
+    btn.className = 'annotation-item' + (isActive ? ' active' : '');
+    btn.setAttribute('aria-current', isActive ? 'true' : 'false');
+    btn.dataset.annotationId = annotation.id;
+    btn.innerHTML = `
+      <span class="annotation-item-num" aria-hidden="true">${escape(annotation.label)}</span>
+      <span class="annotation-item-title">${escape(annotation.title)}</span>`;
+    index.appendChild(btn);
+  }
+}
+
+function escape(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function escapeAttr(str) {
+  return String(str).replace(/"/g, '&quot;');
+}
+
+// ── App router ─────────────────────────────────────────────────────────────
+
+// ─── State ───────────────────────────────────────────────────────────────────
+
+function parseHash() {
+  const hash = location.hash.replace(/^#/, '');
+  const [appId, screenId, annotationId] = hash.split('/');
+  return { appId: appId || null, screenId: screenId || null, annotationId: annotationId || null };
+}
+
+function navigate(appId, screenId, annotationId) {
+  const parts = [appId, screenId, annotationId].filter(Boolean);
+  location.hash = parts.join('/');
+}
+
+// ─── Render ───────────────────────────────────────────────────────────────────
+
+function render() {
+  const { appId, screenId, annotationId } = parseHash();
+
+  const app = (appId && appsById[appId]) || apps[0];
+  const screen = (screenId && app.screens.find(s => s.id === screenId)) || app.screens[0];
+  const annotation = annotationId
+    ? screen.annotations.find(a => a.id === annotationId) || null
+    : null;
+
+  // Apply app accent color as CSS custom property
+  document.documentElement.style.setProperty('--app-accent', app.accentColor);
+
+  // Update document title
+  document.title = `${app.name} — ${screen.label} | Eye for Design`;
+
+  renderNav(apps, app, screen, navigate);
+  renderViewer(screen, annotation?.id ?? null);
+  renderPanel(screen, annotation, navigate, app.id);
+}
+
+// ─── Events ───────────────────────────────────────────────────────────────────
+
+// Delegated click handling for dynamically rendered elements
+document.addEventListener('click', e => {
+  const marker = e.target.closest('.callout-marker');
+  if (marker) {
+    const { appId, screenId } = parseHash();
+    const app = (appId && appsById[appId]) || apps[0];
+    const screen = (screenId && app.screens.find(s => s.id === screenId)) || app.screens[0];
+    const annotationId = marker.dataset.annotationId;
+    // Toggle off if already active
+    const currentAnnotationId = parseHash().annotationId;
+    if (currentAnnotationId === annotationId) {
+      navigate(app.id, screen.id);
+    } else {
+      navigate(app.id, screen.id, annotationId);
+    }
+    return;
+  }
+
+  const annotationItem = e.target.closest('.annotation-item');
+  if (annotationItem) {
+    const { appId, screenId } = parseHash();
+    const app = (appId && appsById[appId]) || apps[0];
+    const screen = (screenId && app.screens.find(s => s.id === screenId)) || app.screens[0];
+    const annotationId = annotationItem.dataset.annotationId;
+    const currentAnnotationId = parseHash().annotationId;
+    if (currentAnnotationId === annotationId) {
+      navigate(app.id, screen.id);
+    } else {
+      navigate(app.id, screen.id, annotationId);
+    }
+    return;
+  }
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  const { appId, screenId, annotationId } = parseHash();
+  const app = (appId && appsById[appId]) || apps[0];
+  const screen = (screenId && app.screens.find(s => s.id === screenId)) || app.screens[0];
+  const screenIdx = app.screens.indexOf(screen);
+
+  // [ and ] to navigate between screens
+  if (e.key === '[' && !e.metaKey && !e.ctrlKey) {
+    e.preventDefault();
+    if (screenIdx > 0) navigate(app.id, app.screens[screenIdx - 1].id);
+    return;
+  }
+  if (e.key === ']' && !e.metaKey && !e.ctrlKey) {
+    e.preventDefault();
+    if (screenIdx < app.screens.length - 1) navigate(app.id, app.screens[screenIdx + 1].id);
+    return;
+  }
+
+  // Arrow keys to navigate between annotations
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    const annotations = screen.annotations;
+    const idx = annotationId ? annotations.findIndex(a => a.id === annotationId) : -1;
+    const next = annotations[(idx + 1) % annotations.length];
+    navigate(app.id, screen.id, next.id);
+    return;
+  }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    const annotations = screen.annotations;
+    const idx = annotationId ? annotations.findIndex(a => a.id === annotationId) : 0;
+    const prev = annotations[(idx - 1 + annotations.length) % annotations.length];
+    navigate(app.id, screen.id, prev.id);
+    return;
+  }
+
+  // Escape to deselect annotation
+  if (e.key === 'Escape' && annotationId) {
+    e.preventDefault();
+    navigate(app.id, screen.id);
+    return;
+  }
+});
+
+// ─── Boot ─────────────────────────────────────────────────────────────────────
+
+window.addEventListener('hashchange', render);
+render();
+
+})();
+  </script>
+</body>
+</html>
