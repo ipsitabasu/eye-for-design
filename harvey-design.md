@@ -1,195 +1,201 @@
 # Harvey — Design System
 
-> **Confidence note:** This file combines two sources. (1) Written research — Harvey's own design-team blog posts, press coverage, and typeface databases, surfaced via web search (this session couldn't render harvey.ai directly). (2) One real screenshot the user provided — Harvey's `/platform/agents` marketing page, showing the top nav, hero, and one embedded in-product screenshot (an Agents delegation chat with a progress panel). Values pulled from that screenshot are marked **"confirmed — screenshot"**; everything else is still **"estimated"**, visually eyeballed from a single image rather than pixel-sampled from live CSS, or inferred from text alone. Sections/screens not covered by the screenshot (Vault, Workflow builder, Library, History, mobile, pricing) remain unverified — see `Known Gaps`.
+> **Confidence note:** This file combines written research (Harvey's own design-team blog posts, press coverage, typeface databases — this session can't render harvey.ai directly) with **three real screenshots** the user provided: (1) the `/platform/agents` marketing page (nav, hero, one embedded Agents-view screenshot), (2) the Assistant answer view mid-conversation (follow-up suggestions, chat composer), and (3) a split Assistant + Word-style document editor view (citations, sources card, version history, a glossary tooltip, and the full redline editor toolbar). Values pulled from screenshots are marked **"confirmed — screenshot."** Product areas not covered by any screenshot (Vault, Workflow builder, Library, History list, mobile, pricing) remain **"estimated"** or "inferred" — see `Known Gaps`.
 
 ## Overview
 
-Harvey reads as an **editorial, high-contrast, trust-first legal brand** — warm cream canvas, near-black ink, a Didone-style high-contrast serif for display copy, and a clean grotesque sans for everything else. The identity was shaped by Portland studio **Geist** with brand consultant Shawn Farsai, with the web/product build by **Basement Studio**. The house serif, **TWK Ghost** (WELTKERN), carries the wordmark, headlines, and display copy — its thick/thin stroke contrast is directly visible in the "Delegate the Work. Own the Judgment." hero headline and the "Harvey" wordmark. Body copy and UI run in a clean grotesque sans (Harvey's own material names **ABC Diatype** by Dinamo) — visible in nav links, buttons, and the in-product chat text.
+Harvey reads as an **editorial, high-contrast, trust-first legal brand** on its marketing site, and a **plain, white, document-dense productivity tool** in the actual product — the two are deliberately different registers. Marketing (nav, hero) sits on a warm cream canvas; the Assistant and document-editor views confirmed here are **pure white**, consistent with the "Shadcn-derived neutral React base" Harvey's own design-system blog post describes. The identity was shaped by Portland studio **Geist** with brand consultant Shawn Farsai; web build by **Basement Studio**. The house serif, **TWK Ghost** (WELTKERN), carries the wordmark and marketing headlines only — every in-product screenshot confirms body/UI text is a clean grotesque sans throughout, with no serif anywhere in the actual product.
 
-The product's defining trait isn't a color or a shape — it's **transparency as a design principle**, now sharpened into an "agents" pitch: "Delegate the Work. Own the Judgment." Harvey's design team has written publicly that every surface exists to make AI reasoning verifiable, and the confirmed product screenshot shows this directly — a right-hand **Progress panel** enumerates completed steps with strikethrough + checkmarks, and an **Outputs / Sources** toggle sits right below it, keeping "what Harvey did" and "what it's based on" as co-equal, always-visible UI, not a buried footnote.
+The product's defining trait is **citation traceability made literally visible**, confirmed directly now: every substantive claim in an Assistant answer carries small gray superscript **citation badges** (e.g. "¹³ ¹⁷ ³⁸") linking back to source material, and every answer ends in a **Sources card** ("Web search and files — 16 cited"). The Agents view's Progress panel and this citation-badge system are two expressions of the same underlying principle — nothing Harvey generates is presented without a visible trail back to its source.
 
-Two things the marketing site confirms that the earlier text-only research got right: the **cream-canvas, black-ink, single-accent** palette, and the **serif-display / sans-UI** split. One thing it corrects: this is **not** a hairline-only, flat system — the hero product screenshot sits in a large, heavily-rounded, drop-shadowed card over a dark painterly/textured backdrop, and a floating "Ask Harvey" pill chip in the product view is clearly elevated with its own shadow. Harvey uses real elevation deliberately, on a small number of hero surfaces, against an otherwise flat, cream, hairline-divided UI.
+The redline/drafting workflow (confirmed via the split-panel screenshot) pairs the Assistant conversation on the left with a **full Word-style rich-text editor** on the right — paragraph style, bold/italic/underline/strike, lists, alignment, font, link, and undo/redo, plus a "Show edits" toggle and version switcher ("Version 2"). A nice, specific, confirmed detail: hovering an entity name in a drafted document (e.g. "Sterling Group") surfaces a **glossary tooltip** — a small white card with a bold title and a plain-language definition — so a lawyer never has to leave the document to check what a referenced company or term is.
 
 **Key characteristics (confirmed — screenshot):**
-- Warm cream/off-white canvas (not white, not gray) behind nav and hero.
-- Near-black ink text; a black-filled primary CTA button (`Request a Demo`) paired with an outlined black-on-cream secondary button (`Login`).
-- **TWK Ghost**-style high-contrast serif for the wordmark and hero headline; clean grotesque sans everywhere else (nav, buttons, body, in-product UI).
-- One sparing accent — a warm terracotta/orange, seen only in a small circular "spark" mark (the agent/AI indicator) and a thin accent bar — not used broadly.
-- The in-product Agents view: dark near-black icon sidebar, white main panel, a tan/beige user-message bubble, unstyled-gray assistant prose, a right-hand **Progress** checklist with strikethrough-on-complete, and an **Outputs/Sources** segmented toggle.
-- A floating **"Ask Harvey"** pill (avatar + label + accent spark icon) bottom-right of the product view, elevated with a drop shadow — the one persistent "always available" affordance.
-- Full-width black **announcement bar** above the nav ("Harvey Agents execute legal work end-to-end").
-- Generous corner radii on the big hero product-mockup card (~20px) against comparatively tight radii on buttons (~8–10px) — two different rounding scales for "hero" vs. "control" surfaces.
+- **Marketing vs. product canvas split.** Marketing site: warm cream (~#F7F5F0). Assistant + document editor: pure white (#FFFFFF). This is a real, deliberate distinction, not an inconsistency.
+- Near-black ink text; solid-black primary buttons/send-actions; a black-filled `Request a Demo` marketing CTA and a black circular chat-send button share the same near-black fill.
+- **TWK Ghost**-style high-contrast serif only in the wordmark and marketing hero headline. Zero serif usage anywhere in the product screenshots (Assistant, follow-ups, sources, document editor) — all grotesque sans.
+- One sparing accent — warm terracotta/orange, seen only in the marketing "spark" icon; not present anywhere in the confirmed product screenshots (which stay strictly black/white/gray).
+- **Citation badges**: small gray rounded-square superscript chips carrying reference numbers, inline in Assistant answer text.
+- **Sources card**: bordered card with a globe icon, "Web search and files" label, and an "N cited" count.
+- **Chat composer**: rounded light-gray card (not white, not cream — a third, warmer neutral) holding the prompt text, an icon row (attach, connect/share, magic-wand), a mode selector, and a circular send button that is **black when the field has content, muted gray when empty** — a real, confirmed disabled/enabled state pair.
+- **Mode selector** appears in two confirmed forms: a simple "Chat ▾" dropdown in the plain Assistant composer, and a three-way **Auto / Edit / Answer** segmented control in the split editor view.
+- **Version history row**: a bordered pill showing "Version 1" (bold) + a relative timestamp ("2 minutes ago"), plus a "Version 2" label with a history icon in the document editor's own toolbar.
+- **Glossary tooltip**: hovering a pale-blue-highlighted entity name in a drafted document shows a small white card — bold title + plain-language definition — floating with a subtle border/shadow.
+- **Response toolbar**: every AI answer/document gets a consistent small gray icon-row underneath — Copy, Export, Rewrite, Open in editor, plus thumbs up/down at the far right.
+- The in-product Agents view: dark near-black icon sidebar, white main panel, tan/beige user-message bubble, unstyled-gray assistant prose, a right-hand **Progress** checklist with strikethrough-on-complete, and an **Outputs/Sources** segmented toggle.
+- A floating **"Ask Harvey"** pill (avatar + label + accent spark icon) bottom-right of the Agents view, elevated with a drop shadow.
+- Full-width black **announcement bar** above the marketing nav.
+- Two distinct radius scales: ~20px on the hero product-mockup card and the chat composer, vs. ~8–10px on buttons/tabs — "hero/container" surfaces round more generously than "control" surfaces.
 
 **Key characteristics (sourced — text research, not yet visually confirmed):**
-- Design philosophy centers on **citation traceability** — every AI output is linked to verifiable source material (the confirmed screenshot's Progress/Sources panel is the visible expression of this).
-- Five product pillars: **Assistant** (chat), **Vault** (bulk document repository + RAG analysis, ~10,000 docs/project), **Workflow** (no-code agent builder), **History**, **Library** — plus the newer **Agents** delegation surface shown in the screenshot.
-- Native **Word integration** for redlining, driven by natural-language prompts.
-- Design tokens are **semantic/intent-based** ("foreground-base" not "neutral-400"), part of a January 2026 design-system rebuild on a Shadcn-derived React component base.
-- Full **mobile app** (iOS/Android): dictation, "Magic Prompt," Vault search, scan-and-upload, audio-to-transcript.
+- Five product pillars named in Harvey's own materials: **Assistant** (now confirmed), **Vault** (bulk document repository + RAG, ~10,000 docs/project), **Workflow** (no-code agent builder), **History**, **Library** — plus the confirmed **Agents** delegation surface.
+- Design tokens are semantic/intent-based ("foreground-base" not "neutral-400"), part of a January 2026 design-system rebuild on a Shadcn-derived React base — the confirmed all-white, sans-only, restrained-accent product UI is consistent with this.
+- Full mobile app (iOS/Android): dictation, "Magic Prompt," Vault search, scan-and-upload, audio-to-transcript.
 
 ## Colors
 
-### Surface
-- **Canvas** (`{colors.canvas}` — ~#F7F5F0 *confirmed — screenshot*): Warm cream page floor behind nav and hero. Not pure white.
-- **Surface Card** (`{colors.surface-card}` — ~#FFFFFF *confirmed — screenshot*): The in-product chat/progress panel background, white against the cream canvas.
-- **Sidebar Dark** (`{colors.sidebar-dark}` — ~#16181D *confirmed — screenshot*): The narrow icon rail on the left of the in-product Agents view — near-black, cooler than the ink text color.
-- **Announcement Bar** (`{colors.bar-dark}` — ~#0E0D0B *confirmed — screenshot*): Full-width black bar above the nav.
+### Marketing surface
+- **Canvas** (`{colors.canvas}` — ~#F7F5F0 *confirmed*): Warm cream, nav + hero only.
+- **Announcement Bar** (`{colors.bar-dark}` — ~#0E0D0B *confirmed*): Full-width black bar above nav.
+- **Spark Accent** (`{colors.accent}` — ~#DB5A35 *confirmed*): Terracotta/orange, marketing-only — the Agents view's floating chip icon. Not observed anywhere in the Assistant or editor screenshots.
+
+### Product surface
+- **Product White** (`{colors.surface}` — #FFFFFF *confirmed*): Assistant conversation view, Sources card, document editor — the actual product's base surface, distinct from marketing's cream.
+- **Sidebar Dark** (`{colors.sidebar-dark}` — ~#16181D *confirmed*): Narrow icon rail in the Agents view.
+- **Composer Surface** (`{colors.composer-bg}` — ~#F5F3EE *confirmed*): Rounded card background for the chat input — a third neutral, warmer than product-white, cooler/lighter than marketing canvas.
+- **Citation Badge** (`{colors.badge-bg}` — ~#EEEDE8 *confirmed*): Light gray rounded-square chip behind inline citation numbers.
+- **Chat Bubble (user)** (`{colors.bubble-user}` — ~#ECE5DA *confirmed*): Warm tan bubble, Agents-view user turns.
+- **Glossary Highlight** (`{colors.glossary-highlight}` — ~#DCE8F5 *confirmed*): Pale-blue underline/background on entity terms that trigger a definition tooltip.
 
 ### Text
-- **Ink** (`{colors.ink}` — ~#17160F *confirmed — screenshot*): Near-black, warm-leaning. Hero headline, wordmark, nav links, bold UI labels ("Progress," "Context").
-- **Body** (`{colors.body}` — ~#4A4842 *estimated*): Running text weight between ink and muted; not directly distinguishable from ink in the single screenshot at this resolution.
-- **Muted** (`{colors.muted}` — ~#8B8576 *confirmed — screenshot*): Breadcrumb ("Platform /"), "Set client matter," step-count label ("4 of 4 steps") — secondary/contextual text.
+- **Ink** (`{colors.ink}` — ~#17160F *confirmed*): Headlines, wordmark, body emphasis, bold labels ("Bottom Line," "Sources," "Version 1").
+- **Body** (`{colors.body}` — ~#302E28 *confirmed*): Assistant answer prose, follow-up question text, document editor body copy.
+- **Muted** (`{colors.muted}` — ~#8B8576 *confirmed*): Breadcrumbs, toolbar labels (Copy/Export/Rewrite), timestamps, "N cited" subtext, composer placeholder text ("Ask Harvey a question…").
 
-### Accent
-- **Spark Accent** (`{colors.accent}` — ~#DB5A35 *confirmed — screenshot*): Warm terracotta/orange-red. Seen only in the small circular agent/AI "spark" icon beside the floating Ask Harvey chip, and a thin accent bar. Used sparingly — this is Harvey's one brand color beyond black/cream, not a general-purpose UI color.
+### Buttons & interactive states
+- **Primary fill** (`{colors.primary}` — ~#17160F *confirmed*): Black CTA fill (marketing `Request a Demo`) and the chat send-button's **active** state.
+- **Send button (disabled/empty)** (`{colors.control-disabled}` — ~#C9C6BC *confirmed*): Muted gray circular send button when the composer is empty — a real, distinguishable disabled state from the black active one.
+- **Mode selector (active segment)** (`{colors.segment-active}` — ~#2B2A26 *confirmed*): Dark pill behind the selected mode ("Auto") in the Auto/Edit/Answer control.
+- **On Primary** (`{colors.on-primary}` — #FFFFFF *confirmed*): White text/icons on black fills.
+- **Secondary border** (`{colors.border-strong}` — ~#17160F *confirmed*): Black 1px outline, marketing `Login` button.
 
-### Buttons
-- **Primary fill** (`{colors.primary}` — ~#17160F *confirmed — screenshot*, same as ink): Solid black "Request a Demo" CTA.
-- **On Primary** (`{colors.on-primary}` — #FFFFFF *confirmed — screenshot*): White label text on the black CTA.
-- **Secondary border** (`{colors.border-strong}` — ~#17160F *confirmed — screenshot*): Black 1px outline on the cream-background "Login" button.
+### Other confirmed
+- **Progress check** (`{colors.progress-done}` — ~#3F8F5F *confirmed, lower confidence*): Green checkmark/strikethrough, Agents Progress panel.
+- **Hairline** (`{colors.hairline}` — ~#E6E1D5 *confirmed*): Dividers between follow-up rows, chat-column/Progress-panel split, editor toolbar icon groups.
+- **Editor toolbar icon** (`{colors.icon-muted}` — ~#6B6860 *confirmed*): Gray icon color in the document editor's formatting toolbar.
 
-### Product UI accents
-- **Chat bubble (user)** (`{colors.bubble-user}` — ~#ECE5DA *confirmed — screenshot*): Warm tan/beige rounded bubble for the user's message in the Agents chat.
-- **Progress check** (`{colors.progress-done}` — ~#3F8F5F *confirmed — screenshot, lower confidence*): Green checkmark/strikethrough color for completed Progress-panel steps.
-- **Hairline** (`{colors.hairline}` — ~#E6E1D5 *confirmed — screenshot*): Vertical divider between the chat column and the Progress/Context side panel.
-
-### Semantic (inferred, standard enterprise pattern — not visible in the screenshot)
-- **Warning** (`{colors.semantic-warning}` — ~#B8791F *estimated*): Flagged clause, unresolved conflict.
-- **Error** (`{colors.semantic-error}` — ~#C0392B *estimated*): Failed extraction, validation error.
+### Semantic (still inferred — not visible in any screenshot)
+- **Warning** (`{colors.semantic-warning}` — ~#B8791F *estimated*)
+- **Error** (`{colors.semantic-error}` — ~#C0392B *estimated*)
 
 ## Typography
 
 ### Font Family
-**TWK Ghost** (WELTKERN, designed by Nolan Paparelli) — high-contrast, Didone-leaning serif — confirmed visually in the "Harvey" wordmark and the "Delegate the Work. Own the Judgment." hero headline: heavy vertical stems, thin hairline serifs and crossbars, classic high-contrast display-serif shape. Sourced separately: first released May 2022 (Regular/Italic), expanded to 13+ weights + italics in June 2025.
-
-A clean grotesque sans — Harvey's own material names **ABC Diatype** (Dinamo) — carries nav links, buttons, breadcrumbs, and all in-product UI/chat text, confirmed visually as a neutral, low-contrast grotesque (not geometric, not humanist-warm).
-
-Both are commercial/licensed typefaces — see substitutes below.
+**TWK Ghost** (WELTKERN) — high-contrast serif — confirmed in the wordmark and marketing hero headline only. **Zero serif usage confirmed anywhere in the product** (Assistant, follow-ups, Sources, document editor, Agents view) — a clean grotesque sans (Harvey's material names **ABC Diatype**, Dinamo) carries all of it, including the drafted email body inside the Word-style editor.
 
 ### Hierarchy
 
 | Token | Approx. Size | Weight | Confidence | Use |
 |---|---|---|---|---|
-| `{typography.display-hero}` | ~72–80px | TWK Ghost, high-contrast | confirmed — screenshot (relative scale) | "Delegate the Work. Own the Judgment." hero headline, 3-line wrap |
-| `{typography.wordmark}` | ~24px | TWK Ghost | confirmed — screenshot | "Harvey" nav logo |
-| `{typography.nav-link}` | ~15px | Sans, regular | confirmed — screenshot | Platform / Solutions / Customers / Security / Resources / Company |
-| `{typography.body-lg}` | ~18px | Sans, regular | confirmed — screenshot | Hero subheadline ("Harvey handles work end to end…") |
-| `{typography.button}` | ~15px | Sans, medium | confirmed — screenshot | "Request a Demo," "Login" |
-| `{typography.chat-body}` | ~14–15px | Sans, regular | confirmed — screenshot | User message bubble, assistant response text |
-| `{typography.caption}` | ~12–13px | Sans, regular | confirmed — screenshot | Breadcrumb, "Set client matter," "4 of 4 steps," Progress list items |
-| `{typography.mono}` | ~13px *estimated* | Sans Mono | estimated | Citation IDs / source references — not visible in this screenshot |
+| `{typography.display-hero}` | ~72–80px | TWK Ghost | confirmed | Marketing hero headline |
+| `{typography.wordmark}` | ~24px | TWK Ghost | confirmed | "Harvey" nav logo |
+| `{typography.nav-link}` | ~15px | Sans, regular | confirmed | Marketing nav |
+| `{typography.section-label}` | ~17px | Sans, regular, gray | confirmed | "Follow-ups" section header |
+| `{typography.answer-body}` | ~15–16px | Sans, regular | confirmed | Follow-up question rows, Assistant answer prose, editor document body |
+| `{typography.toolbar-label}` | ~13px | Sans, regular, gray | confirmed | Copy / Export / Rewrite / Open in editor |
+| `{typography.caption}` | ~12–13px | Sans, regular, gray | confirmed | Breadcrumb, timestamps, "N cited," "4 of 4 steps" |
+| `{typography.citation-badge}` | ~10–11px | Sans, medium | confirmed | Inline superscript citation numbers |
+| `{typography.composer-placeholder}` | ~14–15px | Sans, regular, gray | confirmed | "Ask Harvey a question…" |
+| `{typography.mono}` | ~13px *estimated* | Sans Mono | estimated | Not directly observed; inferred from citation-heavy product |
 
 ### Principles
-- **Serif carries the brand voice; sans carries the work** — confirmed. TWK Ghost appears only in the wordmark and hero headline; every nav, button, and in-product UI element observed is set in the sans.
-- Body/UI text stays small and restrained (~13–15px) even in marketing contexts — this is a controlled, editorial type scale, not an oversized SaaS-marketing one.
+- **Serif is 100% marketing-only** — this is now confirmed across three separate product screenshots, not just inferred from the earlier single hero image.
+- **Muted gray is used heavily and consistently** for anything secondary: timestamps, toolbar labels, placeholders, breadcrumbs, citation subtext — the product leans on a single muted tone rather than multiple gray steps.
 
 ### Note on Font Substitutes
-Both TWK Ghost and ABC Diatype are licensed. Open-source substitutes: **Source Serif 4** or **Freight Text** for TWK Ghost's high-contrast editorial serif role; **Inter** or **IBM Plex Sans** for the grotesque UI role, with **IBM Plex Mono** or **JetBrains Mono** for the monospace cut.
+Both TWK Ghost and ABC Diatype are licensed. Substitutes: **Source Serif 4** / **Freight Text** for TWK Ghost; **Inter** / **IBM Plex Sans** for the grotesque UI role, **IBM Plex Mono** / **JetBrains Mono** for any monospace need.
 
 ## Layout
 
-- **Top announcement bar**: full-width, black, ~40px tall, centered white text + "Learn more" link + close icon. *(confirmed — screenshot)*
-- **Nav bar**: cream background, ~80px tall, logo far left, nav links roughly centered, Login + Request a Demo right-aligned. *(confirmed — screenshot)*
-- **Hero**: asymmetric two-column split within one row — breadcrumb + large serif headline on the left (~55–60% width), subheadline + single CTA top-aligned on the right (~35–40% width). Generous top/bottom padding, headline wraps across 3 lines. *(confirmed — screenshot)*
-- **Hero product mockup**: full-bleed-within-container card, sits directly below the hero copy, appears to slightly overlap/bleed past the hero's vertical rhythm via a dark textured backdrop. *(confirmed — screenshot)*
-- **In-product Agents view**: narrow icon sidebar (fixed width, ~48–56px) + flexible main chat column + fixed-width right panel (~280–320px) for Progress/Context. *(confirmed — screenshot)*
-- **Container width**: page content appears to cap around ~1280–1400px based on the captured viewport; margins are generous (~80–100px) at desktop width. *(estimated from the single screenshot's proportions)*
-- **Base spacing unit**: not measurable precisely from one screenshot; assume 4px/8px base as a standard default. *(estimated)*
+- **Top announcement bar**: full-width black, ~40px, centered white text + link + close icon. *(confirmed)*
+- **Nav bar**: cream, ~80px, logo far left, links centered, actions right. *(confirmed)*
+- **Hero**: asymmetric split — serif headline left (~55–60%), subhead + CTA right (~35–40%), top-aligned. *(confirmed)*
+- **Assistant answer column**: single centered reading column, generous max-width (~900–960px based on screenshot proportions), comfortable line-length for long-form legal analysis. *(confirmed)*
+- **Follow-up list**: full-width rows within the answer column, hairline-divided, no card treatment — plain list. *(confirmed)*
+- **Chat composer**: docked at the bottom of the answer column, not full-width of viewport — matches the answer column's width. *(confirmed)*
+- **Split editor view**: two-pane layout — Assistant conversation left (~45–50% width), Word-style document editor right (~50–55%), each independently scrollable, no visible resize handle. *(confirmed)*
+- **In-product Agents view**: narrow icon sidebar (~48–56px) + flexible chat column + fixed right panel (~280–320px) for Progress/Context. *(confirmed)*
+- **Base spacing unit**: not precisely measurable; 4px/8px assumed as a standard default. *(estimated)*
 
 ## Elevation & Depth
 
-Harvey is **not** hairline-only — this was the biggest correction from seeing an actual screenshot. Two elevation tiers are visible:
-
 | Level | Treatment | Use | Confidence |
 |---|---|---|---|
-| Flat (canvas) | `{colors.canvas}`, no shadow | Nav, hero copy, body bands | confirmed — screenshot |
-| Hairline card | 1px `{colors.hairline}`, no shadow | Divider between chat column and Progress panel inside the product view | confirmed — screenshot |
-| **Hero-elevated** | Large radius + soft drop shadow + dark textured backdrop | The big product-mockup card on the marketing hero | confirmed — screenshot |
-| **Floating-elevated** | Pill shape + drop shadow | The "Ask Harvey" chip, bottom-right of the product view | confirmed — screenshot |
+| Flat (canvas) | `{colors.canvas}`/`{colors.surface}`, no shadow | Nav, hero copy, Assistant answer column, follow-up rows | confirmed |
+| Hairline card | 1px `{colors.hairline}` | Row dividers, chat/Progress-panel split, editor toolbar groups | confirmed |
+| Soft-card | Light fill, subtle border, small shadow | Chat composer, Sources card, glossary tooltip, version-history row | confirmed |
+| **Hero-elevated** | Large radius + drop shadow + dark textured backdrop | Marketing hero product-mockup card | confirmed |
+| **Floating-elevated** | Pill + drop shadow | "Ask Harvey" chip | confirmed |
 
-Elevation is reserved for a small number of "hero" and "always-on-top" surfaces; the rest of the UI (nav, panels, list rows) stays flat with hairline dividers only.
+Elevation is used more broadly in the product than the first screenshot suggested — small soft-shadowed cards (composer, sources, tooltips) are a real, recurring pattern, not just the two "hero" exceptions noted earlier. The distinction that holds up: **nothing gets a heavy shadow**, everything stays subtle except the two marketing-hero exceptions.
 
 ## Shapes
 
 | Token | Value | Use | Confidence |
 |---|---|---|---|
-| `{rounded.control}` | ~8–10px | Buttons (Request a Demo, Login), context tabs (Outputs/Sources) | confirmed — screenshot |
-| `{rounded.hero-card}` | ~20px | The large hero product-mockup card | confirmed — screenshot |
-| `{rounded.pill}` | full/9999px | Floating "Ask Harvey" chip, breadcrumb-adjacent small elements | confirmed — screenshot |
-| `{rounded.bubble}` | ~12–14px | Chat user-message bubble | confirmed — screenshot |
-
-Two distinct rounding scales are in play: a tight, functional radius for controls (buttons, tabs) and a much larger, more decorative radius for the one hero showcase card — not a single uniform scale.
+| `{rounded.control}` | ~8–10px | Buttons, context tabs (Outputs/Sources), mode-selector segments | confirmed |
+| `{rounded.hero-card}` | ~20px | Marketing hero product-mockup card, chat composer card | confirmed |
+| `{rounded.pill}` | full/9999px | Floating Ask Harvey chip, send button (circular), citation badges (rounded-square, not full pill) | confirmed |
+| `{rounded.bubble}` | ~12–14px | Chat user-message bubble, glossary tooltip card | confirmed |
+| `{rounded.badge}` | ~4–6px | Citation superscript chips, "N cited" source card | confirmed |
 
 ## Components
 
 ### Marketing
-**`announcement-bar`** — Full-width black bar above nav; centered white text + link + dismiss icon. *(confirmed)*
+**`announcement-bar`**, **`top-nav`**, **`hero-band`**, **`hero-product-card`**, **`button-primary`**, **`button-secondary`** — see prior confirmed descriptions; unchanged by the new screenshots.
 
-**`top-nav`** — Cream background, serif wordmark left, sans nav links with dropdown chevrons (Platform, Solutions, Resources, Company) center, outlined `button-secondary` (Login) + solid `button-primary` (Request a Demo) right. *(confirmed)*
+### Assistant (confirmed — new)
+**`follow-up-list`** — Plain, hairline-divided list of suggested next questions below an Assistant answer. No card/bubble treatment — just rows.
 
-**`hero-band`** — Breadcrumb ("Platform / Agents") + large serif headline + sans subheadline + single primary CTA, asymmetric split layout. *(confirmed)*
+**`citation-badge`** — Small gray rounded-square superscript chip carrying one or more reference numbers (e.g. "¹³ ¹⁷ ³⁸"), inline within answer prose. This is Harvey's confirmed signature trust affordance — every non-trivial claim gets one.
 
-**`hero-product-card`** — The signature marketing surface: a large-radius, drop-shadowed card containing a dark painterly/textured top backdrop and an embedded screenshot of the actual product below it. This is Harvey's equivalent of Cursor's "IDE mockup card" — the one place the marketing site shows real product UI at native fidelity. *(confirmed)*
+**`sources-card`** — Bordered card below an answer: globe icon + "Web search and files" label (bold) + "N cited" count (muted). Summarizes the citation badges into one clickable entry point.
 
-### Buttons
-**`button-primary`** — Solid black (`{colors.primary}`) fill, white text, ~8–10px radius, medium-weight sans label. *(confirmed)*
+**`response-toolbar`** — Small gray icon row under every AI output: Copy, Export, Rewrite, Open in editor, plus thumbs up/down at the far right. Consistent across the plain Assistant view and the split editor view.
 
-**`button-secondary`** — Cream/transparent fill, black 1px border, black text, same radius as primary; used for lower-emphasis actions (Login). *(confirmed)*
+**`chat-composer`** — Rounded, light-neutral card holding the prompt textarea, an icon row (attach / connect-share / magic-wand), a mode selector, and a circular send button. **Two confirmed button states**: black-filled when text is present, muted-gray when empty.
+
+**`mode-selector`** — Two confirmed variants: a simple "Chat ▾" dropdown (plain Assistant composer) and a three-way **Auto / Edit / Answer** segmented control with a dark active-pill (split editor composer).
+
+**`version-row`** — Bordered pill: bold "Version N" label + relative timestamp, right-aligned. Used for prompt/response version history.
+
+### Document Editor (confirmed — was previously "documented but not visually confirmed" as `redline-panel`)
+**`document-editor-toolbar`** — Full rich-text formatting bar: back arrow, paragraph-style dropdown, Bold/Italic/Underline/Strikethrough, ordered/unordered list, alignment (left/center/right/justify), font ("Aa"), link, cut/copy/paste, undo/redo — grouped with hairline dividers. Right-aligned: "Show edits" toggle, "Version N" + history icon, close icon.
+
+**`glossary-tooltip`** — A pale-blue-highlighted entity name (e.g. a company mentioned in a drafted document) triggers a small white card on hover: bold title ("What is Sterling Group? | SterlingGroup.com") + a plain-language gray description paragraph. Subtle border and shadow.
 
 ### In-product (Agents delegation view)
-**`agent-sidebar`** — Narrow, near-black icon rail, fixed left. *(confirmed)*
+**`agent-sidebar`**, **`chat-thread`** (Agents variant), **`progress-panel`**, **`context-tabs`**, **`ask-harvey-chip`** — unchanged from prior confirmation; see Overview.
 
-**`chat-thread`** — Main panel: user turns render as a tan rounded `chat-bubble`; assistant turns render as plain gray prose with no bubble — a deliberate asymmetry that visually separates "what you asked" from "what Harvey found," reinforced by a smaller gray status/log line ("Search complete. I've located responsive documents…"). *(confirmed)*
-
-**`progress-panel`** — Right-hand panel: "Progress" header + step-count ("4 of 4 steps") + chevron, followed by a checklist where completed steps show a check icon and strikethrough text. This is Harvey's closest analogue to Cursor's AI-timeline pills — the signature "make the agent's work legible" component. *(confirmed)*
-
-**`context-tabs`** — Small segmented control below the Progress panel: "Outputs" / "Sources," ~8px-radius tab buttons. Keeps generated output and cited source material as co-equal, one-click-apart views. *(confirmed)*
-
-**`ask-harvey-chip`** — Floating pill, bottom-right, persistent across the product view: circular "H" avatar + "Ask Harvey" label + small accent-colored spark icon, drop-shadow elevated. *(confirmed)*
-
-### Documented but not yet visually confirmed
-**`citation-chip`** — Inline source-trace marker on AI-generated claims (Harvey's stated design philosophy; exact rendering not visible in this screenshot).
-
+### Documented but still not visually confirmed
 **`vault-project-list`** / **`vault-answer-table`** — Vault's bulk document repository and tabular cross-document answers.
 
 **`workflow-canvas`** — No-code, node-based workflow builder.
 
-**`redline-panel`** — Word-integrated AI redlining.
-
 **`history-list`** / **`library-card`** — Saved threads and templates.
 
-**`mobile-assistant`** / **`mobile-scan-upload`** — Mobile app surfaces (dictation, scan-and-upload).
+**`mobile-assistant`** / **`mobile-scan-upload`** — Mobile app surfaces.
 
 ## Do's and Don'ts
 
 ### Do
-- Reserve **TWK Ghost** for the wordmark and hero-level headlines only — everything else, including in-product UI, is sans.
-- Reserve the terracotta **accent** for the agent/AI "spark" mark — it is not a general button or link color; black-on-cream carries that job.
-- Reserve elevation (shadow + large radius) for hero/showcase surfaces and persistent floating affordances (the Ask Harvey chip) — keep the rest of the UI flat with hairlines.
-- Pair completed-step checklists with a source/output toggle, matching the confirmed Progress + Context(Outputs/Sources) pattern — this is the concrete expression of Harvey's "citation traceability" principle.
+- Keep the **marketing/product canvas split** intentional: cream for marketing, white for product. Don't collapse them into one value.
+- Attach a **citation badge** to any generated claim, and roll them up into a **Sources card** at the end of the response — this is the confirmed, load-bearing trust pattern.
+- Give the send/submit action a distinguishable **disabled state** (muted gray) vs. **active state** (black) tied to whether the input has content.
+- Reserve TWK Ghost strictly for the wordmark and marketing hero — the product is confirmed 100% sans, with no exceptions observed.
+- Use a consistent, restrained **muted gray** for all secondary/meta text rather than introducing new gray steps.
 
 ### Don't
-- Don't apply the large hero-card radius (~20px) to ordinary UI controls — buttons and tabs use a much tighter radius (~8–10px).
-- Don't use the terracotta accent broadly; in the one confirmed screenshot it appears exactly once, at small size.
-- Don't add drop shadows to routine panels/rows — only two elevated surface types were observed, and both are exceptional (hero card, floating chip).
-- Don't treat unconfirmed sections (Vault, Workflow builder, Library, mobile) as verified — they carry the same visual language by inference only.
+- Don't bring the marketing terracotta accent into product UI — it was not observed anywhere in the Assistant, editor, or Agents screenshots.
+- Don't apply the hero-card radius (~20px) to small controls — buttons/tabs/badges use much tighter radii (~4–10px).
+- Don't add heavy shadows to routine cards (composer, sources, tooltips) — they get a subtle soft-shadow at most; only the two marketing-hero exceptions get a pronounced drop shadow.
+- Don't treat Vault, Workflow builder, Library, History-list, or mobile as verified — still inference-only.
 
 ## Responsive Behavior
 
-Not observed — the one screenshot is a single desktop viewport. No breakpoint, tablet, or mobile behavior can be confirmed from it. Standard enterprise-SaaS assumption (unconfirmed): desktop-first for Assistant/Vault/Workflow/Agents, with the mobile app treated as a separate, feature-scoped surface rather than a responsive collapse of the desktop product.
+Not observed — all screenshots are desktop viewports. No breakpoint, tablet, or mobile behavior can be confirmed. Unconfirmed assumption: desktop-first for Assistant/Vault/Workflow/Agents, mobile app treated as a separate, feature-scoped surface.
 
 ## Iteration Guide
 
-1. The confirmed marketing hero/nav and the confirmed Agents in-product view are safe to build on directly — colors, type roles, radii, and elevation patterns above came from an actual screenshot, not inference.
-2. The **Progress panel + Outputs/Sources toggle** is Harvey's real signature component (parallel to Cursor's AI-timeline pills) — preserve it in any redesign pass; it's the visible form of Harvey's stated citation-traceability philosophy, and it's now visually confirmed, not just documented.
-3. Typeface pairing (TWK Ghost display + sans body/UI) is both well-sourced and visually confirmed — safe to build on directly.
-4. Still get a second screenshot (or live access) before finalizing Vault, Workflow builder, Library, History, or mobile — those remain inference-only.
+1. Marketing (nav/hero) and three product surfaces (Assistant answer view, split document editor, Agents delegation view) are now all visually confirmed — safe to build on directly.
+2. The **citation-badge → sources-card** pattern and the Agents **progress-panel** are Harvey's two concrete expressions of the same "make AI reasoning verifiable" principle — preserve both in any redesign pass.
+3. Typeface pairing (TWK Ghost display-only + sans everywhere else) is now confirmed across four independent screenshots — treat this as settled, not inferred.
+4. Still get a screenshot of Vault, the Workflow builder canvas, Library, or History-list before finalizing those sections.
 
 ## Known Gaps
 
-- **Only one screen confirmed.** The `/platform/agents` marketing page (nav, hero, one embedded product screenshot) is the only visually-verified surface. Vault, Workflow builder, Library, History, pricing, and the mobile app are still text-research-only.
-- **Hex values are eyeballed, not sampled.** Colors above were read visually from a single screenshot image, not extracted with a color picker against live CSS — treat them as close approximations, not exact brand values.
-- **No responsive/breakpoint data** — single desktop viewport only.
-- **No dark mode observed** — unknown whether one exists.
-- **TWK Ghost and ABC Diatype are licensed** typefaces; substitutes are suggested above but unverified against Harvey's actual type scale/weights.
-- **Design token rebuild details are partial** — Harvey's January 2026 design-system blog post describes the *naming philosophy* (semantic over appearance-based tokens) but specific token values and the full component list weren't recoverable via text search alone.
+- **Vault, Workflow builder, Library, History-list, pricing, and mobile remain unconfirmed** — text-research-only.
+- **Hex values are eyeballed** from screenshot images, not sampled with a color picker against live CSS — close approximations, not exact brand values.
+- **No responsive/breakpoint or dark-mode data** — all screenshots are a single desktop viewport, light mode.
+- **TWK Ghost and ABC Diatype are licensed**; substitutes suggested above are unverified against Harvey's actual weights/metrics.
+- **Design-token rebuild details are partial** — the semantic-naming philosophy is documented, but specific token values and the full component list weren't recoverable via text search alone.
