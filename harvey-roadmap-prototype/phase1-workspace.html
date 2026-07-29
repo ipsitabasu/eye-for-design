@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Workspace — Phase 1 Concept</title>
+<link rel="stylesheet" href="shared.css" />
+<style>
+  .workspace-toprow { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .canvas-card { border: 1px solid var(--hairline); border-radius: var(--hero-radius); padding: 32px 36px; max-width: 780px; }
+  .canvas-card h2 { font-size: 18px; margin-bottom: 10px; }
+  .canvas-card p { color: var(--body); font-size: 14.5px; line-height: 1.7; margin-bottom: 14px; }
+  .canvas-card ul { margin: 0 0 14px 20px; color: var(--body); font-size: 14.5px; line-height: 1.7; }
+  .signal-line { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+  .promote-row { display: flex; align-items: center; gap: 12px; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--hairline); max-width: 780px; }
+  .side-note { max-width: 780px; margin-top: 10px; font-size: 12.5px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <div id="sidebar-root"></div>
+
+  <main class="content">
+    <div class="page-header">
+      <p class="crumb">Roadmap / Phase 1 · <strong>Workspace Canvas</strong></p>
+      <h1>Workspace</h1>
+      <p>Where born-in-Harvey artifacts live — provenance and structure captured as work is made, not retrofitted afterward.</p>
+    </div>
+
+    <div class="workspace-toprow">
+      <div class="tag-row" id="tagRow">
+        <span class="tag-chip">Client: Whitford Lane</span>
+        <span class="tag-chip">Matter: Acme v. GlobalCorp</span>
+        <span class="tag-chip">Type: Memo</span>
+        <span class="tag-chip">Position: Non-infringement</span>
+      </div>
+      <span class="status-pill status-pill--ephemeral" id="statusPill"><span class="dot"></span> Ephemeral — in thread</span>
+    </div>
+
+    <div class="canvas-card">
+      <h2>Bottom Line</h2>
+      <p>
+        The plaintiff's infringement theory hinges on your client operating a securities trading platform with integrated market exchange functionality and conditional order execution that depends on securities market prices plus FX rates.<span class="citation-badge">36</span><span class="citation-badge">37</span>
+        Public, authoritative sources overwhelmingly show Acme Corp provides embedded payments/multi-currency accounts and FX conversion — not a brokerage/exchange stack, and not the claimed consolidated trading platform described in the complaint.<span class="citation-badge">13</span><span class="citation-badge">17</span><span class="citation-badge">38</span>
+      </p>
+      <p>The most persuasive evidence in your client's favor is therefore:</p>
+      <ul>
+        <li>The comprehensive, consistent public record that Acme Corp is a payments and FX infrastructure provider (Collect, Convert, Pay, Manage), not a securities trading venue.<span class="citation-badge">13</span><span class="citation-badge">17</span><span class="citation-badge">39</span></li>
+        <li>Acme Corp's regulatory posture as an Electronic Money Institution/payment services provider, not a broker-dealer or exchange operator.<span class="citation-badge">12</span><span class="citation-badge">40</span></li>
+        <li>Sterling Group's positioning and industry/partner documentation, with no suggestion of securities execution functionality.<span class="citation-badge">6</span><span class="citation-badge">17</span><span class="citation-badge">31</span><span class="citation-badge">41</span></li>
+      </ul>
+      <p class="signal-line" id="signalLine">Work-product signal: <strong>High</strong> — 12 live citations · 640 words · memo structure detected</p>
+    </div>
+
+    <div class="sources-card" style="max-width:780px; margin-top:16px;">
+      <span class="sc-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M2 8h12M8 2c1.8 1.8 1.8 10.2 0 12M8 2c-1.8 1.8-1.8 10.2 0 12" stroke="currentColor" stroke-width="1.1"/></svg></span>
+      <span>
+        <div class="sc-title">Web search and files</div>
+        <div class="sc-sub">12 cited · live-linked to source paragraphs</div>
+      </span>
+    </div>
+
+    <div class="promote-row">
+      <button class="btn-secondary" id="exportBtn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M2 12h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Export to Word (.docx)
+      </button>
+      <button class="btn-primary" id="promoteBtn">Promote to artifact</button>
+      <span class="side-note" id="promoteNote">Auto-promotes on first edit, export, share, or matter attachment — or when the classifier scores this high enough on its own.</span>
+    </div>
+  </main>
+</div>
+
+<script src="shell.js"></script>
+<script src="phase1.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agents &amp; Training — Phase 4 Concept</title>
+<link rel="stylesheet" href="shared.css" />
+<style>
+  .stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-bottom: 30px; }
+  .stat-card { border: 1px solid var(--hairline); border-radius: var(--card-radius); padding: 18px 20px; }
+  .stat-card .st-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .stat-card .st-value { font-size: 26px; font-weight: 700; }
+  .stat-card .st-trend { font-size: 12px; color: var(--progress-done); margin-top: 4px; font-weight: 600; }
+
+  .pipeline { display: flex; align-items: center; gap: 8px; margin: 8px 0 34px; overflow-x: auto; padding-bottom: 4px; }
+  .pipe-step { display: flex; align-items: center; gap: 8px; border: 1px solid var(--hairline); border-radius: 999px; padding: 8px 16px; font-size: 12.5px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+  .pipe-step.governed { color: var(--accent); border-color: var(--accent); }
+  .pipe-arrow { color: var(--muted); flex-shrink: 0; }
+
+  .digest-card { border: 1px solid var(--hairline); border-radius: var(--card-radius); padding: 16px 18px; margin-bottom: 12px; }
+  .digest-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .digest-head .spark { color: var(--accent); }
+  .digest-head .d-title { font-weight: 700; font-size: 14px; }
+  .digest-head .d-meta { margin-left: auto; font-size: 11.5px; color: var(--muted); }
+  .digest-card ul { margin: 6px 0 10px 18px; font-size: 13px; color: var(--body); line-height: 1.6; }
+  .digest-actions { display: flex; gap: 8px; }
+  .digest-actions button { font-size: 12.5px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--hairline); }
+  .digest-actions button.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <div id="sidebar-root"></div>
+
+  <main class="content">
+    <div class="page-header">
+      <p class="crumb">Roadmap / Phase 4 · <strong>Compounding</strong></p>
+      <h1>Agents &amp; Training</h1>
+      <p>The payoff of Phases 1–3: captured draft→edit deltas train Harvey's own legal model, and proactive agents push decisions owed straight into matter and client spaces.</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="st-label">Model win-rate lift</div>
+        <div class="st-value">+6.2%</div>
+        <div class="st-trend">↑ from graph-active accounts</div>
+      </div>
+      <div class="stat-card">
+        <div class="st-label">Proactive-digest engagement</div>
+        <div class="st-value">71%</div>
+        <div class="st-trend">↑ acted on within 24h</div>
+      </div>
+      <div class="stat-card">
+        <div class="st-label">NRR delta, graph-active accounts</div>
+        <div class="st-value">+14pts</div>
+        <div class="st-trend">↑ vs. non-graph accounts</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:14px; margin-bottom:10px;">Edit-signal capture loop</h3>
+    <div class="pipeline">
+      <span class="pipe-step">Draft in Workspace</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-step">Edit delta captured</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-step governed">Consent + privilege check</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-step">Training corpus (opt-in per tenant)</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-step">Legal model</span>
+    </div>
+
+    <h3 style="font-size:14px; margin-bottom:10px;">Proactive digests pushed today</h3>
+
+    <div class="digest-card">
+      <div class="digest-head">
+        <span class="spark"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 2c.4 2.2 1.5 3.3 3.7 3.7-2.2.4-3.3 1.5-3.7 3.7-.4-2.2-1.5-3.3-3.7-3.7C6 5.3 7.1 4.2 7.5 2Z" stroke="currentColor" stroke-width="1"/></svg></span>
+        <span class="d-title">Amend v Delta IP Litigation — here's what changed</span>
+        <span class="d-meta">pushed 2h ago via proactive agent</span>
+      </div>
+      <ul>
+        <li>Opposing counsel filed an amended complaint narrowing the infringement claims to Section 8 only.</li>
+        <li>Your response deadline moved up by 5 business days.</li>
+      </ul>
+      <div style="font-size:13px; font-weight:600; margin-bottom:6px;">2 decisions you owe:</div>
+      <div class="digest-actions">
+        <button class="primary">Review amended complaint</button>
+        <button>Confirm new deadline</button>
+      </div>
+    </div>
+
+    <div class="digest-card">
+      <div class="digest-head">
+        <span class="spark"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 2c.4 2.2 1.5 3.3 3.7 3.7-2.2.4-3.3 1.5-3.7 3.7-.4-2.2-1.5-3.3-3.7-3.7C6 5.3 7.1 4.2 7.5 2Z" stroke="currentColor" stroke-width="1"/></svg></span>
+        <span class="d-title">Acme Corp Client Space — redline follow-up</span>
+        <span class="d-meta">pushed 6h ago via proactive agent</span>
+      </div>
+      <ul>
+        <li>Client's counterparty accepted 4 of 5 proposed redlines on the Professional Services Agreement.</li>
+      </ul>
+      <div style="font-size:13px; font-weight:600; margin-bottom:6px;">1 decision you owe:</div>
+      <div class="digest-actions">
+        <button class="primary">Respond to remaining redline</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="shell.js"></script>
+<script>renderShell('agents');</script>
+</body>
+</html>
