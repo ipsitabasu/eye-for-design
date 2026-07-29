@@ -1,6 +1,6 @@
 # Harvey — Design System
 
-> **Confidence note:** This file combines written research (Harvey's own design-team blog posts, press coverage, typeface databases — this session can't render harvey.ai directly) with **three real screenshots** the user provided: (1) the `/platform/agents` marketing page (nav, hero, one embedded Agents-view screenshot), (2) the Assistant answer view mid-conversation (follow-up suggestions, chat composer), and (3) a split Assistant + Word-style document editor view (citations, sources card, version history, a glossary tooltip, and the full redline editor toolbar). Values pulled from screenshots are marked **"confirmed — screenshot."** Product areas not covered by any screenshot (Vault, Workflow builder, Library, History list, mobile, pricing) remain **"estimated"** or "inferred" — see `Known Gaps`.
+> **Confidence note:** This file combines written research (Harvey's own design-team blog posts, press coverage, typeface databases — this session can't render harvey.ai directly) with **real screenshots** the user provided, covering: (1) the `/platform/agents` marketing page (nav, hero, one embedded Agents-view screenshot), (2) the Assistant answer view mid-conversation (follow-up suggestions, chat composer, version row), (3) a split Assistant + Word-style document editor view (citations, sources card, glossary tooltip, full redline toolbar), (4) an email/Outlook add-in analysis panel, and (5) the actual **Vault landing page** with its global app sidebar (Assistant/Vault/Workflows/History/Library/Guidance nav, org switcher, project grid). Values pulled from screenshots are marked **"confirmed — screenshot."** Areas still not covered by any screenshot (the Workflow builder canvas, Library/History internals, inside a Vault project, mobile, pricing) remain **"estimated"** or "inferred" — see `Known Gaps`.
 
 ## Overview
 
@@ -28,7 +28,9 @@ The redline/drafting workflow (confirmed via the split-panel screenshot) pairs t
 - Two distinct radius scales: ~20px on the hero product-mockup card and the chat composer, vs. ~8–10px on buttons/tabs — "hero/container" surfaces round more generously than "control" surfaces.
 
 **Key characteristics (sourced — text research, not yet visually confirmed):**
-- Five product pillars named in Harvey's own materials: **Assistant** (now confirmed), **Vault** (bulk document repository + RAG, ~10,000 docs/project), **Workflow** (no-code agent builder), **History**, **Library** — plus the confirmed **Agents** delegation surface.
+- All six top-level nav destinations are now confirmed to exist (**Assistant, Vault, Workflows, History, Library, Guidance**), plus the **Agents** delegation surface. **Vault's landing page** is fully confirmed (entry-point cards, tabbed/searchable project grid); its internal per-project view, the **Workflow builder canvas**, and **History/Library** internals are still text-research-only.
+- Vault holds real, large document sets per project (confirmed real examples run from ~4,000 to ~92,000 files), organized as either a plain Vault project, a "Knowledge base," or a "Shared" project — three distinct types with different card iconography.
+- Harvey also ships an **email client add-in** (confirmed via an Outlook-style analysis panel): it reads an email thread plus attached redlines, produces a structured bullet-point analysis, and offers a "Send to Vault" suggestion to cross-reference with other files.
 - Design tokens are semantic/intent-based ("foreground-base" not "neutral-400"), part of a January 2026 design-system rebuild on a Shadcn-derived React base — the confirmed all-white, sans-only, restrained-accent product UI is consistent with this.
 - Full mobile app (iOS/Android): dictation, "Magic Prompt," Vault search, scan-and-upload, audio-to-transcript.
 
@@ -61,8 +63,11 @@ The redline/drafting workflow (confirmed via the split-panel screenshot) pairs t
 
 ### Other confirmed
 - **Progress check** (`{colors.progress-done}` — ~#3F8F5F *confirmed, lower confidence*): Green checkmark/strikethrough, Agents Progress panel.
-- **Hairline** (`{colors.hairline}` — ~#E6E1D5 *confirmed*): Dividers between follow-up rows, chat-column/Progress-panel split, editor toolbar icon groups.
+- **Hairline** (`{colors.hairline}` — ~#E6E1D5 *confirmed*): Dividers between follow-up rows, chat-column/Progress-panel split, editor toolbar icon groups, sidebar/content split.
 - **Editor toolbar icon** (`{colors.icon-muted}` — ~#6B6860 *confirmed*): Gray icon color in the document editor's formatting toolbar.
+- **Status dot** (`{colors.status-dot}` — ~#3B6FD9 *confirmed, moderate confidence*): Small blue dot beside some Vault project names — exact meaning unconfirmed (possibly "has new activity").
+- **Card icon tile** (`{colors.icon-tile-bg}` — ~#F1EFEA *confirmed*): Flat gray background behind a Vault project card's type icon.
+- **Active nav highlight** (`{colors.nav-active-bg}` — ~#F0EEE8 *confirmed*): Soft rounded-rect background behind the active sidebar nav item.
 
 ### Semantic (still inferred — not visible in any screenshot)
 - **Warning** (`{colors.semantic-warning}` — ~#B8791F *estimated*)
@@ -86,6 +91,10 @@ The redline/drafting workflow (confirmed via the split-panel screenshot) pairs t
 | `{typography.caption}` | ~12–13px | Sans, regular, gray | confirmed | Breadcrumb, timestamps, "N cited," "4 of 4 steps" |
 | `{typography.citation-badge}` | ~10–11px | Sans, medium | confirmed | Inline superscript citation numbers |
 | `{typography.composer-placeholder}` | ~14–15px | Sans, regular, gray | confirmed | "Ask Harvey a question…" |
+| `{typography.page-title}` | ~28–30px | Sans, bold | confirmed | "Vault" page header |
+| `{typography.page-subtitle}` | ~15px | Sans, regular, gray | confirmed | "Upload, store, and analyze thousands of documents" |
+| `{typography.card-title}` | ~15–16px | Sans, bold | confirmed | Entry-point and project card titles |
+| `{typography.nav-item}` | ~14px | Sans, regular/medium | confirmed | Sidebar nav labels |
 | `{typography.mono}` | ~13px *estimated* | Sans Mono | estimated | Not directly observed; inferred from citation-heavy product |
 
 ### Principles
@@ -157,12 +166,33 @@ Elevation is used more broadly in the product than the first screenshot suggeste
 ### In-product (Agents delegation view)
 **`agent-sidebar`**, **`chat-thread`** (Agents variant), **`progress-panel`**, **`context-tabs`**, **`ask-harvey-chip`** — unchanged from prior confirmation; see Overview.
 
+### App Shell / Global Navigation (confirmed — new)
+**`app-sidebar`** — The persistent left rail across the main app (distinct from the Agents view's dark icon-only rail — this one is light/labeled). White background, hairline right border. Top-to-bottom: an **org switcher** (small dark square logomark with a white initial + bold org name "Whitford Lane" + dropdown chevron), a full-width **`button-create`** ("+ Create" — white fill, black 1px border, black text; notably the *outline* button style, not the solid-black primary used on marketing CTAs), then the primary nav list — **Assistant, Vault, Workflows, History, Library, Guidance** — each an icon + label row. The active item (Vault) gets a soft light-gray rounded-rect background, and expands inline to show pinned/recent items as plain indented text rows (no icons) — confirmed example: "Statements (A&W)," "Delta Supply," "Supply Agreements." A muted "Help" row anchors the bottom.
+
+**`page-header`** — Bold page title (~28–30px, e.g. "Vault") + a smaller gray subtitle line beneath it (e.g. "Upload, store, and analyze thousands of documents"). Used at the top of each top-level section.
+
+**`page-tabs`** — A second, distinct tab style from the Agents view's pill-segmented `context-tabs`: plain text tabs with no box/pill — active tab is bold black, inactive tabs are muted gray, no underline observed. Confirmed example: "All projects / Your Projects / Shared with you."
+
+**`search-input`** — Bordered, rounded (~8px) input with a leading magnifying-glass icon and gray placeholder text ("Search"), right-aligned opposite the page tabs.
+
+### Vault (confirmed — new)
+**`entry-point-card`** — Two side-by-side bordered cards at the top of the Vault landing page, each: a circular icon badge, a bold title, and a muted description line. Confirmed pair: **"Create project"** ("Upload a new collection of files or folders") and **"Create knowledge base"** ("Distribute a repository of files to your organization").
+
+**`project-card`** — Grid card (4-up on desktop): a large flat-gray icon/illustration tile on top (icon varies by project type — plain document-stack for a Knowledge base, a folder-with-people glyph for a Shared project, a plain folder for a standard Vault project), then below: a bold project name (some carry a small blue status dot beside the name), an overflow "···" menu top-right, and a muted metadata line ("`N files` · `Type`"). Confirmed real examples: "M&A (US)" (26,593 files · Knowledge base), "Cross-Border Tax Strategies" (14,977 files · Knowledge base), "Avenor AI – Series B Financing" (8,201 files · Shared), "Amend v Delta IP Litigation" (36,897 files · Shared), "Northbridge Holdings" (4,065 files), "Commercial Contracts" (92,841 files · Vault).
+
+**`project-grid`** — The 4-column responsive grid these cards sit in, below the tabs/search row.
+
+### Email / Outlook Add-in (confirmed — new)
+**`email-analysis-panel`** — A contextual side-panel view (email plugin context): left side shows the raw email thread with plain text and bordered **file-attachment chips** (e.g. "…Services Agreement (Acme–GlobalCorp) – Redline.docx"); right side is Harvey's structured analysis of that email/attachment — bold section headers (e.g. "Practical effect") followed by plain bullet lists (no citation badges observed in this particular panel). Ends in a light-gray **`suggestion-card`** ("Send to Vault" bold + "Analyze this email with other related files in Harvey" muted) and a "Settings" row with a small icon at the very bottom.
+
 ### Documented but still not visually confirmed
-**`vault-project-list`** / **`vault-answer-table`** — Vault's bulk document repository and tabular cross-document answers.
+**`vault-answer-table`** — Tabular per-file/cross-document answers inside an opened Vault project (the landing grid above is confirmed; the inside-a-project view is not).
 
-**`workflow-canvas`** — No-code, node-based workflow builder.
+**`workflow-canvas`** — No-code, node-based workflow builder (the nav entry "Workflows" is now confirmed to exist; its canvas UI is not).
 
-**`history-list`** / **`library-card`** — Saved threads and templates.
+**`history-list`** / **`library-card`** — Nav entries "History" and "Library" are now confirmed to exist; their internal layouts are not.
+
+**`guidance-view`** — A confirmed nav entry ("Guidance") with no confirmed internal UI.
 
 **`mobile-assistant`** / **`mobile-scan-upload`** — Mobile app surfaces.
 
@@ -194,7 +224,7 @@ Not observed — all screenshots are desktop viewports. No breakpoint, tablet, o
 
 ## Known Gaps
 
-- **Vault, Workflow builder, Library, History-list, pricing, and mobile remain unconfirmed** — text-research-only.
+- **Vault's landing page is confirmed; its interior (an opened project/knowledge base), the Workflow builder canvas, History's list view, Library's internal layout, Guidance, pricing, and mobile all remain unconfirmed** — text-research-only or, for the nav entries, confirmed to exist but not confirmed internally.
 - **Hex values are eyeballed** from screenshot images, not sampled with a color picker against live CSS — close approximations, not exact brand values.
 - **No responsive/breakpoint or dark-mode data** — all screenshots are a single desktop viewport, light mode.
 - **TWK Ghost and ABC Diatype are licensed**; substitutes suggested above are unverified against Harvey's actual weights/metrics.
