@@ -56,6 +56,10 @@ const PLACEHOLDERS = {
   'stripe/dashboard':       stripeDashboard,
   'stripe/checkout':        stripeCheckout,
   'stripe/payment-links':   stripePaymentLinks,
+  'harvey/queue':           harveyQueue,
+  'harvey/audit':           harveyAudit,
+  'harvey/command-center':  harveyCommandCenter,
+  'harvey/handoff':         harveyHandoff,
 };
 
 function makePlaceholder(screen) {
@@ -1185,6 +1189,581 @@ function stripePaymentLinks() {
   body += t(px + pw / 2, 438, '🔒  Secure checkout by Stripe', 10, MUTED, 'middle');
 
   return svg(body, BG);
+}
+
+// ── HARVEY: shared tokens + helpers ────────────────────────────────────────
+const HV = {
+  BG: '#F7F6F3', CARD: '#FFFFFF', BORDER: '#E2E0DA', LINE: '#EFEDE8',
+  INK: '#16181C', TEXT: '#3C3F45', MUTED: '#83868D', FAINT: '#B4B6BB',
+  NAVY: '#1E3A5F', NAVY_SOFT: '#E9EEF4', NAVY_INK: '#16304F',
+  AMBER: '#A9600C', AMBER_SOFT: '#FAEEDC',
+  GREEN: '#1B7A47', GREEN_SOFT: '#E6F2EA',
+  RED: '#A32B23', RED_SOFT: '#F9EAE8',
+  SLATE_SOFT: '#EEEDE9',
+};
+
+function hvSr(x, y, w, h, stroke, rx = 0, sw = 1) {
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="none" stroke="${stroke}" stroke-width="${sw}"/>`;
+}
+
+function hvCard(x, y, w, h, rx = 10, fill = HV.CARD, stroke = HV.BORDER) {
+  return r(x, y, w, h, fill, rx) + hvSr(x, y, w, h, stroke, rx);
+}
+
+function hvTagW(label, size = 10) {
+  return Math.round(String(label).length * size * 0.58) + 18;
+}
+
+function hvTag(x, y, label, fill, textFill, size = 10, h = 19) {
+  const w = hvTagW(label, size);
+  return pill(x, y, w, h, fill) + t(x + w / 2, y + h / 2 + size * 0.36, label, size, textFill, 'middle', 600);
+}
+
+function hvPauseIcon(x, y, fill, h) {
+  const hh = h || 10;
+  return r(x, y, 3, hh, fill, 1) + r(x + 5, y, 3, hh, fill, 1);
+}
+
+function hvPauseBtn(x, y, w, h, label, stroke, textFill, size) {
+  const sz = size || 11.5;
+  return r(x, y, w, h, HV.CARD, 7) + hvSr(x, y, w, h, stroke, 7)
+    + hvPauseIcon(x + 14, y + h / 2 - 5, textFill)
+    + t(x + w / 2 + 8, y + h / 2 + sz * 0.36, label, sz, textFill, 'middle', 600);
+}
+
+function hvToggle(x, y, on) {
+  return pill(x, y, 32, 18, on ? HV.NAVY : '#CFCDC7') + circle(on ? x + 23 : x + 9, y + 9, 7, '#fff');
+}
+
+function hvBtn(x, y, w, h, label, fill, stroke, textFill, size) {
+  return r(x, y, w, h, fill || HV.CARD, 7)
+    + (stroke ? hvSr(x, y, w, h, stroke, 7) : '')
+    + t(x + w / 2, y + h / 2 + (size || 11.5) * 0.36, label, size || 11.5, textFill || HV.TEXT, 'middle', 600);
+}
+
+function hvShell(active) {
+  const SB = 208;
+  let b = r(0, 0, SB, H, HV.CARD) + line(SB, 0, SB, H, HV.BORDER);
+
+  b += r(20, 22, 22, 22, HV.NAVY, 6);
+  b += t(31, 38, 'H', 12, '#fff', 'middle', 700);
+  b += t(52, 34, 'Harvey', 14.5, HV.INK, 'start', 700);
+  b += t(52, 50, 'Northwind Legal · 3 lawyers', 9.5, HV.MUTED, 'start');
+  b += line(16, 72, SB - 16, 72, HV.LINE);
+
+  const nav = [
+    ['◈', 'Command Center', ''],
+    ['▤', 'Review Queue', '38'],
+    ['§', 'Playbook', 'v12'],
+    ['◷', 'Audit Log', ''],
+    ['⇄', 'Handoff Rules', ''],
+    ['⚙', 'Settings', ''],
+  ];
+  nav.forEach(([ic, label, badge], i) => {
+    const y = 100 + i * 38, on = label === active;
+    if (on) b += r(12, y - 19, SB - 24, 32, HV.NAVY_SOFT, 8);
+    b += t(30, y + 4, ic, 12, on ? HV.NAVY : HV.FAINT, 'middle');
+    b += t(48, y + 5, label, 12, on ? HV.NAVY_INK : HV.TEXT, 'start', on ? 600 : 400);
+    if (badge) b += t(SB - 20, y + 5, badge, 9.5, HV.FAINT, 'end');
+  });
+
+  // Always-present automation state + global kill switch
+  const cy = H - 152;
+  b += r(16, cy, SB - 32, 124, HV.NAVY_SOFT, 10) + hvSr(16, cy, SB - 32, 124, '#D6DEE9', 10);
+  b += t(32, cy + 26, 'AUTOMATION', 9, HV.NAVY, 'start', 700);
+  b += circle(35, cy + 47, 5, HV.GREEN);
+  b += t(47, cy + 52, 'On', 15, HV.INK, 'start', 700);
+  b += t(70, cy + 52, '· 14 NDAs running', 10.5, HV.MUTED, 'start');
+  b += t(32, cy + 70, '3 paused · last pause 4 Mar, A. Wu', 9, HV.MUTED, 'start');
+  b += hvPauseBtn(32, cy + 82, SB - 64, 28, 'Pause all automation', '#DCC8A6', HV.AMBER, 10.5);
+  return b;
+}
+
+// ── HARVEY REVIEW QUEUE ───────────────────────────────────────────────────
+function harveyQueue() {
+  const SB = 208, X = SB + 24;
+  let b = hvShell('Review Queue');
+
+  // Top bar
+  b += r(SB + 1, 0, W - SB - 1, 64, HV.CARD) + line(SB + 1, 64, W, 64, HV.BORDER);
+  b += t(X, 32, 'Review Queue', 19, HV.INK, 'start', 700);
+  b += t(X, 51, '38 NDAs · 9 waiting on Harvey · 12 with counterparties · 4 with a lawyer', 11, HV.MUTED, 'start');
+  b += r(966, 17, 254, 30, HV.BG, 7) + hvSr(966, 17, 254, 30, HV.BORDER, 7);
+  b += t(982, 37, '⌕   Search counterparty, clause, or citation', 10.5, HV.FAINT, 'start');
+  b += hvBtn(1232, 17, 84, 30, 'Import', HV.CARD, HV.BORDER, HV.TEXT, 11);
+  b += hvBtn(1328, 17, 88, 30, '+  New NDA', HV.NAVY, null, '#fff', 11);
+
+  // Filter tabs — the reviewed / to-be-reviewed split as a filter, not a calculation
+  const tabs = [['All', '38', true], ['Waiting on Harvey', '9', false], ['With counterparty', '12', false],
+                ['With a lawyer', '4', false], ['Paused', '3', false], ['Signed this month', '11', false]];
+  let tx = X;
+  tabs.forEach(([label, count, on]) => {
+    const w = Math.round(label.length * 6.5) + 40;
+    b += pill(tx, 80, w, 28, on ? HV.NAVY : HV.CARD) + (on ? '' : hvSr(tx, 80, w, 28, HV.BORDER, 14));
+    b += t(tx + 16, 98, label, 11, on ? '#fff' : HV.TEXT, 'start', on ? 600 : 400);
+    b += t(tx + w - 16, 98, count, 10, on ? '#B9CBE0' : HV.FAINT, 'end', 600);
+    tx += w + 8;
+  });
+  b += t(W - 24, 98, 'Sorted by:  who owes the next move  ▾', 11, HV.NAVY, 'end', 600);
+
+  // Table header
+  b += t(X, 133, 'COUNTERPARTY', 9, HV.FAINT, 'start', 700);
+  b += t(520, 133, 'STAGE', 9, HV.FAINT, 'start', 700);
+  b += t(660, 133, 'TURNS', 9, HV.FAINT, 'start', 700);
+  b += t(790, 133, 'LAST DECISION BY HARVEY', 9, HV.FAINT, 'start', 700);
+  b += t(1150, 133, 'WAITING ON', 9, HV.FAINT, 'start', 700);
+  b += t(1268, 133, 'UPDATED', 9, HV.FAINT, 'start', 700);
+  b += t(1400, 133, 'PAUSE', 9, HV.FAINT, 'middle', 700);
+
+  const rows = [
+    { n: 'Acme Robotics', s: 'Mutual NDA · counterparty paper', st: ['Redline sent', HV.NAVY_SOFT, HV.NAVY_INK], turn: 4,
+      d: 'Countered non-solicit 24 → 12 months', ds: 'Turn 4 · 09:14 · playbook § 4.2 + Cal. B&P § 16600', w: 'Counterparty', u: '2m ago' },
+    { n: 'Northwind Health', s: 'Vendor NDA · our paper', st: ['Queued for review', HV.SLATE_SOFT, HV.TEXT], turn: 2,
+      d: 'Parsing — 3 clauses flagged for redline', ds: 'Turn 2 · started 09:41 · est. 40s', w: 'Harvey', u: '6m ago' },
+    { n: 'Vela Systems', s: 'Mutual NDA · counterparty paper', st: ['Escalated', HV.AMBER_SOFT, HV.AMBER], turn: 6,
+      d: 'Turn limit reached — handed to R. Mehta', ds: 'Turn 6 · 08:52 · brief delivered, waiting 41m', w: 'R. Mehta', u: '41m ago' },
+    { n: 'Brightline Labs', s: 'One-way inbound · counterparty paper', st: ['Paused', HV.SLATE_SOFT, HV.MUTED], turn: 3,
+      d: 'Paused by you — awaiting security review', ds: 'Turn 3 · 08:20 · Harvey will not reply until resumed', w: 'You', u: '1h ago', paused: true },
+    { n: 'Corvus Freight', s: 'Mutual NDA · our paper', st: ['Accepted', HV.GREEN_SOFT, HV.GREEN], turn: 3,
+      d: 'Counterparty accepted the 12-month term', ds: 'Turn 3 · routed to A. Wu for signature review', w: 'A. Wu', u: '1h ago' },
+    { n: 'Halden & Roe', s: 'Vendor NDA · counterparty paper', st: ['Redline sent', HV.NAVY_SOFT, HV.NAVY_INK], turn: 5,
+      d: 'Held position on California non-compete', ds: 'Turn 5 · 07:10 · § 16600 + Edwards v. Arthur Andersen', w: 'Counterparty', u: '2h ago' },
+    { n: 'Juno Biotech', s: 'Mutual NDA · counterparty paper', st: ['Queued for review', HV.SLATE_SOFT, HV.TEXT], turn: 1,
+      d: 'Extracted 14 clauses · 2 deviations found', ds: 'Turn 1 · 06:55 · playbook v12', w: 'Harvey', u: '3h ago' },
+    { n: 'Kestrel Analytics', s: 'One-way outbound · our paper', st: ['Escalated', HV.AMBER_SOFT, HV.AMBER], turn: 4,
+      d: 'Counterparty asked for a call', ds: 'Turn 4 · 06:02 · intent confidence 0.91 · R. Mehta', w: 'R. Mehta', u: '4h ago' },
+    { n: 'Marlow Capital', s: 'Mutual NDA · our paper', st: ['Signed', HV.GREEN_SOFT, HV.GREEN], turn: 2,
+      d: 'Executed — zero lawyer turns', ds: 'Turn 2 · yesterday 17:40 · 5h 12m end to end', w: '—', u: 'Yesterday' },
+    { n: 'Silverbrook Retail', s: 'Vendor NDA · counterparty paper', st: ['Paused', HV.SLATE_SOFT, HV.MUTED], turn: 2,
+      d: 'Paused by A. Wu — playbook v13 pending', ds: 'Turn 2 · yesterday 16:10 · resumes on approval', w: 'You', u: 'Yesterday', paused: true },
+  ];
+
+  b += r(SB + 1, 144, W - SB - 1, 620, HV.CARD);
+  b += line(SB + 1, 144, W, 144, HV.BORDER);
+  rows.forEach((row, i) => {
+    const y = 144 + i * 62;
+    if (row.paused) b += r(SB + 1, y, W - SB - 1, 62, '#FBFAF8');
+    if (i) b += line(X, y, W - 24, y, HV.LINE);
+    if (row.paused) b += r(SB + 1, y, 3, 62, '#CFCDC7');
+
+    b += t(X, y + 26, row.n, 13, row.paused ? HV.MUTED : HV.INK, 'start', 600);
+    b += t(X, y + 44, row.s, 10, HV.MUTED, 'start');
+
+    b += hvTag(520, y + 20, row.st[0], row.st[1], row.st[2], 10);
+
+    // Turn budget: filled pips, amber outline on the escalation turn
+    b += t(660, y + 25, row.turn + ' of 6', 11, row.paused ? HV.MUTED : HV.TEXT, 'start', 600);
+    for (let p = 0; p < 6; p++) {
+      const px = 660 + p * 13;
+      b += r(px, y + 34, 9, 5, p < row.turn ? (row.paused ? HV.FAINT : HV.NAVY) : '#E0DED8', 2.5);
+      if (p === 5) b += hvSr(px - 1.5, y + 32, 12, 9, HV.AMBER, 3);
+    }
+
+    b += t(790, y + 25, row.d, 11.5, row.paused ? HV.MUTED : HV.TEXT, 'start', 500);
+    b += t(790, y + 43, row.ds, 9.5, HV.FAINT, 'start');
+
+    const wFill = row.w === 'Harvey' ? HV.NAVY_SOFT : row.w === 'You' ? HV.AMBER_SOFT : HV.SLATE_SOFT;
+    const wText = row.w === 'Harvey' ? HV.NAVY_INK : row.w === 'You' ? HV.AMBER : HV.TEXT;
+    if (row.w !== '—') b += hvTag(1150, y + 20, row.w, wFill, wText, 10);
+    else b += t(1150, y + 35, '—', 11, HV.FAINT, 'start');
+
+    b += t(1268, y + 35, row.u, 10.5, HV.MUTED, 'start');
+
+    b += r(1386, y + 19, 28, 24, HV.BG, 6) + hvSr(1386, y + 19, 28, 24, HV.BORDER, 6);
+    if (row.paused) b += t(1400, y + 36, '▶', 10, HV.GREEN, 'middle');
+    else b += hvPauseIcon(1396, y + 26, HV.MUTED);
+  });
+  b += line(X, 764, W - 24, 764, HV.BORDER);
+
+  // Footer summary
+  b += t(X, 792, 'Harvey handled 26 turns across 18 NDAs today · 4 escalated · your queue took 11 minutes', 11, HV.MUTED, 'start');
+
+  // Undo toast — pause states its consequence and stays reversible
+  b += r(X, 816, 620, 48, HV.INK, 9);
+  b += hvPauseIcon(X + 20, 834, '#fff', 12);
+  b += t(X + 44, 840, 'Brightline Labs paused.', 12, '#fff', 'start', 600);
+  b += t(X + 190, 840, 'Harvey will not reply on this NDA until you resume. Nothing is sent.', 11, '#B9BCC2', 'start');
+  b += t(X + 596, 846, 'Undo', 11.5, '#9FC3E8', 'end', 600);
+
+  return svg(b, HV.BG);
+}
+
+// ── HARVEY NDA AUDIT LOG ──────────────────────────────────────────────────
+function harveyAudit() {
+  const SB = 208, X = SB + 24;
+  let b = hvShell('Audit Log');
+
+  // Header
+  b += r(SB + 1, 0, W - SB - 1, 96, HV.CARD) + line(SB + 1, 96, W, 96, HV.BORDER);
+  b += t(X, 30, 'Review Queue   ›   Acme Robotics', 10.5, HV.MUTED, 'start');
+  b += t(X, 58, 'Acme Robotics × Northwind — Mutual NDA', 19, HV.INK, 'start', 700);
+  b += t(X, 78, 'Turn 4 of 6 · waiting on counterparty · playbook v12 · opened 10 Mar · 3 deviations', 11, HV.MUTED, 'start');
+  b += hvPauseBtn(986, 32, 152, 32, 'Pause this NDA', '#DCC8A6', HV.AMBER, 11.5);
+  b += hvBtn(1150, 32, 142, 32, 'Hand to lawyer  →', HV.CARD, HV.BORDER, HV.TEXT, 11.5);
+  b += hvBtn(1304, 32, 112, 32, 'Open document', HV.NAVY, null, '#fff', 11.5);
+
+  // The autonomy contract, generated from the rules
+  b += r(X, 110, W - X - 24, 44, HV.NAVY_SOFT, 8) + hvSr(X, 110, W - X - 24, 44, '#D6DEE9', 8);
+  b += t(X + 18, 137, 'Harvey is negotiating autonomously. It hands to R. Mehta at turn 6, or sooner if Acme asks for a call or accepts.', 12, HV.NAVY_INK, 'start', 500);
+  b += t(W - 42, 137, 'Change rules →', 11.5, HV.NAVY, 'end', 600);
+
+  // ── Turn 4, expanded: the four-field schema ──
+  const cx = X, cw = 752;
+  b += hvCard(cx, 172, cw, 376);
+  b += t(cx + 20, 198, 'Turn 4', 13, HV.INK, 'start', 700);
+  b += t(cx + 74, 198, 'Harvey · 12 Mar, 09:14 · 38s', 11, HV.MUTED, 'start');
+  b += hvTag(cx + 566, 184, 'autonomous', HV.NAVY_SOFT, HV.NAVY_INK, 10);
+  b += hvTag(cx + 652, 184, 'confidence 0.92', HV.SLATE_SOFT, HV.TEXT, 10);
+  b += line(cx, 212, cx + cw, 212, HV.LINE);
+
+  const fx = cx + 168;
+  // 1 · Clause detected
+  b += t(cx + 20, 240, 'CLAUSE', 9, HV.FAINT, 'start', 700);
+  b += t(cx + 20, 256, 'detected', 9, HV.FAINT, 'start');
+  b += t(fx, 238, 'Non-solicitation · § 7', 12.5, HV.INK, 'start', 600);
+  b += t(fx, 258, '24 months, unilateral, no carve-out for general advertising', 11, HV.MUTED, 'start');
+  b += hvTag(cx + 578, 226, 'deviates from playbook', HV.AMBER_SOFT, HV.AMBER, 10);
+  b += line(cx, 274, cx + cw, 274, HV.LINE);
+
+  // 2 · Playbook citation
+  b += t(cx + 20, 302, 'PLAYBOOK', 9, HV.FAINT, 'start', 700);
+  b += t(cx + 20, 318, 'citation', 9, HV.FAINT, 'start');
+  b += t(fx, 300, '§ 4.2  Non-solicitation', 12.5, HV.NAVY_INK, 'start', 600);
+  b += t(fx, 320, 'Accept ≤ 12 months and only if mutual. Never accept employee non-compete.', 11, HV.MUTED, 'start');
+  b += hvTag(cx + 596, 288, 'v12 · R. Mehta', HV.SLATE_SOFT, HV.TEXT, 10);
+  b += line(cx, 336, cx + cw, 336, HV.LINE);
+
+  // 3 · Law citation
+  b += t(cx + 20, 364, 'LAW', 9, HV.FAINT, 'start', 700);
+  b += t(cx + 20, 380, 'citation', 9, HV.FAINT, 'start');
+  b += t(fx, 362, 'Cal. Bus. & Prof. Code § 16600', 12.5, HV.NAVY_INK, 'start', 600);
+  b += t(fx, 382, 'Employee non-solicits unenforceable in CA · Edwards v. Arthur Andersen (2008)', 11, HV.MUTED, 'start');
+  b += hvTag(cx + 622, 350, '✓ verified', HV.GREEN_SOFT, HV.GREEN, 10);
+  b += line(cx, 398, cx + cw, 398, HV.LINE);
+
+  // 4 · Redline sent — the artifact itself
+  b += t(cx + 20, 426, 'REDLINE', 9, HV.FAINT, 'start', 700);
+  b += t(cx + 20, 442, 'sent', 9, HV.FAINT, 'start');
+  b += r(fx, 412, 556, 62, HV.BG, 6) + hvSr(fx, 412, 556, 62, HV.LINE, 6);
+  b += `<text x="${fx + 14}" y="${434}" font-size="11.5" fill="${HV.TEXT}">During the Term and for <tspan fill="${HV.RED}" text-decoration="line-through">twenty-four (24) months</tspan> <tspan fill="${HV.GREEN}" font-weight="600">twelve (12) months</tspan></text>`;
+  b += `<text x="${fx + 14}" y="${456}" font-size="11.5" fill="${HV.TEXT}">thereafter, <tspan fill="${HV.RED}" text-decoration="line-through">Recipient</tspan> <tspan fill="${HV.GREEN}" font-weight="600">neither party</tspan> shall solicit any employee of <tspan fill="${HV.RED}" text-decoration="line-through">Discloser</tspan> <tspan fill="${HV.GREEN}" font-weight="600">the other</tspan>…</text>`;
+  b += t(fx, 494, 'Sent to jordan.reyes@acme.example · 09:14 · email thread ↗', 10, HV.FAINT, 'start');
+  b += line(cx, 508, cx + cw, 508, HV.LINE);
+
+  // Outcome
+  b += hvTag(cx + 20, 518, '✓ Acme accepted 12 months at turn 5', HV.GREEN_SOFT, HV.GREEN, 10.5);
+  b += t(cx + cw - 20, 533, 'View full turn ↗', 10.5, HV.NAVY, 'end', 600);
+
+  // ── Collapsed turns ──
+  const past = [
+    ['Turn 3', 'Harvey · 11 Mar, 16:40', 'Accepted their definition of Confidential Information (§ 1.1). No redline.', 'no deviation', HV.SLATE_SOFT, HV.TEXT],
+    ['Turn 2', 'Harvey · 11 Mar, 09:02', 'Countered term 5 years → 3 years (§ 2.1); cited market-norm memo, 2 clauses.', '1 deviation', HV.AMBER_SOFT, HV.AMBER],
+    ['Turn 1', 'Harvey · 10 Mar, 14:22', 'Parsed 14 clauses, flagged 3 deviations, drafted the opening redline.', '3 deviations', HV.AMBER_SOFT, HV.AMBER],
+    ['Turn 0', 'A. Wu · 10 Mar, 14:20', 'Uploaded Acme paper, selected playbook v12, set turn limit 6.', 'human', HV.NAVY_SOFT, HV.NAVY_INK],
+  ];
+  past.forEach((p, i) => {
+    const y = 564 + i * 56;
+    b += hvCard(cx, y, cw, 48);
+    b += r(cx, y, 3, 48, i === 3 ? HV.NAVY : HV.BORDER, 1.5);
+    b += t(cx + 20, y + 29, p[0], 11.5, HV.INK, 'start', 700);
+    b += t(cx + 70, y + 29, p[1], 10.5, HV.MUTED, 'start');
+    b += t(cx + 216, y + 29, p[2], 11, HV.TEXT, 'start');
+    b += hvTag(cx + cw - hvTagW(p[3], 10) - 16, y + 15, p[3], p[4], p[5], 10);
+  });
+  b += t(cx, 810, '⤓  Export the full trail (PDF) · every turn immutable, timestamped, and attributable', 10.5, HV.MUTED, 'start');
+
+  // ── Memory rail ──
+  const mx = 1008, mw = 408;
+  b += hvCard(mx, 172, mw, 410);
+  b += t(mx + 20, 200, 'Memory formed', 13, HV.INK, 'start', 700);
+  b += t(mx + 20, 219, 'What Harvey carries into the next turn', 10.5, HV.MUTED, 'start');
+  b += line(mx, 236, mx + mw, 236, HV.LINE);
+
+  const mem = [
+    ['“Acme accepts a 12-month non-solicit', 'if it is mutual.”', 'Acme Robotics', HV.NAVY_SOFT, HV.NAVY_INK, 'from turn 5 · applied'],
+    ['“Acme counsel rejects arbitration', 'venues outside Delaware.”', 'Acme Robotics', HV.NAVY_SOFT, HV.NAVY_INK, 'from turn 3 · applied'],
+    ['“California counterparties: lead with', '§ 16600 — accepted 4 of 4 times.”', 'All NDAs', HV.AMBER_SOFT, HV.AMBER, 'from turn 4 · needs approval'],
+  ];
+  mem.forEach((m, i) => {
+    const y = 236 + i * 112;
+    if (i) b += line(mx + 20, y, mx + mw - 20, y, HV.LINE);
+    b += t(mx + 20, y + 30, m[0], 11.5, HV.TEXT, 'start', 500);
+    b += t(mx + 20, y + 48, m[1], 11.5, HV.TEXT, 'start', 500);
+    b += hvTag(mx + 20, y + 62, m[2], m[3], m[4], 9.5, 18);
+    b += t(mx + 20 + hvTagW(m[2], 9.5) + 10, y + 75, m[5], 9.5, HV.FAINT, 'start');
+    b += t(mx + mw - 20, y + 96, 'Edit  ·  Forget', 10, HV.NAVY, 'end', 600);
+  });
+
+  b += hvCard(mx, 598, mw, 120, 10, HV.AMBER_SOFT, '#E8D3AE');
+  b += t(mx + 20, 626, '1 memory would apply to all NDAs', 12, HV.AMBER, 'start', 700);
+  b += t(mx + 20, 648, 'Counterparty-scoped memory applies immediately.', 10.5, HV.TEXT, 'start');
+  b += t(mx + 20, 665, 'Anything that generalises waits for a lawyer and is', 10.5, HV.TEXT, 'start');
+  b += t(mx + 20, 682, 'drafted into the playbook as § 4.2a, never silently.', 10.5, HV.TEXT, 'start');
+  b += hvBtn(mx + 20, 692, 132, 26, 'Review 1 memory', HV.CARD, '#E8D3AE', HV.AMBER, 10.5);
+
+  b += hvCard(mx, 734, mw, 106);
+  b += t(mx + 20, 760, 'GUARDRAILS ON THIS NDA', 9, HV.FAINT, 'start', 700);
+  b += t(mx + 20, 782, '✓  Never autonomous: IP assignment, non-compete', 10.5, HV.TEXT, 'start');
+  b += t(mx + 20, 802, '✓  Auto-pause if the playbook version changes', 10.5, HV.TEXT, 'start');
+  b += t(mx + 20, 822, '✓  Hard stop at turn 6 — R. Mehta takes over', 10.5, HV.TEXT, 'start');
+
+  return svg(b, HV.BG);
+}
+
+// ── HARVEY COMMAND CENTER ─────────────────────────────────────────────────
+function harveyCommandCenter() {
+  const SB = 208, X = SB + 24;
+  let b = hvShell('Command Center');
+
+  // Header + global kill switch
+  b += r(SB + 1, 0, W - SB - 1, 80, HV.CARD) + line(SB + 1, 80, W, 80, HV.BORDER);
+  b += t(X, 36, 'Command Center', 19, HV.INK, 'start', 700);
+  b += t(X, 58, 'Tuesday, 12 March · 186 NDAs in the last 30 days · 3 lawyers, 1 agent', 11, HV.MUTED, 'start');
+  b += r(946, 24, 132, 32, HV.CARD, 7) + hvSr(946, 24, 132, 32, HV.BORDER, 7);
+  b += t(962, 44, 'Last 30 days  ▾', 11, HV.TEXT, 'start');
+  b += hvCard(1096, 16, 320, 48, 9);
+  b += circle(1116, 40, 5, HV.GREEN);
+  b += t(1128, 36, 'Automation on', 12.5, HV.INK, 'start', 700);
+  b += t(1128, 53, '14 NDAs running · 3 paused · 26 turns today', 9.5, HV.MUTED, 'start');
+  b += hvPauseBtn(1310, 26, 96, 28, 'Pause all', '#DCC8A6', HV.AMBER, 10.5);
+
+  // Metric tiles — every number carries the pre-Harvey baseline
+  const tiles = [
+    ['AUTONOMY RATE', '78%', '▲ 6 pts vs Feb', HV.GREEN_SOFT, HV.GREEN, 'NDAs closed with zero lawyer turns', true],
+    ['MEDIAN TURNS TO SIGNATURE', '3.1', '▼ from 5.2 baseline', HV.GREEN_SOFT, HV.GREEN, 'Counted per NDA, human turns included', false],
+    ['MEDIAN CYCLE TIME', '6h 40m', '▼ from 4.2 days', HV.GREEN_SOFT, HV.GREEN, 'Upload to signature, business hours', false],
+    ['LAWYER HOURS RETURNED', '61h', 'this month', HV.SLATE_SOFT, HV.TEXT, '892 clauses reviewed, 41 escalations', false],
+  ];
+  tiles.forEach((tile, i) => {
+    const x = 232 + i * 301;
+    b += hvCard(x, 100, 281, 116);
+    if (tile[6]) b += r(x, 100, 281, 3, HV.NAVY, 1.5);
+    b += t(x + 18, 128, tile[0], 9, HV.FAINT, 'start', 700);
+    b += t(x + 18, 166, tile[1], tile[1].length > 4 ? 26 : 30, HV.INK, 'start', 700);
+    b += hvTag(x + 18, 176, tile[2], tile[3], tile[4], 9.5, 18);
+    b += t(x + 18, 204, tile[5], 9.5, HV.MUTED, 'start');
+  });
+
+  // Trend chart — the question is "is this getting better", not "how much"
+  b += hvCard(232, 236, 700, 288);
+  b += t(252, 266, 'Turns handled per week', 13, HV.INK, 'start', 700);
+  b += circle(700, 262, 5, HV.NAVY); b += t(712, 266, 'Harvey', 10.5, HV.MUTED, 'start');
+  b += circle(780, 262, 5, '#E4CDA4'); b += t(792, 266, 'Lawyer', 10.5, HV.MUTED, 'start');
+  b += t(252, 286, 'Autonomous share is rising while total volume grows — capacity, not deflection.', 10.5, HV.MUTED, 'start');
+  const weeks = ['15 Jan', '22 Jan', '29 Jan', '5 Feb', '12 Feb', '19 Feb', '26 Feb', '4 Mar'];
+  const hv = [40, 62, 78, 96, 110, 128, 142, 150], lw = [86, 80, 72, 60, 52, 44, 40, 34];
+  b += line(268, 470, 908, 470, HV.BORDER);
+  weeks.forEach((wk, i) => {
+    const x = 280 + i * 78, hH = hv[i] * 0.9, lH = lw[i] * 0.9;
+    b += r(x, 470 - hH, 42, hH, HV.NAVY, 2);
+    b += r(x, 470 - hH - lH, 42, lH, '#E4CDA4', 2);
+    b += t(x + 21, 490, wk, 9, HV.FAINT, 'middle');
+    b += t(x + 21, 470 - hH + 16, String(hv[i]), 9.5, '#fff', 'middle', 600);
+    b += t(x + 21, 470 - hH - lH + 14, String(lw[i]), 9.5, HV.AMBER, 'middle', 600);
+  });
+  b += t(252, 508, 'Week of 4 Mar: 150 of 184 turns handled without a lawyer', 10.5, HV.TEXT, 'start', 500);
+
+  // Escalation reasons — each row links to the rule that fired
+  b += hvCard(952, 236, 464, 288);
+  b += t(972, 266, 'Why Harvey handed off', 13, HV.INK, 'start', 700);
+  b += t(972, 286, '41 handoffs · last 30 days', 10.5, HV.MUTED, 'start');
+  const reasons = [
+    ['Turn limit reached (6 turns)', 41, 17, HV.NAVY],
+    ['Counterparty accepted → signature', 26, 11, HV.GREEN],
+    ['Counterparty asked for a call', 22, 9, HV.AMBER],
+    ['No matching playbook clause', 11, 4, HV.RED],
+  ];
+  reasons.forEach((rr, i) => {
+    const y = 320 + i * 46;
+    b += t(972, y, rr[0], 11, HV.TEXT, 'start', 500);
+    b += t(1396, y, rr[1] + '%  ·  ' + rr[2], 11, HV.INK, 'end', 700);
+    b += r(972, y + 8, 424, 8, '#EDEBE6', 4);
+    b += r(972, y + 8, Math.round(424 * rr[1] / 45), 8, rr[3], 4);
+  });
+  b += line(972, 486, 1396, 486, HV.LINE);
+  b += t(972, 508, 'Rising "no playbook match" → a content gap, not a model problem', 10, HV.MUTED, 'start');
+  b += t(1396, 508, 'Tune handoff rules →', 10.5, HV.NAVY, 'end', 600);
+
+  // The dashboard ends in a queue
+  b += hvCard(232, 544, 700, 300);
+  b += t(252, 574, 'Needs a human now', 13, HV.INK, 'start', 700);
+  b += t(400, 574, '3 waiting · oldest 41m', 10.5, HV.MUTED, 'start');
+  b += t(912, 574, 'Open all →', 10.5, HV.NAVY, 'end', 600);
+  b += line(232, 592, 932, 592, HV.LINE);
+  const needs = [
+    ['Vela Systems', 'Turn limit reached', HV.AMBER_SOFT, HV.AMBER, 'waiting 41m', 'R. Mehta', 'Harvey holds at 12-month non-solicit; Vela wants 24.'],
+    ['Kestrel Analytics', 'Call requested', HV.AMBER_SOFT, HV.AMBER, 'waiting 18m', 'R. Mehta', '“Can we hop on a quick call Thursday?” · confidence 0.91'],
+    ['Corvus Freight', 'Counterparty accepted', HV.GREEN_SOFT, HV.GREEN, 'waiting 9m', 'A. Wu', 'Clean accept, 1 deviation — signature review only.'],
+  ];
+  needs.forEach((nd, i) => {
+    const y = 592 + i * 74;
+    if (i) b += line(252, y, 912, y, HV.LINE);
+    b += t(252, y + 28, nd[0], 12.5, HV.INK, 'start', 600);
+    b += hvTag(252, y + 38, nd[1], nd[2], nd[3], 10);
+    b += t(252 + hvTagW(nd[1], 10) + 10, y + 52, nd[4] + ' · ' + nd[5], 10, HV.MUTED, 'start');
+    b += t(560, y + 30, nd[6], 10.5, HV.MUTED, 'start');
+    b += hvBtn(842, y + 22, 70, 28, 'Open', HV.CARD, HV.BORDER, HV.NAVY, 11);
+  });
+
+  // Published guardrails — the screenshot that goes into a security review
+  b += hvCard(952, 544, 464, 300);
+  b += t(972, 574, 'What Harvey will never do alone', 13, HV.INK, 'start', 700);
+  b += line(952, 592, 1416, 592, HV.LINE);
+  [
+    'Never autonomous on IP assignment, non-compete,',
+    '     or data-processing clauses — always a lawyer',
+    'Never sends a document for signature',
+    'Auto-pauses every NDA when the playbook version changes',
+    'No memory generalises across NDAs without approval',
+    'Hard stop at 6 turns per negotiation',
+  ].forEach((g, i) => {
+    const y = 620 + i * 26;
+    if (i !== 1) b += t(972, y, '✓', 11, HV.GREEN, 'start', 700);
+    b += t(990, y, g, 10.5, HV.TEXT, 'start');
+  });
+  b += line(972, 792, 1396, 792, HV.LINE);
+  b += t(972, 814, 'Last global pause: 4 Mar, 09:02–09:40 by A. Wu', 10.5, HV.MUTED, 'start');
+  b += t(972, 830, 'Reason: playbook v12 rollout · 14 NDAs held, 0 sent', 10, HV.FAINT, 'start');
+
+  return svg(b, HV.BG);
+}
+
+// ── HARVEY HANDOFF RULES ──────────────────────────────────────────────────
+function harveyHandoff() {
+  const SB = 208, X = SB + 24;
+  let b = hvShell('Handoff Rules');
+
+  b += r(SB + 1, 0, W - SB - 1, 80, HV.CARD) + line(SB + 1, 80, W, 80, HV.BORDER);
+  b += t(X, 36, 'Handoff rules', 19, HV.INK, 'start', 700);
+  b += t(X, 58, 'When Harvey stops negotiating and a person takes over · applies to 38 open NDAs', 11, HV.MUTED, 'start');
+  b += r(912, 24, 190, 32, HV.CARD, 7) + hvSr(912, 24, 190, 32, HV.BORDER, 7);
+  b += t(928, 44, 'Applies to:  All NDAs  ▾', 11, HV.TEXT, 'start');
+  b += hvBtn(1120, 24, 88, 32, 'Discard', HV.CARD, HV.BORDER, HV.MUTED, 11.5);
+  b += hvBtn(1224, 24, 192, 32, 'Save rules  ·  simulate first', HV.NAVY, null, '#fff', 11.5);
+
+  const L = 232, LW = 690, fx = 300;
+
+  // Rule 1 — turn limit, with its reasoning attached
+  b += hvCard(L, 100, LW, 172);
+  b += hvToggle(L + 20, 116, true);
+  b += t(fx, 130, 'Hand to a lawyer after a set number of turns', 13.5, HV.INK, 'start', 600);
+  b += t(fx, 150, 'A turn = one redline exchanged with the counterparty.', 11, HV.MUTED, 'start');
+  b += hvTag(L + LW - 132, 116, 'active on 38 NDAs', HV.NAVY_SOFT, HV.NAVY_INK, 10);
+  b += r(fx, 164, 124, 34, HV.BG, 8) + hvSr(fx, 164, 124, 34, HV.BORDER, 8);
+  b += line(fx + 40, 164, fx + 40, 198, HV.BORDER);
+  b += line(fx + 84, 164, fx + 84, 198, HV.BORDER);
+  b += t(fx + 20, 187, '−', 16, HV.MUTED, 'middle');
+  b += t(fx + 62, 187, '6', 15, HV.INK, 'middle', 700);
+  b += t(fx + 104, 186, '+', 15, HV.MUTED, 'middle');
+  b += t(fx + 136, 187, 'turns', 11.5, HV.TEXT, 'start');
+  b += t(fx + 186, 187, 'median NDA closes in 3.1 — six leaves room to counter twice', 10.5, HV.MUTED, 'start');
+  b += t(fx, 222, '☑  Only count turns where Harvey changed the document', 11, HV.TEXT, 'start');
+  b += t(fx, 244, '☐  Warn the assigned lawyer one turn early', 11, HV.MUTED, 'start');
+
+  // Rule 2 — probabilistic trigger, threshold exposed
+  b += hvCard(L, 288, LW, 160);
+  b += hvToggle(L + 20, 304, true);
+  b += t(fx, 318, 'When the counterparty asks for a call', 13.5, HV.INK, 'start', 600);
+  b += t(fx, 338, 'Detected from the thread — “hop on a call”, “quick sync”, a calendar link, a phone number.', 11, HV.MUTED, 'start');
+  b += hvTag(L + LW - 120, 304, '9 fired this month', HV.SLATE_SOFT, HV.TEXT, 10);
+  b += t(fx, 372, 'Hand off above', 11, HV.TEXT, 'start', 500);
+  b += r(fx + 92, 366, 240, 6, '#E4E2DC', 3);
+  b += r(fx + 92, 366, 168, 6, HV.NAVY, 3);
+  b += circle(fx + 260, 369, 9, HV.CARD) + hvSr(fx + 251, 360, 18, 18, HV.NAVY, 9, 2);
+  b += t(fx + 344, 372, '0.80  ·  high confidence', 11, HV.NAVY_INK, 'start', 600);
+  b += t(fx, 400, 'Below 0.80 Harvey flags the thread in the queue instead of handing off — it never ignores the signal.', 10.5, HV.MUTED, 'start');
+  b += t(fx, 424, '☑  Also notify #legal-escalations in Slack', 11, HV.TEXT, 'start');
+
+  // Rule 3 — acceptance is a handoff too
+  b += hvCard(L, 464, LW, 176);
+  b += hvToggle(L + 20, 480, true);
+  b += t(fx, 494, 'When the counterparty accepts', 13.5, HV.INK, 'start', 600);
+  b += t(fx, 514, 'Acceptance ends the negotiation — a person signs off before anything is executed.', 11, HV.MUTED, 'start');
+  b += hvTag(L + LW - 116, 480, '11 fired this month', HV.GREEN_SOFT, HV.GREEN, 10);
+  [
+    ['Always route to a lawyer', false, 'safest · adds ~11 min per clean NDA'],
+    ['Only if any clause deviated from the playbook', true, 'default · 26% of accepts last month'],
+    ['Never — route straight to signature', false, 'not recommended · execution cannot be undone'],
+  ].forEach((opt, i) => {
+    const y = 542 + i * 26;
+    b += circle(fx + 7, y - 4, 7, HV.CARD) + hvSr(fx, y - 11, 14, 14, opt[1] ? HV.NAVY : '#CFCDC7', 7, 1.5);
+    if (opt[1]) b += circle(fx + 7, y - 4, 4, HV.NAVY);
+    b += t(fx + 24, y, opt[0], 11.5, opt[1] ? HV.INK : HV.TEXT, 'start', opt[1] ? 600 : 400);
+    b += t(fx + 316, y, opt[2], 10.5, HV.FAINT, 'start');
+  });
+  b += t(fx, 622, 'Harvey never sends a document for signature on its own, whatever these toggles say.', 10.5, HV.NAVY_INK, 'start', 600);
+
+  // Clause-level guardrails — no turn count overrides these
+  b += hvCard(L, 656, LW, 152);
+  b += t(L + 20, 686, 'Always escalate these clauses — at any turn, at any confidence', 13, HV.INK, 'start', 700);
+  let cx2 = L + 20;
+  ['IP assignment', 'Non-compete', 'Data processing (GDPR)', 'Indemnity > $1M', 'Governing law ≠ DE / CA'].forEach(c => {
+    const w = hvTagW(c, 11);
+    b += pill(cx2, 702, w, 26, HV.SLATE_SOFT) + hvSr(cx2, 702, w, 26, HV.BORDER, 13);
+    b += t(cx2 + w / 2, 719, c, 11, HV.TEXT, 'middle', 500);
+    cx2 += w + 8;
+  });
+  b += t(L + 20, 752, '+  Add clause type', 11, HV.NAVY, 'start', 600);
+  b += t(L + 20, 780, 'Harvey still drafts a recommendation for each one — it simply does not send it.', 10.5, HV.MUTED, 'start');
+
+  // Who takes over
+  const R = 946, RW = 470;
+  b += hvCard(R, 100, RW, 168);
+  b += t(R + 20, 130, 'Who takes over', 13, HV.INK, 'start', 700);
+  b += line(R, 148, R + RW, 148, HV.LINE);
+  [['RM', 'R. Mehta', '12 open · avg first touch 14m'], ['AW', 'A. Wu', '7 open · avg first touch 22m']].forEach((p, i) => {
+    const y = 148 + i * 44;
+    b += circle(R + 34, y + 24, 14, HV.NAVY_SOFT);
+    b += t(R + 34, y + 28, p[0], 10, HV.NAVY_INK, 'middle', 700);
+    b += t(R + 58, y + 22, p[1], 12, HV.INK, 'start', 600);
+    b += t(R + 58, y + 38, p[2], 10, HV.MUTED, 'start');
+  });
+  b += t(R + 20, 254, '◉ Round robin by open load     ○ Always R. Mehta', 11, HV.TEXT, 'start');
+
+  // Simulation before save
+  b += hvCard(R, 284, RW, 236);
+  b += t(R + 20, 314, 'If these rules were live', 13, HV.INK, 'start', 700);
+  b += t(R + 20, 333, 'Replayed against the last 30 days · 186 NDAs', 10.5, HV.MUTED, 'start');
+  b += line(R, 350, R + RW, 350, HV.LINE);
+  [
+    ['Escalation rate', '22%', '27%', '+9 NDAs', 22, 27, HV.AMBER],
+    ['Autonomy rate', '78%', '73%', '−5 pts', 78, 73, HV.NAVY],
+    ['Lawyer time per NDA', '—', '11 min', 'median first touch', 0, 0, HV.MUTED],
+  ].forEach((s, i) => {
+    const y = 378 + i * 44;
+    b += t(R + 20, y, s[0], 11, HV.TEXT, 'start', 500);
+    b += t(R + RW - 20, y, s[1] + '  →  ' + s[2], 11.5, HV.INK, 'end', 700);
+    if (s[4]) {
+      b += r(R + 20, y + 8, 300, 8, '#EDEBE6', 4);
+      b += r(R + 20, y + 8, 3 * s[4], 8, '#D8D5CE', 4);
+      b += r(R + 20, y + 8, 3 * s[5], 4, s[6], 2);
+    }
+    b += t(R + RW - 20, y + 16, s[3], 10, HV.MUTED, 'end');
+  });
+  b += t(R + 20, 502, 'Replay uses recorded turns and assumes counterparty behaviour is unchanged.', 9.5, HV.FAINT, 'start');
+
+  // What the lawyer receives
+  b += hvCard(R, 536, RW, 300);
+  b += t(R + 20, 566, 'What the lawyer receives', 13, HV.INK, 'start', 700);
+  b += t(R + RW - 20, 566, 'preview', 10.5, HV.FAINT, 'end');
+  b += r(R + 20, 582, RW - 40, 178, HV.BG, 8) + hvSr(R + 20, 582, RW - 40, 178, HV.BORDER, 8);
+  b += t(R + 38, 608, 'Acme Robotics — handed to you at turn 6', 12, HV.INK, 'start', 700);
+  b += t(R + 38, 626, 'Mutual NDA · counterparty paper · opened 10 Mar', 10, HV.MUTED, 'start');
+  b += line(R + 38, 638, R + RW - 38, 638, HV.LINE);
+  [
+    ['OPEN ISSUE', 'Acme wants a 24-month non-solicit; we hold at 12.'],
+    ['POSITION HELD', 'Playbook § 4.2 + Cal. B&P § 16600 — cited in turns 4 and 6.'],
+    ['RECOMMENDED', 'Offer 18 months with a mutual general-advertising carve-out.'],
+  ].forEach((s, i) => {
+    const y = 656 + i * 32;
+    b += t(R + 38, y, s[0], 8.5, HV.FAINT, 'start', 700);
+    b += t(R + 38, y + 14, s[1], 10.5, HV.TEXT, 'start');
+  });
+  b += t(R + 38, 752, 'All 6 turns, every citation, one click away ↗', 10, HV.NAVY, 'start', 600);
+  b += hvBtn(R + 20, 776, 132, 34, 'Take over', HV.NAVY, null, '#fff', 12);
+  b += hvBtn(R + 162, 776, 268, 34, '↩  Send back to Harvey with a note', HV.CARD, HV.BORDER, HV.TEXT, 12);
+
+  return svg(b, HV.BG);
 }
 
 // ── Generic fallback ───────────────────────────────────────────────────────

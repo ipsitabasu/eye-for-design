@@ -26,6 +26,7 @@ const linearJs = strip(read('data/linear.js'), 'linearData');
 const duoJs    = strip(read('data/duolingo.js'), 'duolingoData');
 const notionJs = strip(read('data/notion.js'), 'notionData');
 const stripeJs = strip(read('data/stripe.js'), 'stripeData');
+const harveyJs = strip(read('data/harvey.js'), 'harveyData');
 const appJs    = read('app.js')
   .replace(/^import\s+.+?from\s+'.+?';?\s*$/gm, '')
   .trim();
@@ -98,7 +99,9 @@ ${notionJs}
 
 ${stripeJs}
 
-const apps = [linearData, duolingoData, notionData, stripeData];
+${harveyJs}
+
+const apps = [linearData, duolingoData, notionData, stripeData, harveyData];
 const appsById = Object.fromEntries(apps.map(function(a) { return [a.id, a]; }));
 
 // ── Components ─────────────────────────────────────────────────────────────
